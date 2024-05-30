@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="37px" height="37px" viewBox="0 0 37 37" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Shape Copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="3-HOME-PRIVADO" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="PRIV-PROMOCIONES" transform="translate(-669.000000, -328.000000)" fill="#EC0000" fill-rule="nonzero">
+            <path d="M687.5,365 C677.28245,365 669,356.71755 669,346.5 C669,336.28245 677.28245,328 687.5,328 C697.71755,328 706,336.28245 706,346.5 C706,356.71755 697.71755,365 687.5,365 Z M687.5,335 C683.358125,335 680,338.2835 680,342.333333 C680,346.383167 687.5,357 687.5,357 C687.5,357 695,346.383167 695,342.333333 C695,338.2835 691.641875,335 687.5,335 Z M685,342.5 C685,341.12 686.12,340 687.5,340 C688.88,340 690,341.12 690,342.5 C690,343.88 688.88,345 687.5,345 C686.12,345 685,343.88 685,342.5 Z" id="Shape-Copy"></path>
+        </g>
+    </g>
+</svg>

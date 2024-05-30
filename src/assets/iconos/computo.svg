@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24.09 24.09">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #ec0000;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 0.7px;
+      }
+    </style>
+  </defs>
+  <title> Master_Iconos_recompensas</title>
+  <g id="Layer_6" data-name="Layer 6">
+    <g>
+      <g>
+        <path class="cls-1" d="M18.61,15.11V7.45a1.09,1.09,0,0,0-1.09-1.09H6.57A1.09,1.09,0,0,0,5.48,7.45v7.66"/>
+        <path class="cls-1" d="M4.16,15.11v1.44a1.19,1.19,0,0,0,1.19,1.19H18.74a1.19,1.19,0,0,0,1.19-1.19V15.11Z"/>
+      </g>
+      <polyline class="cls-1" points="13.17 15.11 13.17 15.55 10.92 15.55 10.92 15.11"/>
+    </g>
+  </g>
+</svg>

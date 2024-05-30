@@ -1,0 +1,2943 @@
+<p-tabView (onChange)="tabActive($event)">
+    <p-tabPanel header="Datos del fideicomiso" class="t25" id="datafid">
+        <div class="panel panel-default">
+            <div class="card">
+                <div class="panel-body mt-5">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="fipofid" class="col-md-12 control-label text-left">
+                                        Tipo de fideicomiso (*)
+                                    </label>
+                                    <div class="col-12 formCon">
+                                        <input  class="form-control"
+                                                id="fipofid"
+                                                name="fipofid"
+                                                type="text"
+                                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                                [formControl]="fipo_fidf"
+                                                [maxlength]="200"
+                                                [(ngModel)]="fipo_fid" >
+                                        <small  class="p-error text-left"
+                                                *ngIf="fipo_fid === ''">Este campo es requerido.</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="finfid" class="col-md-12 control-label text-left">
+                                        Fines del fideicomiso (*)
+                                    </label>
+                                    <div class="col-12 formCon">
+                                        <textarea   class="form-control"
+                                                    id="finfid"
+                                                    name="finfid"
+                                                    type="text"
+                                                    oninput="this.value=this.value.replace(/<|>/g,'')"
+                                                    [formControl]="fin_fidf"
+                                                    [maxlength]="6000"
+                                                    [(ngModel)]="fin_fid" >
+                                        </textarea>
+                                        <small  class="p-error text-left"
+                                                *ngIf="fin_fid === ''">Este campo es requerido.</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="patfid" class="col-md-12 control-label text-left">
+                                        Patrimonio del fideicomiso (*)
+                                    </label>
+                                    <div class="col-12 formCon">
+                                        <textarea   class="form-control"
+                                                    id="patfid"
+                                                    name="patfid"
+                                                    type="text"
+                                                    maxlength="6000"
+                                                    oninput="this.value=this.value.replace(/<|>/g,'')"
+                                                    [formControl]="pat_fidf"
+                                                    [(ngModel)]="pat_fid">
+                                        </textarea>
+                                        <small  class="p-error text-left"
+                                                *ngIf="pat_fid === ''">Este campo es requerido.</small>
+                                            
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="fechaconst" class="col-md-12 control-label text-left">
+                                        Fecha de constitución (*)
+                                    </label>
+                                    <app-ng-calendar class="ml-0 mr-0 tablecalendar"
+                                                    ngDefaultControl 
+                                                    name="fechaconst" 
+                                                    id="fechaconst" 
+                                                    inputId="fechaconst" 
+                                                    locale="es"
+                                                    [maxDate]="maxDate"
+                                                    formatDate="dd/mm/yy"
+                                                    [(ngModel)]="fechaconst"
+                                                    (OutDate)="getDataS( $event, 'fechaconst' )"
+                                                    placeholder={{fechaconst}}>
+                                    </app-ng-calendar>
+                                </div>
+                                <div class="form-group">
+                                    <label for="numint" class="col-md-12 control-label text-left">
+                                        Número de intervinientes (*)
+                                    </label>
+                                    <div class="col-12 formCon">
+                                        <input  class="form-control"
+                                                id="numint"
+                                                name="numint"
+                                                type="text"
+                                                oninput="this.value=this.value.replace(/[^0-9.]|<|>/g,'')"
+                                                [formControl]="num_intf"
+                                                [maxlength]="2"
+                                                [(ngModel)]="num_int" >
+                                        <small  class="p-error text-left"
+                                                *ngIf="num_int === ''">Este campo es requerido.</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="acciones" class="col-md-12 control-label text-left">
+                                        Clasificación de fines de fideicomiso (*)
+                                    </label>
+                                    <div class="p-inputgroup">
+                                        <input  pInputText
+                                                type="text"
+                                                class="p-column-filter"
+                                                id="accionesap"
+                                                [(ngModel)]="selectedintervinientes"
+                                                disabled>       
+                                        <button pButton
+                                                pRipple
+                                                type="button"
+                                                icon="pi pi-align-justify"
+                                                class="p-button-danger"
+                                                (click)="displayMBenef()">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Documentos Dictaminados" class="t25" id="docsdictfid">
+        <div class="card">
+            <p-table #dt2
+                    editMode="row"
+                    responsiveLayout="scroll"
+                    dataKey="id"
+                    id="docsdictfid"
+                    [value]="docsdictaminados"
+                    [(selection)]="selecteddocsdictaminados" 
+                    [rowHover]="true"
+                    [showCurrentPageReport]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th scope="col" class="t17" id="thddfid">
+                            <label for="nombre_doc">
+                                <p class="p-header">Nombre del documento (*)</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropdocname"
+                                        name="nombre_doc"
+                                        id="nombre_doc"
+                                        optionValue="id"
+                                        optionLabel="nombre"
+                                        placeholder="Seleccionar"
+                                        [options]="arrayFiles"
+                                        [(ngModel)]="idArchivo"
+                                        (onChange)="getData( $event, 'idArchivo' )" >
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" class="t17" id="thddfid">
+                            <label for="numesc">
+                                <p class="p-header">Póliza o No. escritura pública (*)</p>
+                            </label>
+                            <input  pInputText
+                                    type="text" 
+                                    class="p-column-filter" 
+                                    id="numesc"
+                                    oninput="this.value=this.value.replace(/<|>/g,'')"
+                                    [maxlength]="50"
+                                    [(ngModel)]="poliza" 
+                                    (ngModelChange)="getData( poliza, 'polizaval' )">
+                        </th>
+                        <th scope="col" class="t15" id="thddfid">
+                            <label for="fechaemdev">
+                                <p class="p-header">Fecha emisión de escritura (*)</p>
+                            </label>
+                            <app-ng-calendar class="ml-0 mr-0 tablecalendar"
+                                             ngDefaultControl 
+                                             name="fechaemdev" 
+                                             id="fechaemdev" 
+                                             inputId="femisiondev" 
+                                             locale="es"
+                                             formatDate="dd/mm/yy"
+                                             [maxDate]="maxDate"
+                                             [selectDate]="fchEmisionEscr" 
+                                             (OutDate)="getData( $event, 'fchEmisionEscr' )">
+                            </app-ng-calendar>
+                        </th>
+                        <th scope="col" class="t18" id="thddfid">
+                            <label for="actos">
+                                <p class="p-header">Actos que se hicieron constar (*)</p>
+                            </label>
+                            <input  pInputText
+                                    type="text"
+                                    id="actos"
+                                    name="actos"
+                                    class="p-column-filter"
+                                    oninput="this.value=this.value.replace(/<|>/g,'')"
+                                    [maxlength]="2000"
+                                    [(ngModel)]="actos"
+                                    (ngModelChange)="getData( actos, 'actosconst' )">
+                        </th>
+                        <th scope="col" class="t15" id="thddfid">
+                            <label for="ins_art">
+                                <p class="p-header">Inserción artículo 2554 ó correlativo (*)</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropinsar"
+                                        name="ins_art"
+                                        id="ins_art"
+                                        optionValue="nombre"
+                                        optionLabel="nombre"
+                                        placeholder="Seleccionar"
+                                        [options]="insart"
+                                        [(ngModel)]="articulo"
+                                        (onChange)="getData( $event, 'articulo' )">
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" class="t16" id="thddfid-1">
+                            <label for="consideraciones">
+                                <p class="p-header">Consideraciones legales (*)</p>
+                            </label>
+                            <input  pInputText
+                                    type="text"
+                                    id="consideraciones"
+                                    name="consideraciones"
+                                    class="p-column-filter"
+                                    oninput="this.value=this.value.replace(/<|>/g,'')"
+                                    [maxlength]="4000"
+                                    [(ngModel)]="consideraciones"
+                                    (ngModelChange)="getData( consideraciones, 'consleg' )">
+                        </th>
+                        <th scope="col" id="thddfid" class="accionesth">
+                            <label for="accionesdocs">
+                                <p class="p-header">Acciones</p>
+                            </label>
+                            <br />
+                            <button pButton 
+                                    pRipple 
+                                    icon="pi pi-plus" 
+                                    id="accionesdocs"
+                                    class="p-button-rounded p-button-table-success" 
+                                    (click)="guardarDocsDict()" 
+                                    [disabled]="!(fchEmisionEscr && fchEmisionEscr.length > 0 && consideraciones && articulo && insart && idArchivo && poliza && actos && consideraciones.length > 0 && insart.length > 0 && articulo.length > 0 && actos.length > 0 && poliza.length > 0 && this.idArchivo.length > 0)">
+                            </button>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body"
+                             let-docsdictaminado
+                             let-editing="editing"
+                             let-rowIndex="rowIndex"
+                             id="tmpdocsfid">
+                    <tr [pEditableRow]="docsdictaminado">
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown *ngIf="isReady"
+                                                appendTo="body"
+                                                class="dropdocname"
+                                                name="nombredocfid"
+                                                id="nombredocfid"
+                                                optionValue="id"
+                                                optionLabel="nombre"
+                                                placeholder="{{docsdictaminado.nomArchivo}}"
+                                                [options]="arrayFiles"
+                                                [(ngModel)]="docsdictaminado.nomArchivo"
+                                                [disabled]="true">
+                                    </p-dropdown>
+                                    <label for="nombredocfid"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <div class="wordwarp">{{ docsdictaminado.nomArchivo }}</div>
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input  id="polizaedfid"
+                                            name="polizaedfid"
+                                            pInputText
+                                            type="text"
+                                            required=true
+                                            [maxlength]="50"
+                                            oninput="this.value=this.value.replace(/<|>/g,'')"
+                                            [(ngModel)]="docsdictaminado.poliza">
+                                    <label for="polizaedfid"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ docsdictaminado.poliza }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <br>
+                                    <app-ng-calendar  ngDefaultControl 
+                                                      name="fechaeditfid"
+                                                      id="fechaeditfid"
+                                                      inputId="femisiondev"
+                                                      locale="es"
+                                                      [maxDate]=maxDate
+                                                      formatDate="dd-mm-yy"
+                                                      [selectDate]="docsdictaminado.fchEmisionEscr"
+                                                      placeholder={{docsdictaminado.fchEmisionEscr}}
+                                                      (OutDate)="docsdictaminado.fchEmisionEscr=$event">
+                                    </app-ng-calendar>
+                                    <label for="fechaeditfid"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ docsdictaminado.fchEmisionEscr }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input  id="actosfid"
+                                            name="actosfid"
+                                            pInputText
+                                            type="text"
+                                            required=true
+                                            [maxlength]="2000"
+                                            oninput="this.value=this.value.replace(/<|>/g,'')"
+                                            [(ngModel)]="docsdictaminado.actos">
+                                    <label for="actosfid"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ docsdictaminado.actos }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown *ngIf="isReady"
+                                                appendTo="body"
+                                                class="dropinsar"
+                                                name="articuloedfid"
+                                                id="articuloedfid"
+                                                optionValue="nombre"
+                                                optionLabel="nombre"
+                                                [options]="insart"
+                                                [(ngModel)]="docsdictaminado.articulo">
+                                    </p-dropdown>
+                                    <label for="articuloedfid"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ docsdictaminado.articulo }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input  id="consideracionesfid"
+                                            name="consideracionesfid"
+                                            pInputText
+                                            type="text"
+                                            required=true
+                                            [maxlength]="4000"
+                                            oninput="this.value=this.value.replace(/<|>/g,'')"
+                                            [(ngModel)]="docsdictaminado.consideraciones">
+                                    <label for="consideracionesfid"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ docsdictaminado.consideraciones }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <div class="row justify-content-center">
+                                <a *ngIf="!editing"
+                                    pInitEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnEditfid"
+                                    title="btnEditesp"
+                                    (click)="onRowEditInit(rowIndex, docsdictaminado)"
+                                    disabled="(indexActiveEdit !== -1) && (indexActiveEdit !== rowIndex))">
+                                    <span><em class="pi pi-pencil red-color"></em></span>
+                                </a>
+                                <a *ngIf="editing"
+                                    pSaveEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnCheckfid"
+                                    title="btnCheckesp"
+                                    (click)="onRowEditSave(rowIndex, docsdictaminado)" 
+                                    [hidden]="((indexActiveEdit !== -1) && (indexActiveEdit !== rowIndex)) || !(docsdictaminado &&  docsdictaminado.consideraciones.length > 0 && docsdictaminado.articulo.length > 0 && docsdictaminado.actos.length > 0 && docsdictaminado.nomArchivo.length >0 && docsdictaminado.poliza.length > 0)">
+                                    <span><em class="pi pi-check red-color"></em></span>
+                                </a>
+                                <a *ngIf="editing"
+                                    pCancelEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnSavefid"
+                                    title="Save"
+                                    (click)="onRowEditCancel(rowIndex, docsdictaminado)"
+                                    disabled="(indexActiveEdit !== -1) && (rowIndex !== indexActiveEdit)">
+                                    <span><em class="pi pi-times red-color"></em></span>
+                                </a>
+                                <a  *ngIf="!editing"
+                                    class="btn btn-default mr-3"
+                                    id="btnTrashfid"
+                                    title="trash"
+                                    (click)="eliminarDocsDict(rowIndex)"
+                                    disabled="(indexActiveEdit !== -1) && (rowIndex !== indexActiveEdit)">
+                                    <span><em class="pi pi-trash red-color"></em></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage" id="tmppfmess">
+                    <tr>
+                        <td colspan="8">No se encontraron documentos.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div class="panel-body mt-5" id="tabsfootdocsdict">
+                <div class="row col-md-12 ml-3">
+                    <label for="registro">
+                        Incluye registro
+                    </label>
+                    <div class="col-md-3">
+                        <div class="col-12 formCon">
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body" 
+                                        class="dropincreg" 
+                                        ngDefaultControl 
+                                        name="registro" 
+                                        id="registro" 
+                                        optionValue="nombre" 
+                                        [options]="insart" 
+                                        [(ngModel)]="registro" 
+                                        (onChange)="getData( $event, 'registro' )" 
+                                        optionLabel="nombre" 
+                                        placeholder="Seleccionar">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <label for="referencia">
+                        Dar aviso
+                    </label>
+                    <div class="col-md-3">
+                        <div class="col-12 formCon">
+                            <p-dropdown *ngIf="isReady" 
+                                        appendTo="body" 
+                                        name="dropincreg" 
+                                        id="aviso" 
+                                        optionValue="nombre" 
+                                        [options]="daravisovalue" 
+                                        [(ngModel)]="aviso" 
+                                        optionLabel="nombre" 
+                                        (onChange)="getDataB( $event, 'aviso' )" 
+                                        placeholder="Seleccionar">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <label for="domicilio">
+                        Fecha de aviso
+                    </label>
+                    <div class="col-md-3">
+                        <div class="col-12 formCon">
+                            <app-ng-calendar class="ml-0 mr-0"
+                                             ngDefaultControl
+                                             name="feaviso"
+                                             inputId="feaviso"
+                                             locale="es"
+                                             formatDate="dd/mm/yy"
+                                             [(ngModel)]="femaviso"
+                                             (OutDate)="getDataB( $event, 'femaviso' )"
+                                             placeholder={{femaviso}}>
+                            </app-ng-calendar>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-left mt-3">
+                    <span>Si a la fecha no se han incluido en los datos de la inscripción definitivos se deberá cancelar la cuenta.</span>
+                </div>
+            </div>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Datos de inscripción" class="t25" id="tabpnadocsinscgob">
+        <div class="card">
+            <p-table #dt2
+                    editMode="row"
+                    responsiveLayout="scroll"
+                    dataKey="id"
+                    id="tabldocsinscgob"
+                    [value]="datosinscs"
+                    [(selection)]="selecteddatosinscs" 
+                    [rowHover]="true"
+                    [showCurrentPageReport]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th scope="col" class="t18">
+                            <label for="nombredoc">
+                                <p class="p-header">Póliza o No. escritura pública (*)</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady" 
+                                        appendTo="body"
+                                        class="dropdocname"
+                                        name="num_escritura_f"
+                                        id="num_escritura_f"
+                                        optionValue="idArchivo"
+                                        optionLabel="poliza"
+                                        [options]="documentosValue"
+                                        [(ngModel)]="num_escritura_f"
+                                        placeholder="Seleccionar"
+                                        (onChange)="getDataB( $event, 'num_escritura_f' )">
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" class="t18">
+                            <label for="foliomerc">
+                                <p class="p-header">Folio mercantil (*)</p>
+                            </label>
+                            <input pInputText
+                                   type="text"
+                                   id="foliomerc"
+                                   name="foliomerc"
+                                   class="p-column-filter"
+                                   oninput="this.value=this.value.replace(/<|>/g,'')"
+                                   [(ngModel)]="folioMerc"
+                                   [maxlength]="400"
+                                   (ngModelChange)="getDataB( folioMerc, 'folio' )">
+                        </th>
+                        <th scope="col" class="t18">
+                            <label for="fechaem">
+                                <p class="p-header">Fecha de inscripción (*)</p>
+                            </label>
+                            <app-ng-calendar    ngDefaultControl 
+                                                class="ml-0 mr-0 tablecalendar"
+                                                name="feinscrip"
+                                                inputId="feinscrip"
+                                                locale="es"
+                                                formatDate="dd/mm/yy"
+                                                [maxDate]="maxDate"
+                                                [selectDate]="fchInscripcion"
+                                                (OutDate)="getDataB( $event, 'fchInscripcion' )"
+                                                placeholder={{fchInscripcion}}>
+                            </app-ng-calendar>
+                        </th>
+                        <th scope="col" class="t18">
+                            <label for="actos">
+                                <p class="p-header">Estado</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropinsar"
+                                        name="estado"
+                                        id="estado"
+                                        optionValue="idEntidadFed"
+                                        [options]="entidadesDatadi"
+                                        [(ngModel)]="entidaddi"
+                                        optionLabel="nombre"
+                                        (onChange)="getDataB( $event, 'entidaddi' )"
+                                        placeholder="Seleccionar">
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" class="t18">
+                            <label for="insercion">
+                                <p class="p-header">Municipio</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropinsar"
+                                        name="municipio"
+                                        id="municipio"
+                                        optionValue="idMunicipio"
+                                        optionLabel="nombre"
+                                        [options]="municipiosDatadi"
+                                        placeholder="Seleccionar"
+                                        [(ngModel)]="municipiodi" 
+                                        (onChange)="getDataB( $event, 'municipiodi' )">
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" id="thafid" class="accionesth">
+                            <label for="acciones">
+                                <p class="p-header mb-1">Acciones</p>
+                            </label>
+                            <br />
+                            <button pButton
+                                    pRipple
+                                    icon="pi pi-plus"
+                                    class="p-button-rounded p-button-table-success"
+                                    [disabled]="!(fchInscripcion && fchInscripcion.length > 0 && folioMerc && folioMerc.length > 0 && this.datosinsc.num_escritura_f > 0)"
+                                    (click)="guardarDatosInsc()">
+                            </button>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body"
+                             let-datosinsc
+                             let-editing="editing"
+                             let-rowIndex="rowIndex"
+                             id="tmpdinsfid">
+                    <tr [pEditableRow]="datosinsc">
+                        <td id="tddifid">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText
+                                            appendTo="body"
+                                            class="dropdocname"
+                                            name="num_escritura_f"
+                                            id="num_escritura_f"
+                                            required=true
+                                            [(ngModel)]="datosinsc.poliza"
+                                            [disabled]="true">
+                                <label for="num_escritura_fed"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosinsc.poliza }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td id="tddifid">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input  pInputText
+                                            type="text"
+                                            name="foliomercfid"
+                                            id="foliomercfid"
+                                            class="p-column-filter"
+                                            required=true
+                                            oninput="this.value=this.value.replace(/<|>/g,'')"
+                                            [maxlength]="400"
+                                            [(ngModel)]="datosinsc.folioMerc">
+                                <label for="foliomercfid"></label>
+                                </ng-template>  
+                                <ng-template pTemplate="output">
+                                    {{ datosinsc.folioMerc }}
+                                </ng-template>    
+                            </p-cellEditor>
+                        </td>
+                        <td id="tddifid">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <app-ng-calendar    ngDefaultControl 
+                                                        class="ml-0 mr-0 tablecalendar"
+                                                        name="feinscripfid"
+                                                        id="feinscripfid"
+                                                        inputId="feinscripfid"
+                                                        locale="es"
+                                                        formatDate="dd-mm-yy"
+                                                        [maxDate]="maxDate"
+                                                        [selectDate]="datosinsc.fchInscripcion"
+                                                        (OutDate)="datosinsc.fchInscripcion=$event"
+                                                        placeholder={{datosinsc.fchInscripcion}}>
+                                    </app-ng-calendar>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosinsc.fchInscripcion }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td id="tddifid">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown *ngIf="isReady"
+                                                appendTo="body"
+                                                class="dropinsar"
+                                                name="estdifid"
+                                                id="estdifid"
+                                                optionValue="idEntidadFed"
+                                                optionLabel="nombre"
+                                                placeholder="{{datosinsc.estadoNombre}}"
+                                                [options]="entidadesDatadi"
+                                                [(ngModel)]="datosinsc.estadoNombre"
+                                                (onChange)="getDataB( $event, 'entidaddi' )">
+                                    </p-dropdown>
+                                    <label for="estadofe"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosinsc.estadoNombre }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td id="tddifid">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown *ngIf="isReady"
+                                                appendTo="body"
+                                                class="dropinsar"
+                                                name="municipiodifid"
+                                                id="municipiodifid"
+                                                optionValue="idMunicipio"
+                                                optionLabel="nombre"
+                                                placeholder="Seleccionar"
+                                                [options]="municipiosDatadi"
+                                                [(ngModel)]="datosinsc.municipioNombre"
+                                                (onChange)="getDataB( $event, 'municipiodi' )">
+                                    </p-dropdown>
+                                    <label for="municipiodifid"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosinsc.municipioNombre }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td id="tddifid">
+                            <div class="row justify-content-center">
+                                <a *ngIf="!editing"
+                                    pInitEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnEdit"
+                                    title="btnEdit"
+                                    (click)="onRowEditDj(rowIndex, datosinsc)"
+                                    disabled="(rowIndexDatosJuzActive !== -1) && (rowIndex !== rowIndexDatosJuzActive))">
+                                    <span><em class="pi pi-pencil red-color"></em></span>
+                                </a>
+                                <a *ngIf="editing"
+                                    pSaveEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnCheck"
+                                    title="btnCheck"
+                                    (click)="onRowEditSaveDj(rowIndex, datosinsc)"
+                                    [hidden]="((rowIndexDatosJuzActive !== -1) && (rowIndex !== rowIndexDatosJuzActive)) || !(datosinsc && datosinsc.folioMerc.length > 0)">
+                                    <span><em class="pi pi-check red-color"></em></span>
+                                </a>
+                                <a *ngIf="editing"
+                                    pCancelEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnSavefid"
+                                    title="Save"
+                                    (click)="onRowEditCancelDatosInsc(rowIndex, datosinsc)"
+                                    disabled="(rowIndexDatosJuzActive !== -1) && (rowIndex !== rowIndexDatosJuzActive)">
+                                    <span><em class="pi pi-times red-color"></em></span>
+                                </a>
+                                <a  *ngIf="!editing"
+                                    class="btn btn-default mr-3"
+                                    id="btnTrashfid"
+                                    title="trash"
+                                    (click)="eliminarDatosInsc(rowIndex)"
+                                    disabled="(rowIndexDatosJuzActive !== -1) && (rowIndex !== rowIndexDatosJuzActive)">
+                                    <span><em class="pi pi-trash red-color"></em></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No se encontraron registros.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Fedatario" class="t25" id="tabpandatosfedgob">
+        <div class="card">
+            <p-table #dt3
+                    editMode="row"
+                    responsiveLayout="scroll"
+                    dataKey="id"
+                    id="tabldatfedgob"
+                    [value]="datosfeds"
+                    [(selection)]="selecteddatosfeds" 
+                    [rowHover]="true"
+                    [showCurrentPageReport]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th scope="col" class="t18">
+                            <label for="num_escritura_fed">
+                                <p class="p-header">Póliza o No. escritura pública (*)</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropdocname"
+                                        name="num_escritura_fed"
+                                        id="num_escritura_fed"
+                                        optionValue="idArchivo"
+                                        optionLabel="poliza"
+                                        placeholder="Seleccionar"
+                                        [options]="documentosValue"
+                                        [(ngModel)]="num_escritura_fed"
+                                        (onChange)="getDataB( $event, 'num_escritura_fed' )">
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" class="t18">
+                            <label for="nombrefed">
+                                <p class="p-header">Nombre fedatario (*)</p>
+                            </label>
+                            <input  pInputText
+                                    type="text"
+                                    name="nombrefed"
+                                    id="nombrefed"
+                                    class="p-column-filter"
+                                    oninput="this.value=this.value.replace(/<|>/g,'')"
+                                    [maxlength]="400"
+                                    [(ngModel)]="nomFedatario"
+                                    (ngModelChange)="getDataC( nomFedatario, 'fedat' )">
+                        </th>
+                        <th scope="col" class="t18">
+                            <label for="numerofed">
+                                <p class="p-header">Número fedatario (*)</p>
+                            </label>
+                            <input  pInputText
+                                    type="text"
+                                    name="numerofed"
+                                    id="numerofed"
+                                    mode="decimal"
+                                    oninput="this.value=this.value.replace(/<|>/g,'')"
+                                    [maxlength]="50"
+                                    [(ngModel)]="numFedatario"
+                                    (ngModelChange)="getDataC( numFedatario, 'numfedat' )">
+                        </th>
+                        <th scope="col" class="t18">
+                            <label for="actos"><p class="p-header">Estado</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropinsar"
+                                        name="estadofe"
+                                        id="estadofe"
+                                        optionValue="idEntidadFed"
+                                        optionLabel="nombre"
+                                        placeholder="Seleccionar"
+                                        [options]="entidadesDatafe"
+                                        [(ngModel)]="entidadfe"
+                                        (onChange)="getDataC( $event, 'entidadfe' )">
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" class="t18">
+                            <label for="insercion"><p class="p-header">Municipio</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropinsar"
+                                        name="municipiofe"
+                                        id="municipiofe"
+                                        optionValue="idMunicipio"
+                                        optionLabel="nombre"
+                                        placeholder="Seleccionar"
+                                        [options]="municipiosDatafe"
+                                        [(ngModel)]="municipiofe"
+                                        (onChange)="getDataC( $event, 'municipiofe' )">
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" class="accionesth">
+                            <label for="acciones">
+                                <p class="p-header mb-1">Acciones</p>
+                            </label>
+                            <br />
+                            <button pButton
+                                    pRipple
+                                    icon="pi pi-plus"
+                                    class="p-button-rounded p-button-table-success"
+                                    (click)="guardarFedatario()"
+                                    [disabled]="!(nomFedatario && numFedatario && nomFedatario.length > 0 && numFedatario.length > 0 && this.datosfed.num_escritura_fed > 0)">
+                            </button>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body"
+                             let-datosfed
+                             let-editing="editing"
+                             let-rowIndex="rowIndex"
+                             id="tmpfedfid">
+                    <tr [pEditableRow]="datosfed">
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input  pInputText 
+                                            type="text"
+                                            disabled="true"
+                                            name="numescriturafedfid"
+                                            id="numescriturafedfid"
+                                            [(ngModel)]="datosfed.poliza">
+                                <label for="numescriturafedfid"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosfed.poliza }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input  pInputText
+                                            type="text"
+                                            name="nombrefedatfid"
+                                            id="nombrefedatfid"
+                                            class="p-column-filter"
+                                            required=true
+                                            oninput="this.value=this.value.replace(/<|>/g,'')"
+                                            [maxlength]="400"
+                                            [(ngModel)]="datosfed.nomFedatario">
+                                <label for="nombrefedatfid"></label>
+                                </ng-template>  
+                                <ng-template pTemplate="output">
+                                    {{ datosfed.nomFedatario }}
+                                </ng-template>    
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input  pInputText
+                                            type="text"
+                                            name="numerofedatfid"
+                                            id="numerofedatfid"
+                                            class="p-column-filter"
+                                            required=true
+                                            oninput="this.value=this.value.replace(/[^0-9.]|<|>/g,'')"
+                                            [maxlength]="50"
+                                            [(ngModel)]="datosfed.numFedatario">
+                                <label for="numerofedatfid"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosfed.numFedatario }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown *ngIf="isReady"
+                                                appendTo="body"
+                                                class="dropinsar"
+                                                name="estadofefid"
+                                                id="estadofefid"
+                                                optionValue="idEntidadFed"
+                                                optionLabel="nombre"
+                                                placeholder="{{datosfed.estadoNombre}}"
+                                                [options]="entidadesDatafe"
+                                                [(ngModel)]="datosfed.estadoNombre"
+                                                (onChange)="getDataC( $event, 'entidadfe' )">
+                                    </p-dropdown>
+                                    <label for="estadofefid"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosfed.estadoNombre }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown *ngIf="isReady"
+                                                appendTo="body"
+                                                class="dropinsar"
+                                                name="municipiofefid"
+                                                id="municipiofefid"
+                                                optionValue="idMunicipio"
+                                                optionLabel="nombre"
+                                                placeholder="Seleccionar"
+                                                [options]="municipiosDatafe"
+                                                [(ngModel)]="datosfed.municipioNombre"
+                                                (onChange)="getDataC( $event, 'municipiofe' )">
+                                    </p-dropdown>
+                                    <label for="municipiofefid"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosfed.municipioNombre }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <div class="row justify-content-center">
+                                <a *ngIf="!editing"
+                                    pInitEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnEditfid"
+                                    title="btnEditfid"
+                                    (click)="onRowEditFed(rowIndex, datosfed)"
+                                    disabled="(indexActiveEditFed !== -1) && (rowIndex !== indexActiveEditFed)">
+                                    <span><em class="pi pi-pencil red-color"></em></span>
+                                </a>
+                                <a *ngIf="editing"
+                                    pSaveEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnCheckfid"
+                                    title="btnCheckfid"
+                                    (click)="onRowEditSaveFed(rowIndex, datosfed)" 
+                                    [hidden]="(indexActiveEditFed !== -1) && (rowIndex !== indexActiveEditFed) || !(datosfed && datosfed.poliza.length > 0 && datosfed.nomFedatario.length > 0 && datosfed.numFedatario.length > 0)">
+                                    <span><em class="pi pi-check red-color"></em></span>
+                                </a>
+                                <a *ngIf="editing"
+                                    pCancelEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnSavefid"
+                                    title="Save"
+                                    (click)="onRowEditCancelFederatario(rowIndex, datosfed)"
+                                    disabled="(indexActiveEditFed !== -1) && (rowIndex !== indexActiveEditFed)">
+                                    <span><em class="pi pi-times red-color"></em></span>
+                                </a>
+                                <a  *ngIf="!editing"
+                                    class="btn btn-default mr-3"
+                                    id="btnTrashfid"
+                                    title="trash"
+                                    (click)="eliminarFedatario(rowIndex)"
+                                    disabled="(indexActiveEditFed !== -1) && (rowIndex !== indexActiveEditFed)">
+                                    <span><em class="pi pi-trash red-color"></em></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No se encontraron registros.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Apoderado" class="t25">
+        <div class="card">
+            <div class="row">
+                <div class="form-group col-md-6 offset-md-3 text-center">
+                    <label for="numpoliza">
+                        <p class="p-header mb-1">Póliza o No. escritura pública (*)</p>
+                    </label>
+                    <div class="form-group">
+                        <p-dropdown *ngIf="isReady"
+                                    appendTo="body"
+                                    name="numpoliza"
+                                    id="numpoliza"
+                                    optionValue="idArchivo"
+                                    optionLabel="poliza"
+                                    [options]="documentosValue"
+                                    [(ngModel)]="numpoliza"
+                                    (onChange)="getDataC( $event, 'numpoliza' )"
+                                    placeholder="Seleccionar">
+                        </p-dropdown>
+                        <small  class="p-error text-left"
+                                *ngIf="numpoliza === ''">Este campo es requerido.</small>
+                    </div>
+                    <label for="nombreap">
+                        <p class="p-header mb-1">Nombre o denominación social (*)</p>
+                    </label>
+                    <div class="form-group">
+                        <input  pInputText
+                                type="text"
+                                name="nombreap"
+                                id="nombreap"
+                                class="p-column-filter"
+                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                [maxlength]="80"
+                                [(ngModel)]="nombre"
+                                (ngModelChange)="getDataC( nombre, 'nombreapod' )">
+                        <small  class="p-error text-left"
+                                *ngIf="nombre === ''">Este campo es requerido.</small>
+                    </div>
+                    <label for="apepatap">
+                        <p class="p-header mb-1">Apellido paterno</p>
+                    </label>
+                    <div class="form-group">
+                        <input  pInputText
+                                type="text"
+                                nombre="apepatap"
+                                id="apepatap"
+                                class="p-column-filter"
+                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                [maxlength]="80"
+                                [(ngModel)]="apPaterno"
+                                (ngModelChange)="getDataC( apPaterno, 'apepatapod' )">
+                    </div>
+                    <label for="apematap">
+                        <p class="p-header mb-1">Apellido materno</p>
+                    </label>
+                    <div class="form-group">
+                        <input  pInputText
+                                type="text"
+                                nombre="apematap"
+                                id="apematap"
+                                class="p-column-filter"
+                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                [maxlength]="80"
+                                [(ngModel)]="apMaterno"
+                                (ngModelChange)="getDataC( apMaterno, 'apematapod' )">
+                    </div>
+                    <label for="rfc"><p class="p-header mb-1">RFC</p></label>
+                    <div class="form-group">
+                        <input pInputText
+                               type="text"
+                               nombre="rfc"
+                               id="rfc"
+                               class="p-column-filter"
+                               oninput="this.value=this.value.replace(/<|>/g,'')"
+                               [(ngModel)]="rfc"
+                               [maxlength]="13"
+                               (ngModelChange)="getDataD( rfc, 'datarfc' )">
+                    </div>
+                    <label for="cargosoc">
+                        <p class="p-header mb-1">Cargo en el fideicomiso</p>
+                    </label>
+                    <div class="form-group">
+                        <input pInputText
+                               type="text"
+                               nombre="cargosoc"
+                               id="cargosoc"
+                               class="p-column-filter"
+                               oninput="this.value=this.value.replace(/<|>/g,'')"
+                               [maxlength]="80"
+                               [(ngModel)]="cargoSociedad"
+                               (ngModelChange)="getDataD( cargoSociedad, 'cargosoc' )">
+                    </div>
+                    <label for="accionesap">
+                        <p class="p-header mb-1">Facultades</p>
+                    </label>
+                    <div class="p-inputgroup">
+                        <input pInputText
+                               type="text" 
+                               class="p-column-filter" 
+                               id="accionesap" 
+                               [(ngModel)]="selectedfacultades" disabled>
+                        <button pButton
+                                pRipple
+                                type="button"
+                                icon="pi pi-align-justify"
+                                class="p-button-danger"
+                                (click)="displayMInter()">
+                        </button>
+                    </div>
+                    <label for="consleg">
+                        <p class="p-header mb-1">Consideraciones legales</p>
+                    </label>
+                    <div class="form-group">
+                        <input  pInputText
+                                type="text"
+                                nombre="consleg"
+                                id="consleg"
+                                class="p-column-filter"
+                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                [(ngModel)]="considLegal"
+                                [maxlength]="2000"
+                                (ngModelChange)="getDataD( considLegal, 'consigleg' )">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 text-right" id="btngapodpf">
+                <button pButton
+                        pRipple
+                        class="btn btn-file custom-button-gral"
+                        *ngIf="editRepresentativeActive"
+                        (click)="cancelUpdateFacultyItem()">Cancelar</button>
+                <button pButton
+                        pRipple
+                        class="btn btn-file custom-button-gral ml-3"
+                        [disabled]="!(nombre && nombre!.length > 0 && this.apoderado.numpoliza > 0)"
+                        (click)="editRepresentativeActive ? updateFacultyItem() : guardarApoderado()">{{ editRepresentativeActive ? 'Actualizar' : 'Agregar'}}</button>
+            </div>
+            <p-table    [value]="apoderados" 
+                        dataKey="idAux"
+                        [rowHover]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th scope="col" class="t5" id="thfidapod_1"></th>
+                        <th scope="col" id="thfidapod_1">Nombre</th>
+                        <th scope="col" id="thfidapod_1">N&uacute;mero</th>
+                        <th scope="col" id="thfidapod_1">RFC</th>
+                        <th scope="col" id="thfidapod_1">Cargo</th>
+                        <th scope="col" id="thfidapod_1">Consideraciones legales</th>
+                        <th scope="col" id="thfidapod_1">
+                            <div class="row justify-content-center">
+                                Acciones
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-apoderado let-expanded="expanded" let-rowIndex="rowIndex">
+                    <tr>
+                        <td>
+                            <button type="button"
+                                    id="btnapodpfidown"
+                                    pButton 
+                                    pRipple 
+                                    [pRowToggler]="apoderado" 
+                                    class="p-button-text p-button-rounded p-button-plain" 
+                                    [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'">
+                            </button>
+                        </td>
+                        <td>{{ apoderado.nombreCompleto }}</td>
+                        <td>{{ apoderado.poliza }}</td>
+                        <td>{{ apoderado.rfc }}</td>
+                        <td>{{ apoderado.cargoSociedad }}</td>
+                        <td>{{ apoderado.considLegal }}</td>
+                        <td class="actionsw">
+                            <div class="row justify-content-center align-items-center" id="btnsfid">
+                                <button pButton
+                                        id="btnapodeditfid"
+                                        pRipple 
+                                        icon="pi pi-pencil" 
+                                        [disabled]="(rowIndexActive !== -1) && (rowIndex !== rowIndexActive)"
+                                        class="p-button-rounded p-button-table-primary"
+                                        (click)="editFaculty(rowIndex)"
+                                        pTooltip="Editar" 
+                                        tooltipPosition="bottom"></button>
+                                <button pButton
+                                        id="btnapoddelfid"
+                                        pRipple 
+                                        icon="pi pi-trash"
+                                        [disabled]="((rowIndexActive !== -1) && (rowIndex !== rowIndexActive) || (rowIndex === rowIndexActive))"                                        
+                                        class="p-button-rounded p-button-table-success ml-2" 
+                                        (click)="deleteFaculty(rowIndex)"
+                                        pTooltip="Eliminar" 
+                                        tooltipPosition="bottom">
+                                </button>
+                                <button pButton 
+                                        pRipple 
+                                        id="btncopyapodfid"
+                                        icon="pi pi-copy" 
+                                        [disabled]="((rowIndexActive !== -1) && (rowIndex !== rowIndexActive) || (rowIndex === rowIndexActive))"                                        
+                                        class="p-button-rounded p-button-table-secondary ml-2" 
+                                        (click)="duplicateItemRepresentative(rowIndex)"
+                                        pTooltip="Duplicar" 
+                                        tooltipPosition="bottom">
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template id="tmpapodpf_02" 
+                             pTemplate="rowexpansion"
+                             let-apoderado>
+                    <tr>
+                        <td colspan="7">
+                            <div class="p-3 w-full">
+                                <p-table [value]="apoderado.facultades" dataKey="tipo">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th scope="col" id="thpfapod_2" >Facultades</th>
+                                            <th scope="col" id="thpfapod_2" >Tipo de ejercicio</th>
+                                            <th scope="col" id="thpfapod_2" >Vigencia</th>
+                                            <th scope="col" id="thpfapod_2" >Limitantes</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template id="tmpfidfac" pTemplate="body" let-faculty>
+                                        <tr>
+                                            <td>{{faculty.tipo}}</td>
+                                            <td>{{ getExeType(faculty.tipoEj) }}</td>
+                                            <td>{{ checkIsEmpty(faculty.vig) }}</td>
+                                            <td>{{ checkIsEmpty(faculty.limit) }}</td>
+                                            
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template id="tmpfacfidm" pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="4">Sin facultades registradas</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Intervinientes" class="t25" id="panelben">
+        <div class="card">
+            <div class="row">
+                <div class="form-group col-md-6 offset-md-3 text-center">
+                    <label for="numpolizab">
+                        <p class="p-header mb-1">Póliza o No. escritura pública (*):</p>
+                    </label>
+                    <div class="form-group">
+                        <p-dropdown *ngIf="isReady"
+                                    appendTo="body"
+                                    name="numpolizab"
+                                    id="numpolizab"
+                                    optionValue="idArchivo"
+                                    optionLabel="poliza"
+                                    [options]="documentosValue"
+                                    [(ngModel)]="numpolizab"
+                                    (onChange)="getDataE( $event, 'numpolizab' )"
+                                    placeholder="Seleccionar">
+                        </p-dropdown>
+                        <small  class="p-error text-left"
+                                *ngIf="numpolizab === ''">Este campo es requerido.</small>
+                    </div>
+                    <label for="nombreap">
+                        <p class="p-header mb-1">Nombre o denominación social (*)</p>
+                    </label>
+                    <div class="form-group">
+                        <input  pInputText
+                                type="text"
+                                name="nombreap"
+                                id="nombreap"
+                                class="p-column-filter"
+                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                [(ngModel)]="nombreb"
+                                [maxlength]="80"
+                                (ngModelChange)="getDataE( nombreb, 'nombrebenb' )">
+                        <small  class="p-error text-left"
+                                *ngIf="nombreb === ''">Este campo es requerido.</small>
+                    </div>
+                    <label for="apepatap">
+                        <p class="p-header mb-1">Apellido paterno</p>
+                    </label>
+                    <div class="form-group">
+                        <input  pInputText
+                                type="text"
+                                nombre="apepatap"
+                                id="apepatap"
+                                class="p-column-filter"
+                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                [(ngModel)]="apepatapb"
+                                [maxlength]="80"
+                                (ngModelChange)="getDataE( apepatapb, 'apepatbenb' )">
+                    </div>
+                    <label for="apematap">
+                        <p class="p-header mb-1">Apellido materno</p>
+                    </label>
+                    <div class="form-group">
+                        <input  pInputText
+                                type="text"
+                                nombre="apematap"
+                                id="apematap"
+                                class="p-column-filter"
+                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                [maxlength]="80"
+                                [(ngModel)]="apematapb"
+                                (ngModelChange)="getDataE( apematapb, 'apematabenb' )">
+                    </div>
+                    <label for="rfc">
+                        <p class="p-header mb-1">RFC</p>
+                    </label>
+                    <div class="form-group">
+                        <input  pInputText
+                                type="text"
+                                nombre="rfc"
+                                id="rfc"
+                                class="p-column-filter"
+                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                [(ngModel)]="rfcb"
+                                [maxlength]="13"
+                                (ngModelChange)="getDataE( rfcb, 'datarfcb' )">
+                    </div>
+                    <label for="cargofid">
+                        <p class="p-header mb-1">Partes del fideicomiso (*)</p>
+                    </label>
+                    <div class="form-group">
+                        <input  pInputText
+                                type="text"
+                                nombre="cargofid"
+                                id="cargofid"
+                                class="p-column-filter"
+                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                [maxlength]="80"
+                                [(ngModel)]="cargoFideicomiso"
+                                (ngModelChange)="getDataE( cargoFideicomiso, 'cargofid' )">
+                        <small  class="p-error text-left"
+                                *ngIf="cargoFideicomiso === ''">Este campo es requerido.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 text-right">
+                <button pButton
+                        pRipple
+                        class="btn btn-file custom-button-gral"
+                        *ngIf="editIntervinienteActive"
+                        (click)="cancelUpdateIntervinienteItem()">Cancelar
+                </button>
+                <button pButton
+                        pRipple
+                        class="btn btn-file custom-button-gral ml-3"
+                        [disabled]="!(nombreb && nombreb!.length > 0)"
+                        (click)="editIntervinienteActive ? updateIntervinienteItem() : guardarInterviniente()">{{ editIntervinienteActive ? 'Actualizar' : 'Agregar'}}
+                </button>
+            </div>
+                <p-table #dt4
+                        dataKey="id"
+                        id="tabbenef"
+                        rowGroupMode="subheader"
+                        groupRowsBy="nombreCompletob"
+                        sortField="nombreCompleto"
+                        sortMode="asc"
+                        [value]="intervinientes"
+                        [scrollable]="true"
+                        [globalFilterFields]="['nombreCompletob']"
+                        [(selection)]="selectedintervinientes" 
+                        [rowHover]="true">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th scope="col" id="benfid">Póliza o No. escritura pública</th>
+                            <th scope="col" id="benfid">RFC</th>
+                            <th scope="col" id="benfid">Cargo fideicomiso</th>
+                            <th scope="col" id="benfid">Acciones</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="groupheader"
+                                 let-interviniente
+                                 id="tmpgfid">
+                        <tr pRowGroupHeader>
+                            <td colspan="7">
+                                {{ interviniente.nombreCompletob }}
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-interviniente let-rowIndex="rowIndex" id="tmpinterfid">
+                        <tr >
+                            <td id="tdapofid">
+                                {{ interviniente.poliza }}
+                            </td>
+                            <td id="tdapofid">
+                                {{ interviniente.rfc }}
+                            </td>
+                            <td id="tdapofid">
+                                {{ interviniente.cargoFide }}
+                            </td>
+                            <td id="tdapofid">
+                                <button pButton 
+                                        pRipple
+                                        id="btnapodedit"
+                                        icon="pi pi-pencil" 
+                                        [disabled]="(rowIndexIntervinienteActive !== -1) && (rowIndex !== rowIndexIntervinienteActive)"
+                                        class="p-button-rounded p-button-table-primary"
+                                        (click)="editInterviniente(rowIndex)"
+                                        pTooltip="Editar" 
+                                        tooltipPosition="bottom"></button>
+                                <button pButton
+                                        pRipple
+                                        icon="pi pi-trash"
+                                        id="btnapodtrash"
+                                        [disabled]="((rowIndexIntervinienteActive !== -1) && (rowIndex !== rowIndexIntervinienteActive) || (rowIndex === rowIndexIntervinienteActive))"                                        
+                                        class="p-button-rounded p-button-table-success ml-2" 
+                                        (click)="deleteInterviniente(rowIndex)"
+                                        pTooltip="Eliminar" 
+                                        tooltipPosition="bottom">
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="7">No se encontraron registros.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+        </div>
+    </p-tabPanel>
+    <p-dialog class="t150" id="dialmodfid" header="Header" [(visible)]="displayModalInter" [modal]="true"
+              [draggable]="false" [resizable]="false" [closable]="false" >
+        <ng-template pTemplate="header">
+            <p></p>
+        </ng-template>
+        <ng-template pTemplate="body" id="tmpfacfid">
+            <div class="card" id="tmpfacfid-1">
+                <table class="p-datatable-gobinst" id="tabModob" rows="10" aria-describedby="Facultades">
+                    <tr>
+                        <th scope="col" class="t25" id="thmodobfid">
+                            <label for="nombrefac"><p class="p-header">Facultades</p>
+                            </label>
+                        </th>
+                        <th scope="col" class="t25" id="thmodobfid">
+                            <label for="nombrete"><p class="p-header">Tipo de ejercicio</p>
+                            </label>
+                        </th>
+                        <th scope="col" class="t25" id="thmodobfid">
+                            <label for="nombrelim"><p class="p-header">Limitantes</p>
+                            </label>
+                        </th>
+                        <th scope="col" class="t25" id="thmodobfid">
+                            <label for="nombrevig"><p class="p-header">Vigencia</p>
+                            </label>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left" id="checkfacfid" >
+                                <label class="font-weight-label" for="optionsRadios1">
+                                    <input #checkboxes [(ngModel)]="domainActsCheck" type="checkbox" id="optionRadio1" name="actosdom" id="optionRadio1" value="1">
+                                    <span class="ml-2">Actos de dominio</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="ejercicioad-1">
+                                <div class="col-md-6 mb-3">
+                                    <p-dropdown *ngIf="isReady" appendTo="body" [ngClass]="{'is-required' : checkIsRequired(domainActsCheck,domainActsExeType)}" name="ejercicioad" id="ejercicioad" optionValue="id" [options]="tipoejercicio" [(ngModel)]="domainActsExeType" optionLabel="nombre" placeholder="Seleccionar"></p-dropdown>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="checkfaclegfid">
+                                <div class="col-md-12 mb-3">
+                                    <label for="domainActsLimit"></label>
+                                    <textarea pInputText type="text" class="p-column-filter" id="domainActsLimit" oninput="this.value=this.value.replace(/<|>/g,'')" [maxlength]=8000 [(ngModel)]="domainActsLimit"></textarea>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-6 mb-3">
+                                    <app-ng-calendar class="ml-0 mr-0 tablecalendarc" ngDefaultControl inputId="dateactdom" locale="es" formatDate="dd-mm-yy" [selectDate]="domainActsValidity" (OutDate)="getDataS( $event, 'dateactdom' )" placeholder={{facultad.dateactdom}}></app-ng-calendar>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left" id="checkfacfid">
+                                <label class="font-weight-label" for="optionsRadios2">
+                                    <input #checkboxes [(ngModel)]="adminActsCheck" type="checkbox" id="optionRadio2" name="actosadmin" id="optionRadio2" value="2">
+                                    <span class="ml-2">Actos de administración</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="ejercicioaa-1">
+                                <div class="col-md-6 mb-3">
+                                    <p-dropdown *ngIf="isReady" appendTo="body" [ngClass]="{'is-required' : checkIsRequired(adminActsCheck,adminActsExeType)}" name="ejercicioaa" id="ejercicioaa" optionValue="id" [options]="tipoejercicio" [(ngModel)]="adminActsExeType" optionLabel="nombre" placeholder="Seleccionar"></p-dropdown>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="checkfaclegfid">
+                                <div class="col-md-12 mb-3">
+                                    <label for="adminActsLimit"></label>
+                                    <textarea pInputText type="text" class="p-column-filter" id="adminActsLimit" oninput="this.value=this.value.replace(/<|>/g,'')" [maxlength]=8000 [(ngModel)]="adminActsLimit"></textarea>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-6 mb-3">
+                                    <app-ng-calendar class="ml-0 mr-0 tablecalendarc" ngDefaultControl inputId="dateactadm" locale="es" formatDate="dd-mm-yy" [selectDate]="adminActsValidity" (OutDate)="getDataS( $event, 'dateactadm' )" placeholder={{facultad.dateactadm}}></app-ng-calendar>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left" id="checkfacfid">
+                                <label class="font-weight-label" for="optionsRadios3">
+                                    <input #checkboxes [(ngModel)]="collectionCheck" type="checkbox" id="optionRadio3" name="pleitcob" id="optionRadio3" value="3">
+                                    <span class="ml-2">Pleitos y cobranzas</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="ejerciciopc-1">
+                                <div class="col-md-6 mb-3">
+                                    <p-dropdown *ngIf="isReady" appendTo="body" [ngClass]="{'is-required' : checkIsRequired(collectionCheck,collectionExeType)}" name="ejerciciopc" id="ejerciciopc" optionValue="id" [options]="tipoejercicio" [(ngModel)]="collectionExeType" optionLabel="nombre" placeholder="Seleccionar"></p-dropdown>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="checkfaclegfid">
+                                <div class="col-md-12 mb-3">
+                                    <label for="collectionLimit"></label>
+                                    <textarea pInputText type="text" class="p-column-filter" id="collectionLimit" oninput="this.value=this.value.replace(/<|>/g,'')" [maxlength]=8000 [(ngModel)]="collectionLimit"></textarea>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-6 mb-3">
+                                    <app-ng-calendar class="ml-0 mr-0 tablecalendarc" ngDefaultControl inputId="datepleicob" locale="es" formatDate="dd-mm-yy" [selectDate]="collectionValidity" (OutDate)="getDataS( $event, 'datepleicob' )" placeholder={{facultad.datepleicob}}></app-ng-calendar>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left" id="checkfacfid">
+                                <label class="font-weight-label" for="optionsRadios4">
+                                    <input #checkboxes [(ngModel)]="creditsTitlesCheck" type="checkbox" id="optionRadio4" name="otorgartitul" id="optionRadio4" value="4">
+                                    <span class="ml-2">Otorgar y suscribir titulos de créditos</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="ejercicioos-1">
+                                <div class="col-md-6 mb-3">
+                                    <p-dropdown *ngIf="isReady" appendTo="body" [ngClass]="{'is-required' : checkIsRequired(creditsTitlesCheck,creditsTitlesExeType)}" name="ejercicioos" id="ejercicioos" optionValue="id" [options]="tipoejercicio" [(ngModel)]="creditsTitlesExeType" optionLabel="nombre" placeholder="Seleccionar"></p-dropdown>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="checkfaclegfid">
+                                <div class="col-md-12 mb-3">
+                                    <label for="creditsTitlesLimit"></label>
+                                    <textarea pInputText type="text" class="p-column-filter" id="creditsTitlesLimit" oninput="this.value=this.value.replace(/<|>/g,'')" [maxlength]=8000 [(ngModel)]="creditsTitlesLimit"></textarea>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-6 mb-3">
+                                    <app-ng-calendar class="ml-0 mr-0 tablecalendarc" ngDefaultControl inputId="dateotorgtitul" locale="es" formatDate="dd-mm-yy" [selectDate]="creditsTitlesValidity" (OutDate)="getDataS( $event, 'dateotorgtitul' )" placeholder={{facultad.dateotorgtitul}}></app-ng-calendar>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left" id="checkfacfid">
+                                <label class="font-weight-label" for="optionsRadios5">
+                                    <input #checkboxes [(ngModel)]="substitutionCheck" type="checkbox" id="optionRadio5" name="otrevdelsus" id="optionRadio5" value="5">
+                                    <span class="ml-2">Otorgamiento, revocación, delegación y sustitución</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="ejercicioor-1">
+                                <div class="col-md-6 mb-3">
+                                    <p-dropdown *ngIf="isReady" appendTo="body" [ngClass]="{'is-required' : checkIsRequired(substitutionCheck,substitutionExeType)}" name="ejercicioor" id="ejercicioor" optionValue="id" [options]="tipoejercicio" [(ngModel)]="substitutionExeType" optionLabel="nombre" placeholder="Seleccionar"></p-dropdown>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="checkfaclegfid">
+                                <div class="col-md-12 mb-3">
+                                    <label for="substitutionLimit"></label>
+                                    <textarea pInputText type="text" class="p-column-filter" id="substitutionLimit" oninput="this.value=this.value.replace(/<|>/g,'')" [maxlength]=8000 [(ngModel)]="substitutionLimit"></textarea>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-6 mb-3">
+                                    <app-ng-calendar class="ml-0 mr-0 tablecalendarc" ngDefaultControl inputId="dateotredesu" locale="es" formatDate="dd-mm-yy" [selectDate]="substitutionValidity" (OutDate)="getDataS( $event, 'dateotredesu' )" placeholder={{facultad.dateotredesu}}></app-ng-calendar>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left" id="checkfacfid">
+                                <label class="font-weight-label" for="optionsRadios6">
+                                    <input #checkboxes [(ngModel)]="specialMightCheck" type="checkbox" id="optionRadio6" name="podesp" id="optionRadio6" value="6">
+                                    <span class="ml-2">Poderes especiales</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="ejerciciope-1">
+                                <div class="col-md-6 mb-3">
+                                    <p-dropdown *ngIf="isReady" appendTo="body" [ngClass]="{'is-required' : checkIsRequired(specialMightCheck,specialMightExeType)}" name="ejerciciope" id="ejerciciope" optionValue="id" [options]="tipoejercicio" [(ngModel)]="specialMightExeType" optionLabel="nombre" placeholder="Seleccionar"></p-dropdown>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="checkfaclegfid">
+                                <div class="col-md-12 mb-3">
+                                    <label for="specialMightLimit"></label>
+                                    <textarea pInputText type="text" class="p-column-filter" id="specialMightLimit" oninput="this.value=this.value.replace(/<|>/g,'')" [maxlength]=8000 [(ngModel)]="specialMightLimit"></textarea>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-6 mb-3">
+                                    <app-ng-calendar class="ml-0 mr-0 tablecalendarc" ngDefaultControl inputId="datepodesp" locale="es" formatDate="dd-mm-yy" [selectDate]="specialMightValidity" (OutDate)="getDataS( $event, 'datepodesp' )" placeholder={{facultad.datepodesp}}></app-ng-calendar>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <button class="p-button-rounded p-button-danger mr-3" type="submit" id="EnviaBtn" (click)="closeInterModal()"> Agregar facultades </button>
+        </ng-template>
+
+        <ng-template pTemplate="footer" id="tmpfootmodal">
+            <p-button (click)="closeInterModal()" label="Cerrar" class="btn modal-button-gral"></p-button>
+        </ng-template>
+    </p-dialog>
+
+    <p-dialog class="t150" id="dialmodinterfid" header="Header" [(visible)]="displayModalBenef" [modal]="true"
+    [draggable]="false" [resizable]="false" [closable]="false" >
+        <ng-template pTemplate="header">
+            <p></p>
+        </ng-template>
+        <ng-template pTemplate="body" id="tmpfacfidinter">
+            <div class="card" id="tmpfacfid-1">
+                <table class="p-datatable-gobinst" id="tabModob" rows="10" aria-describedby="Facultades">
+                    <tr>
+                        <th scope="col" class="t25" id="thmodobfid">
+                            <label for="nombrefac"><p class="p-header">Fines</p>
+                            </label>
+                        </th>
+                        <th scope="col" class="t25" id="thmodobfid">
+                            <label for="nombrete"><p class="p-header">Vulnerable</p>
+                            </label>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="activGuber" id="optionsRadios1" name="actasdedom" id="actasdedom" value="1">
+                                    <span class="ml-2">Actividad gubernamental</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="ageAdu" id="optionsRadios1" name="actasdeadm" id="actasdeadm" value="2">
+                                    <span class="ml-2">Agente aduanal</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="agriGanPes" id="optionsRadios1" name="pleicob" id="pleicob" value="3">
+                                    <span class="ml-2">Agricultura/ Ganadería/ Pesca</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="aliAbarBeb" id="optionsRadios1" name="otorcre" id="otorcre" value="4">
+                                    <span class="ml-2">Alimentos/ Abarrotes/ Bebidas no alcohólicas</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="armFueAcc" id="optionsRadios1" name="otredesu" id="otredesu" value="5">
+                                    <span class="ml-2">Armas de fuego y accesorios</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="arrenMuebInm" id="optionsRadios1" name="podesp" id="podesp" value="6">
+                                    <span class="ml-2">Arrendamiento muebles/ Inmuebles</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="artOficFoto" id="optionsRadios1" name="podesp" id="podesp" value="7">
+                                    <span class="ml-2">Art de oficina/ Fotografía/ Deporte</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="barCantCenNoc" id="optionsRadios1" name="podesp" id="podesp" value="8">
+                                    <span class="ml-2">Bares/ Cantinas/ y Centros nocturnos</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="bcaMultDesFom" id="optionsRadios1" name="podesp" id="podesp" value="9">
+                                    <span class="ml-2">Bca múltiple/ Bca desarrollo/ Fomento</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="casaBolsa" id="optionsRadios1" name="podesp" id="podesp" value="10">
+                                    <span class="ml-2">Casas de bolsa</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="cenCambCasCamb" id="optionsRadios1" name="podesp" id="podesp" value="11">
+                                    <span class="ml-2">Centro cambiarios/ Casas de cambio</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="cineRadTvMed" id="optionsRadios1" name="podesp" id="podesp" value="12">
+                                    <span class="ml-2">Cine, radio, TV y medios impresos</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="comTextiles" id="optionsRadios1" name="podesp" id="podesp" value="13">
+                                    <span class="ml-2">Comercialización de textiles</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="comerGeneral" id="optionsRadios1" name="podesp" id="podesp" value="14">
+                                    <span class="ml-2">Comercializadora en general</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="comerBebAlcTab" id="optionsRadios1" name="podesp" id="podesp" value="15">
+                                    <span class="ml-2">Comercio bebidas alcohólicas y tabaco</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="compVentInm" id="optionsRadios1" name="podesp" id="podesp" value="16">
+                                    <span class="ml-2">Compra venta de inmuebles</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="compVentAnt" id="optionsRadios1" name="podesp" id="podesp" value="17">
+                                    <span class="ml-2">Compra venta de antigüedades y arte</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="maquinaria" id="optionsRadios1" name="maquinaria" id="maquinaria" value="18">
+                                    <span class="ml-2">Maquinaria</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="empsectpub" id="optionsRadios1" name="empsectpub" id="empsectpub" value="19">
+                                    <span class="ml-2">Empleado del sector privado</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="matdesh" id="optionsRadios1" name="matdesh" id="matdesh" value="20">
+                                    <span class="ml-2">Materiales de desecho/ Chatarrero</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="estudiante" id="optionsRadios1" name="estudiante" id="estudiante" value="21">
+                                    <span class="ml-2">Estudiante</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="minmetind" id="optionsRadios1" name="minmetind" id="minmetind" value="22">
+                                    <span class="ml-2">Minería/ Metalúrgica/ Industrial química</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="casaemp" id="optionsRadios1" name="casaemp" id="casaemp" value="23">
+                                    <span class="ml-2">Montepío/ Casa de empeño</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="notpublic" id="optionsRadios1" name="notpublic" id="notpublic" value="24">
+                                    <span class="ml-2">Notario público/ Corredores</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="orgcivic" id="optionsRadios1" name="orgcivic" id="orgcivic" value="25">
+                                    <span class="ml-2">Org. cívicas/ Sin fines de lucro/ Religiosas</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="jubilado" id="optionsRadios1" name="jubilado" id="jubilado" value="26">
+                                    <span class="ml-2">Jubilado/ Pensionado</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="oroplat" id="optionsRadios1" name="oroplat" id="oroplat" value="27">
+                                    <span class="ml-2">Oro/ Plata/ Joyas/ Piedras preciosas/ Relojes</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="papmad" id="optionsRadios1" name="papmad" id="papmad" value="28">
+                                    <span class="ml-2">Papel, madera</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="petroleodev" id="optionsRadios1" name="petroleodev" id="petroleodev" value="29">
+                                    <span class="ml-2">Petróleo, derivados, gas, energía</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="piramides" id="optionsRadios1" name="piramides" id="piramides" value="30">
+                                    <span class="ml-2">Pirámides</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="prendas" id="optionsRadios1" name="prendas" id="prendas" value="31">
+                                    <span class="ml-2">Prendas de vestir</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="prestamista" id="optionsRadios1" name="prestamista" id="prestamista" value="32">
+                                    <span class="ml-2">Prestamista</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="refaccaut" id="optionsRadios1" name="refaccaut" id="refaccaut" value="33">
+                                    <span class="ml-2">Refacciones y accesorios automotrices</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="segfuanz" id="optionsRadios1" name="segfuanz" id="segfuanz" value="34">
+                                    <span class="ml-2">Seguros y fianzas</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="constinfra" id="optionsRadios1" name="constinfra" id="constinfra" value="35">
+                                    <span class="ml-2">Construct infraestructura (Obra civil)</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="constinmu" id="optionsRadios1" name="constinmu" id="constinmu" value="36">
+                                    <span class="ml-2">Constructora de inmuebles</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="correspcambiar" id="optionsRadios1" name="correspcambiar" id="correspcambiar" value="37">
+                                    <span class="ml-2">Corresp. cambiario/ Corresp bancario</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="hotelrest" id="optionsRadios1" name="hotelrest" id="hotelrest" value="38">
+                                    <span class="ml-2">Hoteles y restaurantes</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="energsum" id="optionsRadios1" name="otredesu" id="otredesu" value="39">
+                                    <span class="ml-2">Energía eléctrica/ Suministro de energía</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="efinmexico" id="optionsRadios1" name="efinmexico" id="efinmexico" value="40">
+                                    <span class="ml-2">ENT. FIN. sin presencia en méxico</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="entahorrcred" id="optionsRadios1" name="entahorrcred" id="entahorrcred" value="41">
+                                    <span class="ml-2">Entidades de ahorro y crédito popular</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="entprestaho" id="optionsRadios1" name="entprestaho" id="entprestaho" value="42">
+                                    <span class="ml-2">Entidades préstamo/ Caja de ahorro</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="explosivos" id="optionsRadios1" name="explosivos" id="explosivos" value="43">
+                                    <span class="ml-2">Explosivos/Dinamita</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="cobreuranio" id="optionsRadios1" name="cobreuranio" id="cobreuranio" value="44">
+                                    <span class="ml-2">Extrac/Comer, cobre, uranio, urea, hierro</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="fabtextiles" id="optionsRadios1" name="fabtextiles" id="fabtextiles" value="45">
+                                    <span class="ml-2">Fabricación de textiles</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="fideicomiso" id="optionsRadios1" name="fideicomiso" id="fideicomiso" value="46">
+                                    <span class="ml-2">Fideicomisos</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="gpomercanpol" id="optionsRadios1" name="gpomercanpol" id="gpomercanpol" value="47">
+                                    <span class="ml-2">Grupo Mmercan. prof. político y laboral</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="desempleado" id="optionsRadios1" name="desempleado" id="desempleado" value="48">
+                                    <span class="ml-2">Desempleado</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="juegosbet" id="optionsRadios1" name="juegosbet" id="juegosbet" value="49">
+                                    <span class="ml-2">Juegos y apuestas/ Hipódromo</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="jugelectro" id="optionsRadios1" name="jugelectro" id="jugelectro" value="50">
+                                    <span class="ml-2">Juguetes/electrodomésticos/ Art para el hogar</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="servacult" id="optionsRadios1" name="servacult" id="servacult" value="51">
+                                    <span class="ml-2">Serv. artísticos, culturales, deportivos</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="servproftec" id="optionsRadios1" name="servproftec" id="servproftec" value="1">
+                                    <span class="ml-2">Serv. profesionales técnicos y científicos</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="servblindseg" id="optionsRadios1" name="servblindseg" id="servblindseg" value="2">
+                                    <span class="ml-2">Serv, de blindaje o seguridad</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="servconsaseso" id="optionsRadios1" name="servconsaseso" id="servconsaseso" value="3">
+                                    <span class="ml-2">Serv de consultoría y asesoría</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="servmenspaq" id="optionsRadios1" name="servmenspaq" id="servmenspaq" value="4">
+                                    <span class="ml-2">Serv. de mensajería y paquetería</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="servmedsanit" id="optionsRadios1" name="servmedsanit" id="servmedsanit" value="5">
+                                    <span class="ml-2">Serv. de salud médicos y sanitarios</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="servtelecom" id="optionsRadios1" name="servtelecom" id="servtelecom" value="6">
+                                    <span class="ml-2">Servicios de telecomunicaciones</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="servtranspo" id="optionsRadios1" name="servtranspo" id="servtranspo" value="7">
+                                    <span class="ml-2">Servicios de transporte</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="serveducat" id="optionsRadios1" name="serveducat" id="serveducat" value="8">
+                                    <span class="ml-2">Servicios educativos</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="quehacerhog" id="optionsRadios1" name="quehacerhog" id="quehacerhog" value="9">
+                                    <span class="ml-2">Quehaceres del hogar/ Ama de casa</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="servlegal" id="optionsRadios1" name="servlegal" id="servlegal" value="10">
+                                    <span class="ml-2">Servicios legales</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="socfinanmult" id="optionsRadios1" name="socfinanmult" id="socfinanmult" value="11">
+                                    <span class="ml-2">Soc. finan de objeto múltiple no regulada</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="socinver" id="optionsRadios1" name="socinver" id="socinver" value="12">
+                                    <span class="ml-2">Sociedades de inversión</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="tdctarjetapago" id="optionsRadios1" name="tdctarjetapago" id="tdctarjetapago" value="13">
+                                    <span class="ml-2">TDC/ Tarjeta pre-pago/ Instr de pago cheque de viajero</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="trdinerofond" id="optionsRadios1" name="trdinerofond" id="trdinerofond" value="14">
+                                    <span class="ml-2">Transmisor de dinero o disp. de fondos</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="transladoval" id="optionsRadios1" name="transladoval" id="transladoval" value="15">
+                                    <span class="ml-2">Traslado o custodia de valores</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="distvehiculos" id="optionsRadios1" name="distvehiculos" id="distvehiculos" value="16">
+                                    <span class="ml-2">Venta y distribución de vehículos automotrices</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    SI
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="fabalfareria" id="optionsRadios1" name="fabalfareria" id="fabalfareria" value="17">
+                                    <span class="ml-2">Fabricación y comer de alfarería, porcelana, loza</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="srvcuidpers" id="optionsRadios1" name="srvcuidpers" id="srvcuidpers" value="17">
+                                    <span class="ml-2">Serv. de cuidado personal, estéticas</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left">
+                                <label class="font-weight-label mt-7" for="optionsRadios1">
+                                    <input #checkboxes type="checkbox" [(ngModel)]="tlapferrete" id="optionsRadios1" name="tlapferrete" id="tlapferrete" value="17">
+                                    <span class="ml-2">Tlapalerías/ Ferreterías/ y derivados</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p>
+                                    NO
+                                </p>
+                            </div> 
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <button class="p-button-rounded p-button-danger mr-3" type="submit" (click)="saveLegislativePowers()"> Agregar fines del fideicomiso </button>
+            <ng-template pTemplate="footer" id="tmpfootmodalfid-1">
+                <p-button (click)="closeBenefModal()" label="Cerrar" class="btn modal-button-gral"></p-button>
+            </ng-template>
+        </ng-template>
+
+        <ng-template pTemplate="footer" id="tmpfootmodalfid-2">
+            <p-button (click)="closeBenefModal()" label="Cerrar" class="btn modal-button-gral"></p-button>
+        </ng-template>
+    </p-dialog>
+
+    <p-dialog header="Header" class="h50" [(visible)]="displayModalAd" [modal]="true"
+              [draggable]="false" [resizable]="false" [closable]="false">
+        <ng-template pTemplate="header">
+            <h3>Dictamen</h3>
+        </ng-template>
+        <p class="m-0 text-center">
+            <strong>{{ messageModalM }}</strong>
+        </p>
+            <ng-template pTemplate="footer" id="tmpfootmodal-1">
+                <p-button (click)="closeAvisoModal()" label="Cerrar" class="btn modal-button-gral"></p-button>
+            </ng-template>
+    </p-dialog> 
+    <div class="modal-footer" id="modfootfid-1">
+        <button class="p-button-rounded p-button-danger"
+                id="btnfoot-2"
+                (click)="guardarDictamen()"
+                [disabled]="((fipo_fidf.invalid)||(fin_fidf.invalid)||(pat_fidf.invalid)||(num_intf.invalid))">
+                Guardar Dictamen</button>
+    </div>
+</p-tabView>
+
+<p-dialog   header="Header"
+            [(visible)]="displayModalM"
+            [modal]="true"
+            [draggable]="false"
+            [resizable]="false" 
+            [closable]="false"
+            class="dialog50">
+    <ng-template pTemplate="header">
+        Error
+    </ng-template>
+        <p class="m-0">{{ messageModalM }}</p>
+    <ng-template pTemplate="footer">
+        <p-button (click)="closeModal()" label="Cerrar" class="btn modal-button-gral"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog class="h50" id="diagheadfid" header="Header" [(visible)]="confirmDeleteDictum" [modal]="true" 
+    [draggable]="false" [resizable]="false" [closable]="false">
+    <ng-template pTemplate="header">
+        <h3>Confirmaci&oacute;n</h3>
+    </ng-template>
+    <p class="m-0">
+        Al eliminar el registro seleccionado, eliminará toda relación que tenga asociada a la poliza del archivo.
+        <br><br>
+        <strong>¿Desea continuar?</strong>
+    </p>
+        <ng-template pTemplate="footer" id="tmpfootfid-2">
+            <div class="p-dialog-footer__content-center">
+                <p-button class="btn modal-button-gral text-center" id="acceptFile" name="acceptFile"  label="Aceptar" (click)="acceptDeleteFile()"></p-button>
+                <p-button class="btn modal-button-gral text-center  p-dialog-footer__content-center--button-secundary" id="closeFile" name="closeFile"  label="Cancelar" (click)="closeDialogDeleteFile()"></p-button>
+            </div>
+        </ng-template>
+</p-dialog>

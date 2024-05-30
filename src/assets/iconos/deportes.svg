@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24.09 24.09">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #ec0000;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 0.7px;
+      }
+    </style>
+  </defs>
+  <title> Master_Iconos_recompensas</title>
+  <g id="Layer_6" data-name="Layer 6">
+    <g>
+      <path class="cls-1" d="M18.36,5.73A3.85,3.85,0,0,0,15.68,5,11.27,11.27,0,0,0,8.11,8.11c-3.36,3.36-3.86,8.76-2.38,10.24a3.85,3.85,0,0,0,2.68.77A11.27,11.27,0,0,0,16,16C19.34,12.61,19.84,7.21,18.36,5.73Z"/>
+      <g>
+        <g>
+          <line class="cls-1" x1="11.11" y1="18.65" x2="5.44" y2="12.98"/>
+          <line class="cls-1" x1="12.9" y1="5.36" x2="18.73" y2="11.19"/>
+        </g>
+        <g>
+          <line class="cls-1" x1="9.76" y1="14.25" x2="14.25" y2="9.76"/>
+          <g>
+            <line class="cls-1" x1="9.58" y1="12.67" x2="11.47" y2="14.55"/>
+            <line class="cls-1" x1="11.12" y1="11.12" x2="13.01" y2="13.01"/>
+            <line class="cls-1" x1="12.67" y1="9.58" x2="14.55" y2="11.47"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

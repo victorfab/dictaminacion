@@ -1,0 +1,37 @@
+<!-- Topbar header -->
+<header class="topbar">
+    <nav class="navbar top-navbar navbar-expand-md navbar-light">
+        <!-- ============================================================== -->
+        <!-- Logo -->
+        <!-- ============================================================== -->
+        <div class="navbar-header col-md-3 d-flex justify-content-start">
+            <!-- Icono Logo -->
+            <a class="pointer" routerLink="/solicitudes">
+                <img src="./assets/img/logosantder.png" class="ml-3 mr-3" alt="Loogo Santander">
+            </a>
+            <!-- Fin Icono Logo -->
+        </div>
+        <div class="navbar-header col-6 d-flex justify-content-center">
+            <ul class="nav">
+                <li class="submenu-dropdown-item submenu">
+                    <h3> {{rolUsuario}} </h3>
+                    <label class="redlabel">Sucursal: {{sucursal}}</label>
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-header col-md-3 d-flex justify-content-end">
+            <ul class="nav justify-content-end">
+                <li>
+                    <div class="iconshead">
+                        <div class="icon-profile"></div><br />
+                        <div class="icon-logout" (click)="logout()"></div>
+                    </div>
+                        <div class="col-md-12 headpro text-right">
+                            <h6 class="redlabel">{{nombre}}</h6>
+                            <label class="redlabel">{{dateTime}}</label>
+                        </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

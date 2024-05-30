@@ -1,0 +1,13 @@
+<div class="row justify-content-center">
+    <span class="p-float-label cwidth">
+      <p-autoComplete [(ngModel)]="data"
+                      [suggestions]="output"
+                      (completeMethod)="search($event)"
+                      field="nombre"
+                      [dropdown]="true"
+                      [disabled]="disabled"
+                      (ngModelChange)="sendOutput()">
+      </p-autoComplete>
+      <label for="float-CIContratos">{{ labelInput }}</label>
+    </span>
+</div>

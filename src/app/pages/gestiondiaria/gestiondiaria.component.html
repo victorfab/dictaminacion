@@ -1,0 +1,362 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingMisSolicitudes">
+                        <h6 class="panel-title">
+                            <strong>Búsqueda de folios</strong>
+                            <a  class="custom-button-link"
+                                role="button"
+                                data-toggle="collapse"
+                                href="#collapseMisSolicitudes"
+                                aria-expanded="false"
+                                aria-controls="collapseMisSolicitudes">
+                                    - Haz clic para ocultar o mostrar
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseMisSolicitudes" class="collapse show" role="tabpanel" aria-labelledby="headingMisSolicitudes">
+                        <div class="panel-body">
+                            <form class="form-horizontal" id="form">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="folio" class="col-sm-12 col-md-6 control-label">
+                                                    Folio:
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input  class="form-control misSol"
+                                                            id="folio"
+                                                            name="folio"
+                                                            maxlength="50"
+                                                            type="text"
+                                                            [(ngModel)]="solicitudFolio"
+                                                            (ngModelChange)="getData( solicitudFolio, 'busquedaFolio' )">
+                                                </div>
+                                                <label for="ci_fini" class="col-sm-12 col-md-6 control-label">Desde: </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <app-ng-calendar    class="ml-0 mr-0"
+                                                                        name="ci_fini"
+                                                                        inputId="ci_fini"
+                                                                        locale="es"
+                                                                        formatDate="dd/mm/yy"
+                                                                        value=""
+                                                                        [maxDate]="dateToDay"
+                                                                        (OutDate)="getData( $event, 'ci_fini' )">
+                                                    </app-ng-calendar>
+                                                </div>
+                                                <label for="ci_ffin" class="col-sm-12 col-md-6 control-label">Hasta: </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <app-ng-calendar    #busquedaAvanzadaHasta
+                                                                        name="ci_ffin"
+                                                                        inputId="ci_ffin"
+                                                                        locale="es"
+                                                                        formatDate="dd/mm/yy"
+                                                                        value=""
+                                                                        [maxDate]="dateToDay" 
+                                                                        (OutDate)="getData( $event, 'ci_ffin' )">
+                                                    </app-ng-calendar>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="nombre_den" class="col-sm-4 col-md-4 control-label">
+                                                    Nombre, denominación o razón social:
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input  class="form-control misSol"
+                                                            id="nombre_den"
+                                                            name="nombre_den"
+                                                            maxlength="100"
+                                                            [(ngModel)]="rasSoc"
+                                                            (ngModelChange)="getData( rasSoc, 'rzonSocial' )">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="row xtra-top-pad-15">
+                                <div class="row col-md-12 justify-content-end">
+                                    <button (click)="limpiarFormulario()"
+                                            id="limpiarAv"
+                                            class="p-button-rounded p-button-secondary">Limpiar Datos
+                                    </button>
+                                    <div>
+                                        <button class="p-button-rounded p-button-danger"
+                                                (click)="obtenerSolExtAdv()"
+                                                type="button"
+                                                id="EnviaBtn" >
+                                                    Buscar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div *ngIf="consultaIni === '1'; else conRazsoc">
+                        <div class="card" id="headingDetalleInverv">
+                            <div class="card-header" role="tab" id="heagDetIntv-1">
+                                <h6 class="panel-title">
+                                    <strong id="foliosTxt">Folios</strong>
+                                    <a  class="custom-button-link"
+                                        role="button"
+                                        data-toggle="collapse"
+                                        href="#collapseGestionDiaria"
+                                        aria-expanded="false"
+                                        aria-controls="collapseDetalleInverv">
+                                            - Haz clic para ocultar o mostrar
+                                    </a>
+                                </h6>
+                            </div>
+                            <div id="collapseGestionDiaria" class="collapse show" role="tabpanel" aria-labelledby="headingDetalleInverv">
+                                <div class="panel-body"><br>
+                                    <div class="dataTables_scrollBody">
+                                        <p-table #dt1
+                                                class="rowAlternate" 
+                                                [value]="dataTableSol" 
+                                                dataKey="id"
+                                                [rows]="10"
+                                                [rowsPerPageOptions]="[10,25,50]" 
+                                                [showCurrentPageReport]="true"
+                                                paginatorDropdownAppendTo="body"
+                                                currentPageReportTemplate="Total de registros: {totalRecords}" 
+                                                styleClass="p-datatable-gridlines"
+                                                [paginator]="true"
+                                                responsiveLayout="scroll"
+                                                scrollHeight="400px"
+                                                [globalFilterFields]="['beanRespuestaConsulta.beanBusqueda.folio','beanRespuestaConsulta.beanBusqueda.razonSocial','tipoDictamen','beanRespuestaConsulta.estadoDesc','beanRespuestaConsulta.beanFechasRespuesta.fechaRegistro','beanRespuestaConsulta.beanFechasRespuesta.fechaCompromiso','beanRespuestaConsulta.abogado']"
+                                                [exportHeader]="'customExportHeader'">
+                                            <ng-template pTemplate="caption" id="tmpgd">
+                                                <div class="flex align-items-center justify-content-between text-right">
+                                                    <h5 class="m-0"></h5>
+                                                    <span class="p-input-icon-left">
+                                                        <em class="pi pi-search mr-3"></em>
+                                                        <input  pInputText
+                                                                type="text"
+                                                                id="search3"
+                                                                placeholder="Buscar..."
+                                                                (input)="dt1.filterGlobal( $any($event.target).value, 'contains' )"/>
+                                                        <label for="search3"></label>
+                                                    </span>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template pTemplate="header" id="tmpsolgd">
+                                                <tr>
+                                                    <th class="text-wrap fixed-width" id="solgd-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="beanRespuestaConsulta.beanBusqueda.folio">Folio <p-sortIcon field="beanRespuestaConsulta.beanBusqueda.folio"></p-sortIcon></div>
+                                                    </th>
+                                                    <th class="text-wrap fixed-width" id="solgd-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="beanRespuestaConsulta.beanBusqueda.razonSocial">Nombre, denominación o razón social <p-sortIcon field="beanRespuestaConsulta.beanBusqueda.razonSocial"></p-sortIcon></div>
+                                                    </th>
+                                                    <th class="text-wrap fixed-width" id="solgd-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="tipoDictamen">Tipo dictamen <p-sortIcon field="tipoDictamen"></p-sortIcon></div>
+                                                    </th>
+                                                    <th class="text-wrap fixed-width" id="solgd-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="beanRespuestaConsulta.estadoDesc">Estado <p-sortIcon field="beanRespuestaConsulta.estadoDesc"></p-sortIcon></div>
+                                                    </th>
+                                                    <th class="text-wrap fixed-width" id="solgd-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="beanRespuestaConsulta.beanFechasRespuesta.fechaRegistro">Fecha registro <p-sortIcon field="beanRespuestaConsulta.beanFechasRespuesta.fechaRegistro"></p-sortIcon></div>
+                                                    </th>
+                                                    <th class="text-wrap fixed-width" id="solgd-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="beanRespuestaConsulta.beanFechasRespuesta.fechaCompromiso">Fecha compromiso <p-sortIcon field="beanRespuestaConsulta.beanFechasRespuesta.fechaCompromiso"></p-sortIcon></div>
+                                                    </th>
+                                                    <th class="text-wrap fixed-width" id="solgd-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="accion">Acción <p-sortIcon field="accion"></p-sortIcon></div>
+                                                    </th>
+                                                    <th class="text-wrap fixed-width" id="solgd-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="beanRespuestaConsulta.abogado">Abogado <p-sortIcon field="beanRespuestaConsulta.abogado"></p-sortIcon></div>
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" id="tmpgdbody" let-dataTableSol>
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <a href="#" [routerLink]="['/foliodetgestion', dataTableSol.beanRespuestaConsulta.beanBusqueda.folio ]" >
+                                                            {{dataTableSol.beanRespuestaConsulta.beanBusqueda.folio}}
+                                                        </a>
+                                                    </td>
+                                                    <td class="text-center">{{dataTableSol.beanRespuestaConsulta.beanBusqueda.razonSocial}}</td>
+                                                    <td class="text-center">{{dataTableSol.beanRespuestaConsulta.beanBusquedaTipoDict.descripcionDictamen}}</td>
+                                                    <ng-container class="text-center">
+                                                        <td class="colorprior text-center" *ngIf="dataTableSol.beanRespuestaConsulta.beanFechasRespuesta.prioridad === '1' && dataTableSol.estadoDictamen !== 'ACT'; else error">
+                                                            {{dataTableSol.beanRespuestaConsulta.estadoDesc}}
+                                                        </td>
+                                                        <ng-template #error>
+                                                            <ng-container *ngIf="dataTableSol.beanRespuestaConsulta.beanBusqueda.idTipoReingreso === '3' && dataTableSol.estadoDictamen !== 'ACT'; else turn">
+                                                                <td class="colorerror text-center">{{dataTableSol.beanRespuestaConsulta.estadoDesc}}</td>
+                                                            </ng-container>
+                                                        </ng-template>
+                                                        <ng-template #turn>
+                                                            <ng-container *ngIf="dataTableSol.beanRespuestaConsulta.beanBusqueda.idTipoReingreso === '8' && dataTableSol.estadoDictamen !== 'ACT'; else normal">
+                                                                <td class="colorturn  text-center">{{dataTableSol.beanRespuestaConsulta.estadoDesc}}</td>
+                                                            </ng-container>
+                                                        </ng-template>
+                                                        <ng-template #normal>
+                                                            <td class="text-center">{{dataTableSol.beanRespuestaConsulta.estadoDesc}}</td>
+                                                        </ng-template>
+                                                    </ng-container>
+                                                    <td class="text-center">{{dataTableSol.beanRespuestaConsulta.beanFechasRespuesta.fechaRegistro}}</td>
+                                                    <td class="text-center">{{dataTableSol.beanRespuestaConsulta.beanFechasRespuesta.fechaCompromiso}}</td>
+                                                    <td class="text-left"><a href="#" [routerLink]="['/foliodetgestion', dataTableSol.beanRespuestaConsulta.beanBusqueda.folio ]" > Reasignar </a></td>
+                                                    <td class="text-center">{{dataTableSol.beanRespuestaConsulta.abogado}}</td>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="emptymessage">
+                                                <tr>
+                                                    <td colspan="7">No se encontraron solicitudes.</td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #conRazsoc id="tmpgdrazs">
+                        <div class="card" id="tmpgdrazs-1">
+                            <div class="card-header" role="tab" id="headingDetalleInverv">
+                                <h6 class="panel-title">
+                                    <strong id="foliosTxt">Folios</strong>
+                                    <a  class="custom-button-link"
+                                        role="button"
+                                        data-toggle="collapse"
+                                        href="#collapseDetallerz"
+                                        aria-expanded="false"
+                                        aria-controls="collapseDetalleInverv">
+                                            - Haz clic para ocultar o mostrar
+                                    </a>
+                                </h6>
+                            </div>
+                            <div id="collapseDetallerz" class="collapse show" role="tabpanel" aria-labelledby="headingDetalleInverv">
+                                <div class="panel-body" id="collapseDetallerz-1"><br>
+                                    <div class="dataTables_scrollBody" id="collapseDetallerz-2">
+                                        <p-table #dt3
+                                                class="rowAlternate" 
+                                                [value]="dataTableSolRazSoc" 
+                                                dataKey="id"
+                                                [rows]="10"
+                                                [rowsPerPageOptions]="[10,25,50]" 
+                                                [showCurrentPageReport]="true"
+                                                paginatorDropdownAppendTo="body"
+                                                currentPageReportTemplate="Total de registros: {totalRecords}" 
+                                                styleClass="p-datatable-gridlines"
+                                                [paginator]="true"
+                                                responsiveLayout="scroll"
+                                                scrollHeight="400px"
+                                                [globalFilterFields]="['beanRespuestaConsulta.beanBusqueda.folio' ]"
+                                                [exportHeader]="'customExportHeader'"
+                                                id="tabrazsocgd">
+                                            <ng-template pTemplate="caption" id="tmpgdrazsoc">
+                                                <div class="flex align-items-center justify-content-between text-right">
+                                                    <h5 class="m-0"></h5>
+                                                    <span class="p-input-icon-left">
+                                                        <em class="pi pi-search mr-3"></em>
+                                                        <input  pInputText
+                                                                type="text"
+                                                                id="search2"
+                                                                placeholder="Buscar..." 
+                                                                (input)="dt3.filterGlobal( $any($event.target).value, 'contains' )"/>
+                                                        <label for="search2"></label>
+                                                        <button type="button"
+                                                                pButton
+                                                                pRipple
+                                                                class="p-button-success mr-2 font20"
+                                                                pTooltip="XLS"
+                                                                tooltipPosition="bottom"
+                                                                icon="pi pi-file-excel"
+                                                                (click)="exportExcel()">
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template pTemplate="header" id="tmplrazsocgd">
+                                                <tr>
+                                                    <th class="text-wrap fixed-width" id="thrazsoc-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="beanRespuestaConsulta.beanBusqueda.folio">Folio <p-sortIcon field="beanRespuestaConsulta.beanBusqueda.folio"></p-sortIcon></div>
+                                                    </th>
+                                                    <th class="text-wrap fixed-width" id="thrazsoc-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="beanRespuestaConsulta.beanBusqueda.razonSocial">Nombre, denominación o razón social <p-sortIcon field="beanRespuestaConsulta.beanBusqueda.razonSocial"></p-sortIcon></div>
+                                                    </th>
+                                                    <th class="text-wrap fixed-width" id="thrazsoc-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="tipoDictamen">Tipo dictamen <p-sortIcon field="tipoDictamen"></p-sortIcon></div>
+                                                    </th>
+                                                    <th class="text-wrap fixed-width" id="thrazsoc-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="beanRespuestaConsulta.estadoDesc">Estado <p-sortIcon field="beanRespuestaConsulta.estadoDesc"></p-sortIcon></div>
+                                                    </th>
+                                                    <th class="text-wrap fixed-width" id="thrazsoc-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="beanRespuestaConsulta.beanFechasRespuesta.fechaRegistro">Fecha registro <p-sortIcon field="beanRespuestaConsulta.beanFechasRespuesta.fechaRegistro"></p-sortIcon></div>
+                                                    </th>
+                                                    <th class="text-wrap fixed-width" id="thrazsoc-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="beanRespuestaConsulta.beanFechasRespuesta.fechaCompromiso">Fecha compromiso <p-sortIcon field="beanRespuestaConsulta.beanFechasRespuesta.fechaCompromiso"></p-sortIcon></div>
+                                                    </th>
+                                                    <th class="text-wrap fixed-width" id="thrazsoc-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="accion">Acción <p-sortIcon field="accion"></p-sortIcon></div>
+                                                    </th>
+                                                    <th class="text-wrap fixed-width" id="thrazsoc-1" scope="col">
+                                                        <div class="justify-content-center align-items-center" pSortableColumn="beanRespuestaConsulta.abogado">Abogado <p-sortIcon field="beanRespuestaConsulta.abogado"></p-sortIcon></div>
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-dataTableSolRazSoc>
+                                                <tr>
+                                                    <td class="text-left"><a href="#" [routerLink]="['/foliodetgestion', dataTableSolRazSoc.beanRespuestaConsulta.beanBusqueda.folio ]" > {{dataTableSolRazSoc.beanRespuestaConsulta.beanBusqueda.folio}} </a></td>
+                                                    <td class="text-center">{{dataTableSolRazSoc.beanRespuestaConsulta.beanBusqueda.razonSocial}}</td>
+                                                    <td class="text-center">{{dataTableSolRazSoc.beanRespuestaConsulta.beanBusquedaTipoDict.descripcionDictamen}}</td>
+                                                    <ng-container class="text-center">
+                                                        <td class="colorprior text-center" *ngIf="dataTableSolRazSoc.beanRespuestaConsulta.beanFechasRespuesta.prioridad === '1' && dataTableSolRazSoc.estadoDictamen !== 'ACT'; else error">
+                                                            {{dataTableSolRazSoc.beanRespuestaConsulta.estadoDesc}}
+                                                        </td>
+                                                        <ng-template #error>
+                                                            <ng-container *ngIf="dataTableSolRazSoc.beanRespuestaConsulta.beanBusqueda.idTipoReingreso === '3' && dataTableSolRazSoc.estadoDictamen !== 'ACT'; else turn">
+                                                                <td class="colorerror text-center">{{dataTableSolRazSoc.beanRespuestaConsulta.estadoDesc}}</td>
+                                                            </ng-container>
+                                                        </ng-template>
+                                                        <ng-template #turn>
+                                                            <ng-container *ngIf="dataTableSolRazSoc.beanRespuestaConsulta.beanBusqueda.idTipoReingreso === '8' && dataTableSolRazSoc.estadoDictamen !== 'ACT'; else normal">
+                                                                <td class="colorturn  text-center">{{dataTableSolRazSoc.beanRespuestaConsulta.estadoDesc}}</td>
+                                                            </ng-container>
+                                                        </ng-template>
+                                                        <ng-template #normal>
+                                                            <td class="text-center">{{dataTableSolRazSoc.beanRespuestaConsulta.estadoDesc}}</td>
+                                                        </ng-template>
+                                                    </ng-container>
+                                                    <td class="text-center">{{dataTableSolRazSoc.beanRespuestaConsulta.beanFechasRespuesta.fechaRegistro}}</td>
+                                                    <td class="text-center">{{dataTableSolRazSoc.beanRespuestaConsulta.beanFechasRespuesta.fechaCompromiso}}</td>
+                                                    <td class="text-left"><a href="#" [routerLink]="['/foliodetgestion', dataTableSolRazSoc.beanRespuestaConsulta.beanBusqueda.folio ]" > Reasignar </a></td>
+                                                    <td class="text-center">{{dataTableSolRazSoc.beanRespuestaConsulta.abogado}}</td>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="emptymessage">
+                                                <tr>
+                                                    <td colspan="7">No se encontraron solicitudes.</td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="row pad-final"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog class="dialog50" header="Header" [(visible)]="displayModalFormErr" [modal]="true"
+    [draggable]="false" [resizable]="false" [closable]="false">
+    <ng-template pTemplate="header">
+        <h3>{{ headerModalM }}</h3>
+    </ng-template>
+    <p class="m-0">{{ messageModalM }}</p>
+        <ng-template pTemplate="footer">
+            <p-button (click)="closeModalForm()" label="Cerrar" class="btn modal-button-gral"></p-button>
+        </ng-template>
+</p-dialog>

@@ -1,0 +1,321 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-group " id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingUsuarios">
+                        <h6 class="panel-title">
+                            <strong>Búsqueda</strong>
+                            <a role="button" class="custom-button-link" data-toggle="collapse" href="#collapseUsuarios" aria-expanded="true" aria-controls="collapseUsuarios">
+                                - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseUsuarios" class="collapse show" role="tabpanel" aria-labelledby="headingUsuarios">
+                        <div class="panel-body"><br>
+                            <form class="form-horizontal" id="form">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="idu" class="col-sm-12 col-md-6">
+                                                    ID Usuario:
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input  class="form-control misSol inputbuc"
+                                                            id="idu"
+                                                            name="idu"
+                                                            maxlength="10"
+                                                            type="text"
+                                                            [(ngModel)]="idUser"
+                                                            (ngModelChange)="getData( idUser, 'idUsuario' )" >
+                                                </div>
+                                                <label for="tipusuario" class="col-sm-12 col-md-6">
+                                                    Tipo de usuario 
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <p-dropdown name="tipousr"
+                                                                class="estatus-dropdown"
+                                                                id="tipousr"
+                                                                [options]="tipousr"
+                                                                [(ngModel)]="tipusuarios"
+                                                                optionLabel="nombre"
+                                                                placeholder="Seleccionar"
+                                                                (onChange)="getData( $event, 'tipusuario' )">
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="desde" class="col-sm-12 col-md-6"> Registrado desde </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <app-ng-calendar    class="ml-0 mr-0"
+                                                                        name="ci_fini"
+                                                                        inputId="ci_fini"
+                                                                        locale="es"
+                                                                        formatDate="dd/mm/yy"
+                                                                        [maxDate]="dateToDay"
+                                                                        (OutDate)="getData( $event, 'ci_fini' )" >
+                                                    </app-ng-calendar>
+                                                </div>
+                                                <label for="hasta" class="col-sm-12 col-md-6">
+                                                    Registrado hasta
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <app-ng-calendar    #busquedaAvanzadaHasta
+                                                                        name="ci_ffin"
+                                                                        inputId="ci_ffin"
+                                                                        locale="es"
+                                                                        formatDate="dd/mm/yy"
+                                                                        [maxDate]="dateToDay" 
+                                                                        (OutDate)="getData( $event, 'ci_ffin' )" >
+                                                    </app-ng-calendar>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="row xtra-top-pad-15">
+                                <div class="row col-md-12 justify-content-end">
+                                    <button (click)="obtenerUsuarios()" 
+                                            type="button" 
+                                            id="EnviaBtn" 
+                                            pButton
+                                            [disabled]="!((idUser||tipusuarios)||(dataFiltersb&&(dataFiltersb.ci_ffin||dataFiltersb.ci_fini)))"
+                                            class="p-button-rounded p-button-danger mr-3">
+                                            Buscar
+                                    </button>
+                                    <button (click)="limpiarFormulario()" 
+                                            type="button" 
+                                            id="limpiarAv" 
+                                            class="p-button-rounded p-button-secondary">
+                                            Limpiar datos
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingDetalleUsuarios">
+                        <h6 class="panel-title">
+                            <strong id="foliosTxt">Resultados</strong>
+                            <a  class="custom-button-link"
+                                role="button"
+                                data-toggle="collapse"
+                                href="#collapseDetalleUsuarios"
+                                aria-expanded="false"
+                                aria-controls="collapseDetalleUsuarios">
+                                - Haz clic para ocultar o mostrar
+                            </a>
+                        </h6>
+                    </div>
+                    <div    id="collapseDetalleUsuarios"
+                            class="collapse show"
+                            role="tabpanel"
+                            aria-labelledby="headingDetalleUsuarios">
+                        <div class="panel-body"><br>
+                            <div class="dataTables_scrollBody">
+                                <p-table #dt1
+                                        class="rowAlternate" 
+                                        [value]="dataTableUrs"
+                                        dataKey="id"
+                                        [rows]="10"
+                                        [rowsPerPageOptions]="[10,25,50]" 
+                                        [showCurrentPageReport]="true"
+                                        paginatorDropdownAppendTo="body"
+                                        currentPageReportTemplate="Total de registros: {totalRecords}" 
+                                        styleClass="p-datatable-gridlines"
+                                        [paginator]="true"
+                                        responsiveLayout="scroll"
+                                        scrollHeight="400px"
+                                        [globalFilterFields]="['codigo','nombre','tipoUsuario','dictamenes','regiones','folios','noFolios']"
+                                        [exportHeader]="'customExportHeader'">
+                                    <ng-template pTemplate="caption">
+                                        <div class="flex align-items-center justify-content-between text-right">
+                                            <h5 class="m-0"></h5>
+                                            <span class="p-input-icon-left">
+                                                <em class="pi pi-search mr-3"></em>
+                                                <input  pInputText
+                                                        type="text"
+                                                        id="search"
+                                                        (input)="dt1.filterGlobal( $any($event.target).value, 'contains' )"
+                                                        placeholder="Buscar..." />
+                                                <label for="search"></label>
+                                                <button pButton
+                                                        pRipple
+                                                        class="font20"
+                                                        type="button"
+                                                        icon="pi pi-file-excel"
+                                                        (click)="exportExcel()"
+                                                        class="p-button-success mr-2"
+                                                        pTooltip="XLS"
+                                                        tooltipPosition="bottom">
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th scope="col">
+                                                <div></div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div    class="justify-content-center align-items-center"
+                                                        pSortableColumn="codigo">Despacho
+                                                        <p-sortIcon field="codigo"></p-sortIcon>
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div    class="justify-content-center align-items-center"
+                                                        pSortableColumn="nombre">Nombre
+                                                        <p-sortIcon field="nombre"></p-sortIcon>
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div    class="justify-content-center align-items-center"
+                                                        pSortableColumn="tipousuario">Tipo de usuario
+                                                        <p-sortIcon field="tipousuario"></p-sortIcon>
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div    class="justify-content-center align-items-center"
+                                                        pSortableColumn="dictamenes">Tipo de dictamen
+                                                        <p-sortIcon field="dictamenes"></p-sortIcon>
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div    class="justify-content-center align-items-center"
+                                                        pSortableColumn="regiones">Regiones
+                                                        <p-sortIcon field="regiones"></p-sortIcon>
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div    class="justify-content-center align-items-center"
+                                                        pSortableColumn="folios">Folios asignados
+                                                        <p-sortIcon field="folios"></p-sortIcon>
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div    class="justify-content-center align-items-center"
+                                                        pSortableColumn="noFolios">Limite folios
+                                                        <p-sortIcon field="noFolios"></p-sortIcon>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-dataTableUr>
+                                        <tr>
+                                            <td class="t10">
+                                                <label for="checkuser"></label>
+                                                <input  type="radio"
+                                                        name="checkuser"
+                                                        id="checkuser"
+                                                        (change)="onCheckbox(dataTableUr.idAbogado, dataTableUr.tipoUsuario, 'selectUsr')" />
+                                            </td>
+                                            <td class="text-left">{{ dataTableUr.codigo }}</td>
+                                            <td class="text-left">{{ dataTableUr.nombre }}</td>
+                                            <td class="text-left">{{ dataTableUr.tipoUsuario }}</td>
+                                            <td class="text-left" ><span *ngFor="let dicta of dataTableUr.dictamenes ; let isLast=last" > {{ dicta }}{{isLast ? '' : ', '}} </span></td>
+                                            <td class="text-left" ><span *ngFor="let region of dataTableUr.regiones ; let isLast=last" > {{ region }}{{isLast ? '' : ', '}} </span></td>
+                                            <td class="text-left">{{ dataTableUr.noFolios }}</td>
+                                            <td class="text-left">{{ dataTableUr.folios }}</td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="8">No se encontraron solicitudes.</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                <div class="row mt-5">
+                                    <div class="col-md-12 text-right">
+                                            <div class="float-right">
+                                                <button type="button"
+                                                        class="p-button-rounded p-button-danger mr-3"
+                                                        pButton
+                                                        pRipple
+                                                        [disabled]="!((idabog))"
+                                                        (click)="eliminarUsuario( selectedValues )" >Eliminar
+                                                </button>
+                                            </div>
+                                            <div class="float-right mr-5">
+                                                <button type="button" 
+                                                        class="p-button-rounded p-button-danger mr-3"
+                                                        [disabled]="!((idabog))"
+                                                        pButton pRipple (click)="modificarUsuario( selectedValues )" >Modificar
+                                                </button>
+                                            </div>
+                                            <div class="float-right mr-5">
+                                                <button type="button"
+                                                        class="p-button-rounded p-button-danger mr-3"
+                                                        pButton pRipple [routerLink]="['/altausuario']">Agregar
+                                                </button>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+                <div class="row pad-final"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog   header="Header" 
+            [(visible)]="dialogConfirm" 
+            [modal]="true" 
+            class="h50"
+            [draggable]="false" 
+            [resizable]="false" 
+            [closable]="false">
+    <ng-template pTemplate="header">
+        <h3>{{ titleDialog }}</h3>
+    </ng-template>
+    <p class="m-0">
+        <strong>{{ messageDialog }}</strong>
+    </p>
+        <ng-template pTemplate="footer">
+            <div class="p-dialog-footer__content-center">
+                <p-button   class="btn modal-button-gral text-center" 
+                            id="acceptFile" 
+                            name="acceptFile"  
+                            label="Aceptar"
+                            (click)="closeDialogInfo()">
+                </p-button>
+            </div>
+        </ng-template>
+</p-dialog>
+
+<p-dialog header="Header" class="h50" [(visible)]="confirmDeleteItem" [modal]="true"
+    [draggable]="false" [resizable]="false" [closable]="false">
+    <ng-template pTemplate="header">
+        <h3>Confirmaci&oacute;n</h3>
+    </ng-template>
+    <p class="m-0">
+        <strong>¿Desea eliminar los elementos seleccionados?</strong>
+    </p>
+        <ng-template pTemplate="footer">
+            <div class="p-dialog-footer__content-center">
+                <p-button class="btn modal-button-gral text-center" id="acceptFile" name="acceptFile"  label="Aceptar" (click)="deleteItem()"></p-button>
+                <p-button class="btn modal-button-gral text-center  p-dialog-footer__content-center--button-secundary" id="closeFile" name="closeFile"  label="Cancelar" (click)="closeDialog()"></p-button>
+            </div>
+        </ng-template>
+</p-dialog>
+
+<p-dialog class="dialog50" header="Header" [(visible)]="displayModalFormErr" [modal]="true"
+    [draggable]="false" [resizable]="false" [closable]="false">
+    <ng-template pTemplate="header">
+        <h3>{{ headerModalM }}</h3>
+    </ng-template>
+    <p class="m-0">{{ messageModalM }}</p>
+        <ng-template pTemplate="footer">
+            <p-button (click)="closeModalForm()" label="Cerrar" class="btn modal-button-gral"></p-button>
+        </ng-template>
+</p-dialog>
+
+

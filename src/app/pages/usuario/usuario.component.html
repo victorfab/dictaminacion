@@ -1,0 +1,191 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-group " id="accordion" role="tablist" aria-multiselectable="true">
+                <form class="form-horizontal" id="form">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingUsuarios">
+                            <h6 class="panel-title">
+                                <strong>Alta de usuario</strong>
+                                <a role="button" class="custom-button-link" data-toggle="collapse" href="#collapseAltaUsuarios" aria-expanded="true" aria-controls="collapseAltaUsuarios">
+                                    - Haz clic para ocultar o mostrar 
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="collapseAltaUsuarios" class="collapse show" role="tabpanel" aria-labelledby="headingAltaUsuarios">
+                            <div class="panel-body"><br>
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12 form mb-5">
+                                            <label for="tipogetusr" class="col-sm-12 col-md-6 control-label">
+                                                Tipo de usuario
+                                            </label>
+                                            <div class="col-sm-12 col-md-12 form mb-5">
+                                                <p-dropdown class="estatus-dropdown"
+                                                            name="tipogetusr" 
+                                                            id="tipogetusr"
+                                                            optionValue="nombre" 
+                                                            optionLabel="nombre" 
+                                                            *ngIf="usuario"
+                                                            placeholder="Seleccionar"
+                                                            [formControl]="t_usuario"
+                                                            [options]="tipogetusr" 
+                                                            [(ngModel)]="usuario.tipoUsuario"
+                                                            (onChange)="getData( $event, 'tipusuarios' )" >
+                                                </p-dropdown>
+                                            </div>
+                                            <label for="codigosam" class="col-sm-12 col-md-6 control-label">
+                                                Codigo SAM
+                                            </label>
+                                            <div class="col-sm-12 col-md-12 form mb-5">
+                                                <input  type="text" 
+                                                        class="form-control misSol" 
+                                                        id="codigosam" 
+                                                        name="codigosam"
+                                                        *ngIf="usuario"
+                                                        [formControl]="c_sam"
+                                                        [(ngModel)]="usuario.codigo" >
+                                            </div>
+                                            <label for="nombre" class="col-sm-12 col-md-6 control-label">
+                                                Nombre
+                                            </label>
+                                            <div class="col-sm-12 col-md-12 form mb-5">
+                                                <input  type="text" 
+                                                        class="form-control misSol" 
+                                                        id="nombre" 
+                                                        name="nombre"
+                                                        *ngIf="usuario"
+                                                        [formControl]="t_nombre"
+                                                        [(ngModel)]="usuario.nombre" >
+                                            </div>
+                                            <label for="iddesp" class="col-sm-12 col-md-6 control-label">
+                                                ID Despacho
+                                            </label>
+                                             <div class="col-sm-12 col-md-12 form mb-5">
+                                                <input  type="text" 
+                                                        class="form-control misSol" 
+                                                        id="iddesp" 
+                                                        name="iddesp" 
+                                                        *ngIf="usuario"
+                                                        [formControl]="i_despacho"
+                                                        [(ngModel)]="usuario.idAbogado" >
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 form mb-5">
+                                            <div [hidden]="tipodeusr !== 'E'">
+                                                <label for="limitefol" class="col-sm-12 col-md-6 control-label">
+                                                    Límite folios
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                            <p-inputNumber  *ngIf="usuario"
+                                                                            [(ngModel)]="usuario.folios" 
+                                                                            [showButtons]="true"
+                                                                            [min]="0"
+                                                                            inputId="limitefol"
+                                                                            name="limitefol">
+                                                            </p-inputNumber>
+                                                </div>
+                                            </div>
+                                            <label for="email" class="col-sm-12 col-md-6 control-label">
+                                                Correo
+                                            </label>
+                                            <div class="col-sm-12 col-md-12 form mb-5">
+                                                <input  pInputText
+                                                        id="email" 
+                                                        name="email" 
+                                                        type="email"  
+                                                        *ngIf="usuario"
+                                                        [formControl]="mail"
+                                                        [(ngModel)]="usuario.correo" >
+                                                <small class="email-error p-error" *ngIf="mail.invalid">El correo no es valido.</small>
+                                            </div>
+                                            <label for="telefono" class="col-sm-12 col-md-6 control-label">
+                                                Telefono
+                                            </label>
+                                            <div class="col-sm-12 col-md-12 form mb-5">
+                                                <input  class="form-control misSol inputbuc" 
+                                                        id="telefono" 
+                                                        name="telefono"
+                                                        type="phone" 
+                                                        *ngIf="usuario"
+                                                        [formControl]="t_telefono"
+                                                        [(ngModel)]="usuario.telefono" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" [hidden]="tipodeusr !== 'E'">
+                        <div class="card-header" role="tab" id="headingDictamen">
+                            <h6 class="panel-title">
+                                <strong>Tipo dictamen</strong>
+                                <a role="button" class="custom-button-link" data-toggle="collapse" href="#collapseDictamen" aria-expanded="true" aria-controls="collapseAltaUsuarios">
+                                    - Haz clic para ocultar o mostrar 
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="collapseDictamen" class="collapse show" role="tabpanel" aria-labelledby="headingAltaUsuarios">
+                            <div class="panel-body">
+                                <div class="row mt-5">
+                                    <div *ngFor="let dict of dictamenData" class="field-checkbox">
+                                        <div class="md-col-5 ml-4 mr-3 text-center">
+                                            <p-checkbox name="dictamenes" value="{{dict.nombre}}" [(ngModel)]="selectedDictamList" [label]="dict.nombre" ></p-checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="card">
+                        <div class="card-header" role="tab" id="headingRegion">
+                            <h6 class="panel-title">
+                                <strong>Región</strong>
+                                <a role="button" class="custom-button-link" data-toggle="collapse" href="#collapseRegion" aria-expanded="true" aria-controls="collapseAltaUsuarios">
+                                    - Haz clic para ocultar o mostrar 
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="collapseRegion" class="collapse show" role="tabpanel" aria-labelledby="headingAltaUsuarios">
+                            <div class="panel-body">
+                                <div class="row mt-5">
+                                    <div *ngFor="let region of regionData">
+                                        <div class="md-col-5 ml-4 mr-3 text-center">
+                                            <p-checkbox name="regiones" value="{{region.nombre}}" [(ngModel)]="selectedRegionList" [label]="region.nombre" ></p-checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="text-right mb-5">
+                        <button (click)="guardarUsuario()"
+                                type="submit"
+                                id="EnviaBtn"
+                                class="p-button-rounded p-button-danger mr-3"
+                                [disabled]="(t_usuario.invalid)||(c_sam.invalid)||(t_nombre.invalid)||(i_despacho.invalid)||(mail.invalid)||(t_telefono.invalid)">
+                                Guardar
+                        </button>
+                        <a  class="p-button-rounded p-button-secondary"
+                            id="cancela"
+                            [routerLink]="['/usuarios']">Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog class="dialog50" header="Header" [(visible)]="displayModalFormErr" [modal]="true"
+    [draggable]="false" [resizable]="false" [closable]="false">
+    <ng-template pTemplate="header">
+        <h3>{{ headerModalM }}</h3>
+    </ng-template>
+    <p class="m-0">{{ messageModalM }}</p>
+        <ng-template pTemplate="footer">
+            <p-button (click)="closeModalForm()" label="Cerrar" class="btn modal-button-gral"></p-button>
+        </ng-template>
+</p-dialog>
+

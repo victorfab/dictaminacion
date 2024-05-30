@@ -1,0 +1,67 @@
+
+/* VARIABLES */
+
+/*=============================================
+Colores Primarios
+===============================================*/
+
+$scotia-red: rgb(236, 0, 0);
+$boston-red: rgb(204, 0, 0);
+$ruby-red: rgb(153, 0, 0);
+$light-gray: rgb(242, 242, 242);
+$optimal-gray: rgb(178, 178, 178);
+$medium-gray: rgb(68, 68, 68);
+$grafito: rgb(111 119 121);
+$dark-gray: rgb(36, 36, 36);
+$black: rgb(0, 0, 0);
+$white: rgb(255, 255, 255);
+$sky: rgb(222, 237, 242);
+$medium-sky: rgb(206, 222, 231);
+$dark-sky: rgb(155, 195, 211);
+$camel: rgb(244, 238, 215);
+$turquesa30: rgba(27, 179, 188, 30%);
+$verde: rgba(99 186 104);
+$purpura: rgba(158 54 103);
+$azul: rgba(51 102 255);
+
+$azul: #0032E6;
+$azul100: rgba(51 102 255);
+
+@function get-color($color-name, $alpha: 1) {
+  @return rgba($color-name, $alpha);
+}
+
+/*==============================================
+Colores Fuentes
+===============================================*/
+
+$perla: #bfbfbf;
+$dusty: #8c8c8c;
+$ceniza: #585858;
+
+/*==============================================
+Tamaños de fuentes
+===============================================*/
+
+$root-font-size: 15px;
+$font-sizes: (
+  xsmall: 0.7858 * $root-font-size,
+  // 11px aprox.
+  small: 0.8572 * $root-font-size,
+  // 12px aprox.
+  normal: 1 * $root-font-size,
+  // 14px.
+  medium: 1.1429 * $root-font-size,
+  // 16px aprox.
+  big: 1.2858 * $root-font-size,
+  // 18px aprox.
+  xbig: 1.4286 * $root-font-size,
+  // 20px aprox.
+  xxbig: 1.5715 * $root-font-size // 22px aprox.,,,,,,,,,,,,,
+);
+
+$headtitle: 0.8rem;
+
+@function get-font-pixels($font-size-name) {
+  @return map-get($font-sizes, $font-size-name);
+}

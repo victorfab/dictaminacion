@@ -1,0 +1,377 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-group " id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="../../../assets/img/LineaRojo.png" class="hyphen-style" alt="linea roja">
+                            <strong>&nbsp;&nbsp; Alta de clientes</strong>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingAltaCliente">
+                        <h6 class="panel-title">
+                            <strong>Alta de Cliente</strong>
+                            <a  role="button"
+                                class="custom-button-link"
+                                data-toggle="collapse"
+                                href="#collapseAltaCliente"
+                                aria-expanded="true"
+                                aria-controls="collapseMisSolicitudes">
+                                - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseAltaCliente" class="collapse show" role="tabpanel" aria-labelledby="headingAltaCliente">
+                        <div class="panel-body">
+                            <form class="form-horizontal" id="form">
+                                <div class="form-group">
+                                    <label for="tipo_persona" class="col-sm-2 control-label text-rigth">
+                                        Tipo de persona 
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <p-dropdown appendTo="body"
+                                                    name="tipopersona"
+                                                    class="estatus-dropdown"
+                                                    id="tipopersona"
+                                                    [options]="tipopersona"
+                                                    [(ngModel)]="tipopersonas"
+                                                    optionLabel="nombre"
+                                                    placeholder="Seleccionar"
+                                                    (onChange)="getDataFirstGroup( $event, 'tippersonas' )"
+                                                    [required]="true">
+                                        </p-dropdown>
+                                    </div>
+                                    <label for="rfc" class="col-sm-2 control-label text-rigth">
+                                        R.F.C (*):
+                                    </label>
+                                    <div class="col-sm-4 form">
+                                        <input  class="form-control misSol"
+                                                id="rfc"
+                                                name="rfc"
+                                                [(ngModel)]="rfcdata"
+                                                (ngModelChange)="getDataFirstGroup( rfcdata, 'rfcdata' )"
+                                                maxlength="15">
+                                    </div>
+                                </div>
+                                <div [hidden]="dataFiltersb.tipopersonas !== '0'">
+                                    <div class="form-group">
+                                        <label for="nombre" class="col-sm-2 control-label text-rigth">
+                                            Nombre (*): 
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <input  class="form-control misSol"
+                                                    id="nombre"
+                                                    name="nombre"
+                                                    [(ngModel)]="nombre"
+                                                    (ngModelChange)="getDataFirstGroup( nombre, 'nombre' )"
+                                                    maxlength="500">
+                                        </div>
+                                        <label for="apepat" class="col-sm-2 control-label text-rigth">
+                                            Apellido paterno (*): 
+                                        </label>
+                                        <div class="col-sm-4 form">
+                                            <input  class="form-control misSol"
+                                                    id="apellidop"
+                                                    name="apellidop"
+                                                    [(ngModel)]="apellidop"
+                                                    (ngModelChange)="getDataFirstGroup( apellidop, 'apellidop' )"
+                                                    maxlength="500">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="col-sm-2 control-label text-rigth">
+                                            Email (*): 
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <input  class="form-control misSol"
+                                                    type="email"
+                                                    id="email"
+                                                    name="email"
+                                                    [(ngModel)]="email"
+                                                    (ngModelChange)="getDataFirstGroup( email, 'email' )"
+                                                    maxlength="500">
+                                        </div>
+                                        <label for="apemat" class="col-sm-2 control-label text-rigth">
+                                            Apellido materno (*): 
+                                        </label>
+                                        <div class="col-sm-4 form">
+                                            <input  class="form-control misSol"
+                                                    id="ine"
+                                                    name="ine"
+                                                    [(ngModel)]="ine"
+                                                    (ngModelChange)="getDataFirstGroup( ine, 'ine' )"
+                                                    maxlength="500">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="estadocivil" class="col-sm-2 control-label text-rigth">
+                                            Estado civil (*): 
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <p-dropdown appendTo="body"
+                                                        name="estadocivil"
+                                                        class="estatus-dropdown"
+                                                        id="estadocivil"
+                                                        [options]="estadocivil"
+                                                        [(ngModel)]="estadociviles"
+                                                        optionLabel="nombre"
+                                                        placeholder="Seleccionar"
+                                                        (onChange)="getDataSecondGroup( $event, 'estadociviles' )"
+                                                        [required]="true">
+                                            </p-dropdown>
+                                        </div>
+                                        <label for="fechanac" class="col-sm-2 control-label text-rigth">
+                                            Fecha de nacimiento (*): 
+                                        </label>
+                                        <div class="col-sm-4 form">
+                                            <app-ng-calendar    class="ml-0 mr-0"
+                                                                name="fechanac"
+                                                                inputId="fechanac"
+                                                                locale="es"
+                                                                formatDate="dd/mm/yy"
+                                                                (OutDate)="getDataSecondGroup( $event, 'fechanac' )"
+                                                                value="">
+                                            </app-ng-calendar>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pais" class="col-sm-2 control-label text-rigth">
+                                            País de origen (*): 
+                                        </label>
+                                        <div class="col-sm-4 form">
+                                            <input  class="form-control misSol"
+                                                    id="pais"
+                                                    name="pais"
+                                                    [(ngModel)]="pais"
+                                                    (ngModelChange)="getDataSecondGroup( pais, 'pais' )"
+                                                    maxlength="500">
+                                        </div>
+                                        <label for="genero" class="col-sm-2 control-label text-rigth">
+                                            Genero (*): 
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <p-dropdown appendTo="body"
+                                                        name="genero"
+                                                        class="estatus-dropdown"
+                                                        id="genero"
+                                                        [options]="genero"
+                                                        [(ngModel)]="generos"
+                                                        optionLabel="nombre"
+                                                        placeholder="Seleccionar"
+                                                        (onChange)="getDataSecondGroup( $event, 'generos' )"
+                                                        [required]="true">
+                                            </p-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pais" class="col-sm-2 control-label text-rigth">
+                                            Nacionalidad (*): 
+                                        </label>
+                                        <div class="col-sm-4 form">
+                                            <input  class="form-control misSol"
+                                                    id="nacionalidad"
+                                                    name="nacionalidad"
+                                                    [(ngModel)]="nacionalidad"
+                                                    (ngModelChange)="getDataSecondGroup( nacionalidad, 'nacionalidad' )"
+                                                    maxlength="500">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div [hidden]="dataFiltersb.tipopersonas !== '1'">
+                                    <div class="form-group">
+                                        <label for="nombre" class="col-sm-2 control-label text-rigth">
+                                            Nombre (*): 
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <input  class="form-control misSol"
+                                                    id="nombre"
+                                                    name="nombre"
+                                                    [(ngModel)]="nombre"
+                                                    (ngModelChange)="getDataSecondGroup( nombre, 'nombre' )"
+                                                    maxlength="500">
+                                        </div>
+                                        <label for="email" class="col-sm-2 control-label text-rigth">
+                                            Email (*): 
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <input  class="form-control misSol"
+                                                    type="email"
+                                                    id="email"
+                                                    name="email"
+                                                    [(ngModel)]="email"
+                                                    (ngModelChange)="getDataSecondGroup( email, 'email' )"
+                                                    maxlength="500">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingDirec">
+                        <h6 class="panel-title">
+                            <strong>Dirección</strong>
+                            <a  role="button"
+                                class="custom-button-link"
+                                href="#collapseDirec"
+                                aria-controls="collapseDirec"
+                                aria-expanded="true"
+                                data-toggle="collapse">
+                                - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseDirec" class="collapse show" role="tabpanel" aria-labelledby="headingDirec">
+                        <div class="panel-body">
+                            <form class="form-horizontal" id="form">
+                                <div class="form-group">
+                                    <label for="calle" class="col-sm-1 control-label text-rigth">
+                                        Calle (*): 
+                                    </label>
+                                    <div class="col-md-11">
+                                        <input  class="form-control misSol"
+                                                id="calle"
+                                                name="calle"
+                                                [(ngModel)]="calle"
+                                                (ngModelChange)="getDataSecondGroup( calle, 'calle' )"
+                                                maxlength="500">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="numext" class="col-sm-1 control-label text-rigth">
+                                        Número. Ext. (*): 
+                                    </label>
+                                    <div class="col-md-3">
+                                        <input  class="form-control misSol"
+                                                id="numext"
+                                                name="numext"
+                                                [(ngModel)]="numext"
+                                                (ngModelChange)="getDataSecondGroup( numext, 'numet' )"
+                                                maxlength="500">
+                                    </div>
+                                    <label for="numint" class="col-sm-1 control-label text-rigth">
+                                        Número. Int. (*): 
+                                    </label>
+                                    <div class="col-md-3">
+                                        <input  class="form-control misSol"
+                                                id="numint"
+                                                name="numint"
+                                                [(ngModel)]="numint"
+                                                (ngModelChange)="getDataSecondGroup( numint, 'numint' )"
+                                                maxlength="500">
+                                    </div>
+                                    <label for="estado" class="col-sm-1 control-label text-rigth">
+                                        Estado (*): 
+                                    </label>
+                                    <div class="col-md-3">
+                                        <input  class="form-control misSol"
+                                                id="estado"
+                                                name="estado"
+                                                [(ngModel)]="estado"
+                                                (ngModelChange)="getDataSecondGroup( estado, 'estado' )"
+                                                maxlength="500">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="municipio" class="col-md-1 control-label text-rigth">
+                                        Municipio (*): 
+                                    </label>
+                                    <div class="col-md-5">
+                                        <input  class="form-control misSol"
+                                                id="municipio"
+                                                name="municipio"
+                                                [(ngModel)]="municipio"
+                                                (ngModelChange)="getDataSecondGroup( municipio, 'municipio' )"
+                                                maxlength="100">
+                                    </div>
+                                    <label for="telefono" class="col-md-1 control-label text-rigth">
+                                        Telefono (*): 
+                                    </label>
+                                    <div class="col-md-5">
+                                        <input  type="tel"
+                                                class="form-control misSol"
+                                                id="telefono"
+                                                name="telefono"
+                                                [(ngModel)]="telefono"
+                                                (ngModelChange)="getDataFourGroup( telefono, 'telefono' )"
+                                                pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="segmento" class="col-md-1 control-label text-rigth">
+                                        Segmento (*): 
+                                    </label>
+                                    <div class="col-md-5">
+                                        <input  class="form-control misSol"
+                                                id="segmento"
+                                                name="segmento"
+                                                [(ngModel)]="segmento"
+                                                (ngModelChange)="getDataFourGroup( segmento, 'segmento' )"
+                                                maxlength="100">
+                                    </div>
+                                    <label for="sucursal" class="col-md-1 control-label text-rigth">
+                                        Sucursal (*): 
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input  class="form-control misSol"
+                                                id="sucursal"
+                                                name="sucursal"
+                                                [(ngModel)]="sucursal"
+                                                (ngModelChange)="getDataFourGroup( sucursal, 'sucursal' )"
+                                                maxlength="10">
+                                    </div>
+                                    <label for="cc" class="col-md-1 control-label text-rigth">
+                                        CC (*): 
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input  class="form-control misSol"
+                                                id="cc"
+                                                name="cc"
+                                                [(ngModel)]="cc"
+                                                (ngModelChange)="getDataFourGroup( cc, 'cc' )"
+                                                maxlength="10">
+                                    </div>
+                                </div>
+                                <div class="row xtra-top-pad-15">
+                                    <div class="col-lg-11 col-xs-11 text-right footer-btn">
+                                        <a (click)="limpiarFormulario()"
+                                            id="limpiarAv"
+                                            class="btn custom-button-gral">
+                                                Limpiar formulario
+                                        </a>
+                                        <button (click)="guardarClente()"
+                                                type="submit"
+                                                id="EnviaBtn"
+                                                class="btn custom-button-gral">
+                                                    Guardar
+                                        </button>
+                                    </div>
+                                </div> 
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog   header="Header"
+            [(visible)]="displayModalM"
+            [modal]="true"
+            [draggable]="false"
+            [resizable]="false" 
+            [closable]="false"
+            class="dialog50">
+    <ng-template pTemplate="header">
+        {{ headerModalM }}
+    </ng-template>
+        <p class="m-0">{{ messageModalM }}</p>
+    <ng-template pTemplate="footer">
+        <p-button (click)="closeModal()" label="Cerrar" class="btn modal-button-gral"></p-button>
+    </ng-template>
+</p-dialog>
+
+

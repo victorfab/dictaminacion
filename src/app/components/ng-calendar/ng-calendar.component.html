@@ -1,0 +1,17 @@
+<div class="row justify-content-center">
+    <span class="p-float-label cwidth">
+        <p-calendar [(ngModel)]="selectDate" 
+                    [inputId]="inputId" 
+                    [showIcon]="true" 
+                    [inline]="false" 
+                    [dateFormat]="formatDate" 
+                    (ngModelChange)="sendDate()"
+                    [disabled]="disabled"
+                    appendTo="body"
+                    [placeholder]="placeholder"
+                    [minDate]="minDate"
+                    [maxDate]="maxDate">
+        </p-calendar>
+        <label for="basic"> {{ labelCalendar }} </label>
+    </span>
+</div>

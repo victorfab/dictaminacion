@@ -1,0 +1,1544 @@
+<p-tabView (onChange)="tabActive($event)">
+    <p-tabPanel header="Documentos Dictaminados" class="t25" id="pfdd">
+        <div class="card">
+            <p-table #dt2
+                    editMode="row"
+                    dataKey="id"
+                    id="docsdictperfis"
+                    responsiveLayout="scroll"
+                    [value]="docsdictaminados"
+                    [(selection)]="selecteddocsdictaminados" 
+                    [rowHover]="true" 
+                    [showCurrentPageReport]="true">
+                <ng-template pTemplate="header" id="tmpdocspf">
+                    <tr>
+                        <th scope="col" class="t17" id="thddpf-1">
+                            <label for="nombre_doc">
+                                <p class="p-header">Nombre del documento (*)</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropdocname"
+                                        name="nombre_doc"
+                                        id="nombre_doc"
+                                        optionValue="id"
+                                        optionLabel="nombre"
+                                        placeholder="Seleccionar"
+                                        [options]="arrayFiles"
+                                        [(ngModel)]="idArchivo"
+                                        (onChange)="getData( $event, 'idArchivo' )">
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" class="t17" id="thddpf-2">
+                            <label for="numesc">
+                                <p class="p-header">Póliza o No. escritura pública (*)</p>
+                            </label>
+                            <input  pInputText
+                                    type="text"
+                                    class="p-column-filter"
+                                    id="numesc"
+                                    oninput="this.value=this.value.replace(/<|>/g,'')"
+                                    [maxlength]="50"
+                                    [(ngModel)]="poliza"
+                                    (ngModelChange)="getData( poliza, 'polizaval' )">
+                        </th>
+                        <th scope="col" class="t15" id="thddpf-3">
+                            <label for="fechaemdev">
+                                <p class="p-header">Fecha emisión de escritura (*)</p>
+                            </label>
+                            <app-ng-calendar    ngDefaultControl 
+                                                class="ml-0 mr-0 tablecalendar" 
+                                                name="fechaemdev"
+                                                id="fechaemdev"
+                                                inputId="femisiondev"
+                                                locale="es"
+                                                [maxDate]="maxDate"
+                                                formatDate="dd/mm/yy"
+                                                [selectDate]="fchEmisionEscr"
+                                                (OutDate)="getData( $event, 'fchEmisionEscr' )">
+                            </app-ng-calendar>
+                        </th>
+                        <th scope="col" class="t18" id="thddpf-4">
+                            <label for="actospf">
+                                <p class="p-header">Actos que se hicieron constar (*)</p>
+                            </label>
+                            <input  pInputText
+                                    type="text"
+                                    id="actospf"
+                                    name="actospf"
+                                    class="p-column-filter"
+                                    oninput="this.value=this.value.replace(/<|>/g,'')"
+                                    [maxlength]="2000"
+                                    [(ngModel)]="actos"
+                                    (ngModelChange)="getData( actos, 'actosconst' )">
+                        </th>
+                        <th scope="col" class="t15" id="thddpf-5">
+                            <label for="ins_artpf">
+                                <p class="p-header">Inserción artículo 2554 ó correlativo (*)</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropinsar"
+                                        name="ins_artpf"
+                                        id="ins_artpf"
+                                        optionValue="nombre"
+                                        optionLabel="nombre"
+                                        placeholder="Seleccionar"
+                                        [options]="insart"
+                                        [(ngModel)]="articulo"
+                                        (onChange)="getData( $event, 'articulo' )">
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" class="t16" id="thddpf-6">
+                            <label for="consideraciones"><p class="p-header">Consideraciones legales (*)</p>
+                            </label>
+                            <input  pInputText
+                                    type="text"
+                                    id="consideraciones"
+                                    name="consideraciones"
+                                    class="p-column-filter"
+                                    oninput="this.value=this.value.replace(/<|>/g,'')"
+                                    [maxlength]="4000"
+                                    [(ngModel)]="consideraciones"
+                                    (ngModelChange)="getData( consideraciones, 'consleg' )">
+                        </th>
+                        <th scope="col" id="thddpf-7" class="accionesth">
+                            <label for="accionesdocs">
+                                <p class="p-header">Acciones</p>
+                            </label>
+                            <br />
+                            <button pButton
+                                    pRipple
+                                    icon="pi pi-plus"
+                                    id="accionesdocs"
+                                    class="p-button-rounded p-button-table-success"
+                                    (click)="guardarDocsDict()"
+                                    [disabled]="!(fchEmisionEscr && fchEmisionEscr.length > 0 && consideraciones && articulo && insart && idArchivo && poliza && actos && consideraciones.length > 0 && insart.length > 0 && articulo.length > 0 && actos.length > 0 && poliza.length > 0 && this.idArchivo.length > 0)">
+                            </button>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body"
+                             let-docsdictaminado
+                             let-editing="editing"
+                             let-rowIndex="rowIndex"
+                             id="tmpdocsdpf">
+                    <tr [pEditableRow]="docsdictaminado">
+                        <td id="thdictperfis">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown appendTo="body"
+                                                name="nombreArchivoEdit"
+                                                id="nombreArchivoEdit"
+                                                optionValue="id"
+                                                optionLabel="nombre"
+                                                placeholder="{{docsdictaminado.nomArchivo}}"
+                                                [options]="arrayFiles"
+                                                [(ngModel)]="docsdictaminado.nomArchivo"
+                                                [disabled]="true">
+                                    </p-dropdown>
+                                    <label for="nombreArchivoEdit"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <div class="wordwarp">{{ docsdictaminado.nomArchivo }}</div>
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td id="thdictperfis">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input  pInputText 
+                                            type="text"
+                                            id="polizaDDperfis"
+                                            name="polizaDDperfis"
+                                            required=true
+                                            [maxlength]="50"
+                                            oninput="this.value=this.value.replace(/<|>/g,'')"
+                                            [(ngModel)]="docsdictaminado.poliza">
+                                    <label for="polizaDDperfis"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ docsdictaminado.poliza }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td id="thdictperfis">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <br>
+                                    <app-ng-calendar  ngDefaultControl 
+                                                      name="fechaeditDatos"
+                                                      id="fechaeditDatos"
+                                                      inputId="femisiondev"
+                                                      locale="es"
+                                                      styleClass="mt-2"
+                                                      [maxDate]=maxDate
+                                                      formatDate="dd-mm-yy"
+                                                      [selectDate]="docsdictaminado.fchEmisionEscr"
+                                                      placeholder={{docsdictaminado.fchEmisionEscr}}
+                                                      (OutDate)="docsdictaminado.fchEmisionEscr=$event">
+                                    </app-ng-calendar>
+                                    <label for="fechaeditDatos"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ docsdictaminado.fchEmisionEscr }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td id="thdictperfis">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input  pInputText 
+                                            id="actosDDperfis"
+                                            name="actosDDperfis"
+                                            type="text"
+                                            required=true
+                                            [maxlength]="2000"
+                                            oninput="this.value=this.value.replace(/<|>/g,'')"
+                                            [(ngModel)]="docsdictaminado.actos">
+                                    <label for="actosDDperfis"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ docsdictaminado.actos }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td id="thdictperfis">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown *ngIf="isReady"
+                                                appendTo="body"
+                                                class="dropinsar"
+                                                name="articuloDocumentosDictaminados"
+                                                id="articuloDocumentosDictaminados"
+                                                optionValue="nombre"
+                                                optionLabel="nombre"
+                                                [options]="insart"
+                                                [(ngModel)]="docsdictaminado.articulo">
+                                    </p-dropdown>
+                                    <label for="articuloDocumentosDictaminados"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ docsdictaminado.articulo }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td id="thdictperfis">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input  pInputText 
+                                            type="text"
+                                            id="consideracionesDDperfis"
+                                            name="consideracionesDDperfis"
+                                            required=true
+                                            [maxlength]="4000"
+                                            oninput="this.value=this.value.replace(/<|>/g,'')"
+                                            [(ngModel)]="docsdictaminado.consideraciones">
+                                    <label for="consideracionesDDperfis"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ docsdictaminado.consideraciones }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <div class="row justify-content-center">
+                                <a *ngIf="!editing"
+                                    pInitEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnEditesp"
+                                    title="btnEditesp"
+                                    (click)="onRowEditInitDocumentosDictamines(rowIndex, docsdictaminado)"
+                                    disabled="(rowIndexDocumentosDictaminadosActive !== -1) && (rowIndex !== rowIndexDocumentosDictaminadosActive)">
+                                    <span><em class="pi pi-pencil red-color"></em></span>
+                                </a>
+                                <a *ngIf="editing"
+                                    pSaveEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnCheckesp"
+                                    title="btnCheckesp"
+                                    (click)="onRowEditSaveDocumentosDictaminados(rowIndex, docsdictaminado)"
+                                    [hidden]="((rowIndexDocumentosDictaminadosActive !== -1) && (rowIndex !== rowIndexDocumentosDictaminadosActive)) || !(docsdictaminado &&  docsdictaminado.consideraciones.length > 0 && docsdictaminado.articulo.length > 0 && docsdictaminado.actos.length > 0 && docsdictaminado.nomArchivo.length >0 && docsdictaminado.poliza.length > 0)">
+                                    <span><em class="pi pi-check red-color"></em></span>
+                                </a>
+                                <a *ngIf="editing"
+                                    pCancelEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnSaveesp"
+                                    title="Save"
+                                    (click)="onRowEditCancelDocumentosDictaminados(rowIndex, docsdictaminado)"
+                                    disabled="(rowIndexDocumentosDictaminadosActive !== -1) && (rowIndex !== rowIndexDocumentosDictaminadosActive)">
+                                    <span><em class="pi pi-times red-color"></em></span>
+                                </a>
+                                <a  *ngIf="!editing"
+                                    class="btn btn-default mr-3"
+                                    id="btnTrashesp"
+                                    title="trash"
+                                    (click)="eliminarDocsDict(rowIndex)"
+                                    disabled="(rowIndexDocumentosDictaminadosActive !== -1) && (rowIndex !== rowIndexDocumentosDictaminadosActive)">
+                                    <span><em class="pi pi-trash red-color"></em></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage" id="tmppfmess">
+                    <tr>
+                        <td colspan="7">No se encontraron documentos.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div class="panel-body mt-5" id="tabsfootdocsdict">
+                <div class="row col-md-12 ml-3">
+                    <label for="registro">
+                        Incluye registro:
+                    </label>
+                    <div class="col-md-3">
+                        <div class="col-12 formCon">
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropincreg"
+                                        name="registro"
+                                        id="registro"
+                                        optionValue="nombre"
+                                        optionLabel="nombre"
+                                        placeholder="Seleccionar"
+                                        [options]="insart"
+                                        [(ngModel)]="registro"
+                                        (onChange)="getDataC( $event, 'registro' )">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <label for="referencia">
+                        Dar aviso:
+                    </label>
+                    <div class="col-md-3">
+                        <div class="col-12 formCon">
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        name="aviso"
+                                        id="aviso"
+                                        optionValue="nombre"
+                                        optionLabel="nombre"
+                                        placeholder="Seleccionar"
+                                        [options]="daravisovalue"
+                                        [(ngModel)]="aviso"
+                                        (onChange)="getDataC( $event, 'aviso' )">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <label for="femision">
+                        Fecha emisión de escritura:
+                    </label>
+                    <div class="col-md-2">
+                        <div class="col-12 formCon">
+                            <app-ng-calendar    ngDefaultControl 
+                                                class="ml-0 mr-0"
+                                                name="femision"
+                                                inputId="femision"
+                                                locale="es"
+                                                formatDate="dd/mm/yy"
+                                                placeholder={{femaviso}}
+                                                (OutDate)="getDataC( $event, 'femaviso' )">
+                            </app-ng-calendar>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-left mt-3">
+                    <span>Si a la fecha no se han incluido en los datos de la inscripción definitivos se deberá cancelar la cuenta.</span>
+                </div>
+            </div>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Datos de inscripción" class="t25" id="tabpnadocsipf">
+        <div class="card">
+            <p-table #dt2
+                    editMode="row"
+                    responsiveLayout="scroll"
+                    id="tabldocsipf"
+                    dataKey="id"
+                    [value]="datosinscs"
+                    [(selection)]="selecteddatosinscs" 
+                    [rowHover]="true" 
+                    [showCurrentPageReport]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th scope="col" id="thdocpf" class="t18">
+                            <label for="nombredoc">
+                                <p class="p-header">Póliza o No. escritura pública (*)</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropdocname"
+                                        name="num_escritura_f"
+                                        id="num_escritura_f"
+                                        optionValue="idArchivo"
+                                        optionLabel="poliza"
+                                        placeholder="Seleccionar"
+                                        [options]="documentosValue"
+                                        [(ngModel)]="num_escritura_f"
+                                        (onChange)="getDataTrhid( $event, 'num_escritura_f' )" >
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" id="thdocpf" class="t18">
+                            <label for="foliomerc">
+                                <p class="p-header">Folio mercantil (*)</p>
+                            </label>
+                            <input  pInputText
+                                    type="text"
+                                    id="foliomerc"
+                                    name="foliomerc"
+                                    class="p-column-filter"
+                                    oninput="this.value=this.value.replace(/<|>/g,'')"
+                                    [maxlength]="400"
+                                    [(ngModel)]="folioMerc"
+                                    (ngModelChange)="getDataTrhid( folioMerc, 'folio' )">
+                        </th>
+                        <th scope="col" id="thdocpf" class="t18">
+                            <label for="fechaem">
+                                <p class="p-header">Fecha de inscripción (*)</p>
+                            </label>
+                            <app-ng-calendar    ngDefaultControl 
+                                                class="ml-0 mr-0 tablecalendar"
+                                                name="feinscrip"
+                                                inputId="feinscrip"
+                                                locale="es"
+                                                formatDate="dd/mm/yy"
+                                                [maxDate]="maxDate"
+                                                [selectDate]="fchInscripcion"
+                                                (OutDate)="getDataTrhid( $event, 'fchInscripcion' )"
+                                                placeholder={{fchInscripcion}}>
+                            </app-ng-calendar>
+                        </th>
+                        <th scope="col" id="thdocpf" class="t18">
+                            <label for="actos">
+                                <p class="p-header">Estado</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropinsar"
+                                        name="estado"
+                                        id="estado"
+                                        optionValue="idEntidadFed"
+                                        optionLabel="nombre"
+                                        placeholder="Seleccionar"
+                                        [options]="entidadesDatadi"
+                                        [(ngModel)]="entidaddi"
+                                        (onChange)="getDataTrhid( $event, 'entidaddi' )">
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" id="thdocpf" class="t18">
+                            <label for="insercion">
+                                <p class="p-header">Municipio</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropinsar"
+                                        name="municipio"
+                                        id="municipio"
+                                        optionLabel="nombre"
+                                        optionValue="idMunicipio"
+                                        placeholder="Seleccionar"
+                                        [options]="municipiosDatadi"
+                                        [(ngModel)]="municipiodi"
+                                        (onChange)="getDataTrhid( $event, 'municipiodi' )">
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" id="thdocpf" class="accionesth">
+                            <label for="acciones">
+                                <p class="p-header mb-1">Acciones</p>
+                            </label>
+                            <br />
+                            <button pButton
+                                    pRipple
+                                    icon="pi pi-plus"
+                                    class="p-button-rounded p-button-table-success"
+                                    [disabled]="!(folioMerc && fchInscripcion && folioMerc.length > 0 && fchInscripcion.length > 0 && this.datosinsc.num_escritura_f > 0)"
+                                    (click)="guardarDatosInsc()">
+                            </button>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body"
+                             let-datosinsc
+                             let-editing="editing"
+                             let-rowIndex="rowIndex"
+                             id="tmpdatipf">
+                    <tr [pEditableRow]="datosinsc">
+                        <td id="tddatinpf">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText
+                                            appendTo="body"
+                                            class="dropdocname"
+                                            name="num_escritura_f"
+                                            id="num_escritura_f"
+                                            [(ngModel)]="datosinsc.poliza"
+                                            [disabled]="true">
+                                <label for="num_escritura_fed"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosinsc.poliza }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td id="tddatinpf">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input  pInputText
+                                            type="text"
+                                            name="foliomerc"
+                                            id="foliomerc"
+                                            class="p-column-filter"
+                                            required=true
+                                            oninput="this.value=this.value.replace(/<|>/g,'')"
+                                            [maxlength]="400"
+                                            [(ngModel)]="datosinsc.folioMerc">
+                                <label for="foliomerc"></label>
+                                </ng-template>  
+                                <ng-template pTemplate="output">
+                                    {{ datosinsc.folioMerc }}
+                                </ng-template>    
+                            </p-cellEditor>
+                        </td>
+                        <td id="tddatinpf">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <app-ng-calendar    ngDefaultControl
+                                                        appendTo="body"
+                                                        class="ml-0 mr-0 tablecalendar"
+                                                        name="feinscrip"
+                                                        inputId="feinscrip"
+                                                        locale="es"
+                                                        formatDate="dd-mm-yy"
+                                                        [maxDate]="maxDate"
+                                                        [selectDate]="datosinsc.fchInscripcion"
+                                                        (OutDate)="datosinsc.fchInscripcion=$event"
+                                                        placeholder={{datosinsc.fchInscripcion}}>
+                                    </app-ng-calendar>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosinsc.fchInscripcion }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td id="tddatinpf">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown *ngIf="isReady"
+                                                appendTo="body"
+                                                class="dropinsar"
+                                                name="estdiesp"
+                                                id="estdiesp"
+                                                optionValue="idEntidadFed"
+                                                optionLabel="nombre"
+                                                placeholder="{{datosinsc.estadoNombre}}"
+                                                [options]="entidadesDatadi"
+                                                [(ngModel)]="datosinsc.estadoNombre"
+                                                (onChange)="getDataTrhid( $event, 'entidaddi' )">
+                                    </p-dropdown>
+                                    <label for="estadofe"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosinsc.estadoNombre }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td id="tddatinpf">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown *ngIf="isReady"
+                                                appendTo="body"
+                                                class="dropinsar"
+                                                name="municipiodiesp"
+                                                id="municipiodiesp"
+                                                optionValue="idMunicipio"
+                                                optionLabel="nombre"
+                                                placeholder="Seleccionar"
+                                                [options]="municipiosDatadi"
+                                                [(ngModel)]="datosinsc.municipioNombre"
+                                                (onChange)="getDataTrhid( $event, 'municipiodi' )">
+                                    </p-dropdown>
+                                    <label for="municipiodiesp"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosinsc.municipioNombre }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td id="tddatinpf">
+                            <div class="row justify-content-center">
+                                <a *ngIf="!editing"
+                                    pInitEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnEdit"
+                                    title="btnEdit"
+                                    (click)="onRowEditDj(rowIndex, datosinsc)"
+                                    disabled="(rowIndexDatosJuzActive !== -1) && (rowIndex !== rowIndexDatosJuzActive)">
+                                    <span><em class="pi pi-pencil red-color"></em></span>
+                                </a>
+                                <a *ngIf="editing"
+                                    pSaveEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnCheck"
+                                    title="btnCheck"
+                                    (click)="onRowEditSaveDj(rowIndex, datosinsc)"
+                                    [hidden]="((rowIndexDatosJuzActive !== -1) && (rowIndex !== rowIndexDatosJuzActive)) || !(datosinsc && datosinsc.fchInscripcion && datosinsc.folioMerc.length > 0)">
+                                    <span><em class="pi pi-check red-color"></em></span>
+                                </a>
+                                <a *ngIf="editing"
+                                    pCancelEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnSave"
+                                    title="Save"
+                                    (click)="onRowEditCancelDj(rowIndex, datosinsc)"
+                                    disabled="(rowIndexDatosJuzActive !== -1) && (rowIndex !== rowIndexDatosJuzActive)">
+                                    <span><em class="pi pi-times red-color"></em></span>
+                                </a>
+                                <a  *ngIf="!editing"
+                                    class="btn btn-default mr-3"
+                                    id="btnTrash"
+                                    title="trash"
+                                    (click)="eliminarDatosInsc(rowIndex)"
+                                    disabled="(rowIndexDatosJuzActive !== -1) && (rowIndex !== rowIndexDatosJuzActive)">
+                                    <span><em class="pi pi-trash red-color"></em></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No se encontraron registros.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-tabPanel>    
+    <p-tabPanel header="Fedatario" class="t25">
+        <div class="card">
+            <p-table #dt3
+                    editMode="row"
+                    id="fedatarperfis"
+                    responsiveLayout="scroll"
+                    dataKey="id"
+                    [value]="datosfeds"
+                    [(selection)]="selecteddatosfeds" 
+                    [rowHover]="true" 
+                    [showCurrentPageReport]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th scope="col" class="t18" id="thfedpf">
+                            <label for="num_escritura_fed">
+                                <p class="p-header">Póliza o No. escritura pública (*)</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropdocname"
+                                        name="num_escritura_fed"
+                                        id="num_escritura_fed"
+                                        optionValue="idArchivo"
+                                        optionLabel="poliza"
+                                        placeholder="Seleccionar"
+                                        [options]="documentosValue"
+                                        [(ngModel)]="num_escritura_fed"
+                                        (onChange)="getData( $event, 'num_escritura_fed' )">
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" class="t18" id="thfedpf">
+                            <label for="nombrefed">
+                                <p class="p-header">Nombre notario o corredor (*)</p>
+                            </label>
+                            <input  pInputText
+                                    type="text"
+                                    name="nombrefed"
+                                    id="nombrefed"
+                                    class="p-column-filter"
+                                    oninput="this.value=this.value.replace(/<|>/g,'')"
+                                    [maxlength]="400"
+                                    [(ngModel)]="nomFedatario"
+                                    (ngModelChange)="getDataB( nomFedatario, 'fedat' )">
+                        </th>
+                        <th scope="col" class="t18" id="thfedpf">
+                            <label for="numerofed">
+                                <p class="p-header">Número notario o corredor (*)</p>
+                            </label>
+                            <input  pInputText
+                                    type="text"
+                                    name="numerofed"
+                                    id="numerofed"
+                                    class="p-column-filter"
+                                    oninput="this.value=this.value.replace(/<|>/g,'')"
+                                    [maxlength]="50"
+                                    [(ngModel)]="numFedatario"
+                                    (ngModelChange)="getDataB( numFedatario, 'numfedat' )">
+                        </th>
+                        <th scope="col" class="t18" id="thfedpf">
+                            <label for="estadofe"><p class="p-header">Estado</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropinsar"
+                                        name="estadofe"
+                                        id="estadofe"
+                                        optionValue="idEntidadFed"
+                                        optionLabel="nombre"
+                                        placeholder="Seleccionar"
+                                        [options]="entidadesDatafe"
+                                        [(ngModel)]="entidadfe"
+                                        (onChange)="getDataB( $event, 'entidadfe' )">
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" class="t18" id="thfedpf">
+                            <label for="municipiofe">
+                                <p class="p-header">Municipio</p>
+                            </label>
+                            <p-dropdown *ngIf="isReady"
+                                        appendTo="body"
+                                        class="dropinsar"
+                                        name="municipiofe"
+                                        id="municipiofe"
+                                        optionValue="idMunicipio"
+                                        optionLabel="nombre"
+                                        [options]="municipiosDatafe"
+                                        [(ngModel)]="municipiofe"
+                                        (onChange)="getDataB( $event, 'municipiofe' )"
+                                        placeholder="Seleccionar">
+                            </p-dropdown>
+                        </th>
+                        <th scope="col" id="thfedpf" class="accionesth">
+                            <label for="accfeds">
+                                <p class="p-header mb-1">Acciones</p>
+                            </label>
+                            <br />
+                            <button pButton
+                                    pRipple
+                                    icon="pi pi-plus"
+                                    class="p-button-rounded p-button-table-success"
+                                    id="accfeds"
+                                    [disabled]="!(nomFedatario && numFedatario && nomFedatario.length > 0 && numFedatario.length > 0 && this.datosfed.num_escritura_fed > 0)"
+                                    (click)="guardarFedatario()">
+                            </button>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body"
+                             let-datosfed
+                             let-editing="editing"
+                             let-rowIndex="rowIndex"
+                             id="tmpdatfedpf">
+                    <tr [pEditableRow]="datosfed">
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input  pInputText 
+                                            type="text"
+                                            disabled="true"
+                                            name="numescriturafedpfis"
+                                            id="numescriturafedpfis"
+                                            [(ngModel)]="datosfed.poliza">
+                                <label for="numescriturafedpfis"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosfed.poliza }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input  pInputText
+                                            type="text"
+                                            name="nombrefedatperfis"
+                                            id="nombrefedatperfis"
+                                            class="p-column-filter"
+                                            required=true
+                                            oninput="this.value=this.value.replace(/<|>/g,'')"
+                                            [maxlength]="400"
+                                            [(ngModel)]="datosfed.nomFedatario">
+                                <label for="nombrefedatperfis"></label>
+                                </ng-template>  
+                                <ng-template pTemplate="output">
+                                    {{ datosfed.nomFedatario }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input  pInputText
+                                            type="text"
+                                            name="numerofedatpfis"
+                                            id="numerofedatpfis"
+                                            class="p-column-filter"
+                                            required=true
+                                            oninput="this.value=this.value.replace(/[^0-9.]|<|>/g,'')"
+                                            [maxlength]="50"
+                                            [(ngModel)]="datosfed.numFedatario">
+                                <label for="numerofedatpfis"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosfed.numFedatario }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown *ngIf="isReady"
+                                                appendTo="body"
+                                                class="dropinsar"
+                                                name="estadofepfis"
+                                                id="estadofepfis"
+                                                optionValue="idEntidadFed"
+                                                optionLabel="nombre"
+                                                placeholder="{{datosfed.estadoNombre}}"
+                                                [options]="entidadesDatafe"
+                                                [(ngModel)]="datosfed.estadoNombre"
+                                                (onChange)="getDataB( $event, 'entidadfe' )">
+                                    </p-dropdown>
+                                    <label for="estadofepfis"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosfed.estadoNombre }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown *ngIf="isReady"
+                                                appendTo="body"
+                                                class="dropinsar"
+                                                name="municipiofefid"
+                                                id="municipiofefid"
+                                                optionValue="idMunicipio"
+                                                optionLabel="nombre"
+                                                placeholder="Seleccionar"
+                                                [options]="municipiosDatafe"
+                                                [(ngModel)]="datosfed.municipioNombre"
+                                                (onChange)="getDataB( $event, 'municipiofe' )">
+                                    </p-dropdown>
+                                    <label for="municipiofefid"></label>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ datosfed.municipioNombre }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <div class="row justify-content-center">
+                                <a *ngIf="!editing"
+                                    pInitEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnEditpf"
+                                    title="btnEditpf"
+                                    (click)="onRowEditFed(rowIndex, datosfed)"
+                                    disabled="(rowIndexFederatarioActive !== -1) && (rowIndex !== rowIndexFederatarioActive)">
+                                    <span><em class="pi pi-pencil red-color"></em></span>
+                                </a>
+                                <a *ngIf="editing"
+                                    pSaveEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnCheckfid"
+                                    title="btnCheckpf"
+                                    (click)="onRowEditSaveFederatario(rowIndex, datosfed)" 
+                                    [hidden]="((rowIndexFederatarioActive !== -1) && (rowIndex !== rowIndexFederatarioActive)) || !(datosfed && datosfed.poliza.length > 0 && datosfed.nomFedatario.length > 0 && datosfed.numFedatario.length > 0)">
+                                    <span><em class="pi pi-check red-color"></em></span>
+                                </a>
+                                <a *ngIf="editing"
+                                    pCancelEditableRow
+                                    class="btn btn-default mr-3"
+                                    tabindex="0"
+                                    id="btnSavepf"
+                                    title="Save"
+                                    (click)="onRowEditCancelFederatario(rowIndex, datosfed)"
+                                    disabled="(rowIndexFederatarioActive !== -1) && (rowIndex !== rowIndexFederatarioActive)">
+                                    <span><em class="pi pi-times red-color"></em></span>
+                                </a>
+                                <a  *ngIf="!editing"
+                                    class="btn btn-default mr-3"
+                                    id="btnTrashpf"
+                                    title="trash"
+                                    (click)="eliminarFedatario(rowIndex)"
+                                    disabled="(rowIndexFederatarioActive !== -1) && (rowIndex !== rowIndexFederatarioActive)">
+                                    <span><em class="pi pi-trash red-color"></em></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No se encontraron registros.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Apoderado" id="tmpapopf" class="t25">
+        <div class="card">
+            <div class="row">
+                <div id="apoderadpf" class="form-group col-md-6 offset-md-3 text-center">
+                    <label for="numpoliza">
+                        <p class="p-header mb-1">Póliza o No. escritura pública (*)</p>
+                    </label>
+                    <div class="form-group" id="appf">
+                        <p-dropdown *ngIf="isReady"
+                                    appendTo="body"
+                                    name="numpolizapf"
+                                    id="numpolizapf"
+                                    optionValue="idArchivo"
+                                    optionLabel="poliza"
+                                    placeholder="Seleccionar"
+                                    [options]="documentosValue"
+                                    [(ngModel)]="numpoliza"
+                                    (onChange)="getDataB( $event, 'numpoliza' )">
+                        </p-dropdown>
+                        <small  class="p-error text-left"
+                                *ngIf="numpoliza === ''">Este campo es requerido.</small>
+                    </div>
+                    <label for="nombreappf">
+                        <p class="p-header mb-1">Nombre (*)</p>
+                    </label>
+                    <div class="form-group" id="appf">
+                        <input  pInputText
+                                type="text"
+                                name="nombreappf"
+                                id="nombreappf"
+                                class="p-column-filter"
+                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                [maxlength]="80"
+                                [(ngModel)]="nombre"
+                                (ngModelChange)="getDataB( nombre, 'nombreapod' )">
+                        <small  class="p-error text-left"
+                                *ngIf="nombre === ''">Este campo es requerido.</small>
+                    </div>
+                    <label for="apepatappf">
+                        <p class="p-header mb-1">Apellido paterno (*)</p>
+                    </label>
+                    <div class="form-group" id="appf">
+                        <input  pInputText
+                                type="text"
+                                nombre="apepatappf"
+                                id="apepatappf"
+                                class="p-column-filter"
+                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                [maxlength]="80"
+                                [(ngModel)]="apPaterno"
+                                (ngModelChange)="getDataB( apPaterno, 'apepatapod' )">
+                        <small  class="p-error text-left"
+                                *ngIf="apPaterno === ''">Este campo es requerido.</small>
+                    </div>
+                    <label for="apematappf">
+                        <p class="p-header mb-1">Apellido materno</p>
+                    </label>
+                    <div class="form-group" id="appf">
+                        <input  pInputText
+                                type="text"
+                                nombre="apematappf"
+                                id="apematappf"
+                                class="p-column-filter"
+                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                [maxlength]="80"
+                                [(ngModel)]="apMaterno"
+                                (ngModelChange)="getDataB( apMaterno, 'apematapod' )">
+                    </div>
+                    <label for="rfcpf">
+                        <p class="p-header mb-1">RFC</p>
+                    </label>
+                    <div class="form-group" id="appf">
+                        <input  pInputText
+                                type="text"
+                                nombre="rfcpf"
+                                id="rfcpf"
+                                class="p-column-filter"
+                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                [(ngModel)]="rfc"
+                                [maxlength]="13"
+                                (ngModelChange)="getDataB( rfc, 'datarfc' )">
+                    </div>
+                    <label for="cargosocpf">
+                        <p class="p-header mb-1">Cargo en la sociedad</p>
+                    </label>
+                    <div class="form-group" id="appf">
+                        <input  pInputText
+                                type="text"
+                                nombre="cargosocpf"
+                                id="cargosocpf"
+                                class="p-column-filter"
+                                [maxlength]="80"
+                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                [(ngModel)]="cargoSociedad"
+                                (ngModelChange)="getDataC( cargoSociedad, 'cargosoc' )">
+                    </div>
+                    <label for="facultapopf">
+                        <p class="p-header mb-1">Facultades (*)</p>
+                    </label>
+                    <div class="p-inputgroup" id="appf">
+                        <input  pInputText
+                                type="text"
+                                id="facultapopf"
+                                class="p-column-filter"
+                                [(ngModel)]="selectedfacultades" disabled>
+                        <button pButton
+                                pRipple
+                                type="button"
+                                icon="pi pi-align-justify"
+                                class="p-button-danger"
+                                (click)="displayMInter()">
+                        </button>
+                    </div>
+                    <label for="conslegpf">
+                        <p class="p-header mb-1">Consideraciones legales (*)</p>
+                    </label>
+                    <div class="form-group" id="appf">
+                        <input  pInputText
+                                type="text"
+                                nombre="conslegpf"
+                                id="conslegpf"
+                                class="p-column-filter"
+                                [maxlength]="2000"
+                                [(ngModel)]="considLegal" 
+                                (ngModelChange)="getDataC( considLegal, 'consigleg' )">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 text-right" id="btngapodpf">
+                <button pButton
+                        pRipple
+                        class="btn btn-file custom-button-gral"
+                        *ngIf="editRepresentativeActive"
+                        (click)="cancelUpdateFacultyItem()">Cancelar</button>
+                <button pButton
+                        pRipple
+                        class="btn btn-file custom-button-gral ml-3"
+                        [disabled]="!(nombre && apPaterno && nombre.length > 0 && apPaterno.length > 0 && this.apoderado.numpoliza > 0)"
+                        (click)="editRepresentativeActive ? updateFacultyItem() : guardarApoderado()">{{ editRepresentativeActive ? 'Actualizar' : 'Agregar'}}</button>
+            </div>
+            <p-table    [value]="apoderados" 
+                        dataKey="idAux"
+                        [rowHover]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th scope="col" class="t5" id="thpfapod_1"></th>
+                        <th scope="col" id="thpfapod_1">Nombre</th>
+                        <th scope="col" id="thpfapod_1">N&uacute;mero</th>
+                        <th scope="col" id="thpfapod_1">RFC</th>
+                        <th scope="col" id="thpfapod_1">Cargo</th>
+                        <th scope="col" id="thpfapod_1">Consideraciones legales</th>
+                        <th scope="col" id="thpfapod_1">
+                            <div class="row justify-content-center">
+                                Acciones
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-apoderado let-expanded="expanded" let-rowIndex="rowIndex">
+                    <tr>
+                        <td>
+                            <button type="button"
+                                    id="btnapodpfdown"
+                                    pButton 
+                                    pRipple 
+                                    [pRowToggler]="apoderado" 
+                                    class="p-button-text p-button-rounded p-button-plain" 
+                                    [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'">
+                            </button>
+                        </td>
+                        <td>{{ apoderado.nombreCompleto }}</td>
+                        <td>{{ apoderado.poliza }}</td>
+                        <td>{{ apoderado.rfc }}</td>
+                        <td>{{ apoderado.cargoSociedad }}</td>
+                        <td>{{ apoderado.considLegal }}</td>
+                        <td class="actionsw">
+                            <div class="row justify-content-center align-items-center" id="btnspf">
+                                <button pButton
+                                        id="btnapodeditpf"
+                                        pRipple 
+                                        icon="pi pi-pencil" 
+                                        [disabled]="(rowIndexActive !== -1) && (rowIndex !== rowIndexActive)"
+                                        class="p-button-rounded p-button-table-primary"
+                                        (click)="editFaculty(rowIndex)"
+                                        pTooltip="Editar" 
+                                        tooltipPosition="bottom"></button>
+                                <button pButton
+                                        id="btnapoddelpf"
+                                        pRipple 
+                                        icon="pi pi-trash"
+                                        [disabled]="((rowIndexActive !== -1) && (rowIndex !== rowIndexActive) || (rowIndex === rowIndexActive))"                                        
+                                        class="p-button-rounded p-button-table-success ml-2" 
+                                        (click)="deleteFaculty(rowIndex)"
+                                        pTooltip="Eliminar" 
+                                        tooltipPosition="bottom">
+                                </button>
+                                <button pButton 
+                                        pRipple 
+                                        id="btncopyapodpf"
+                                        icon="pi pi-copy" 
+                                        [disabled]="((rowIndexActive !== -1) && (rowIndex !== rowIndexActive) || (rowIndex === rowIndexActive))"                                        
+                                        class="p-button-rounded p-button-table-secondary ml-2" 
+                                        (click)="duplicateItemRepresentative(rowIndex)"
+                                        pTooltip="Duplicar" 
+                                        tooltipPosition="bottom">
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template id="tmpapodpf_02" 
+                             pTemplate="rowexpansion"
+                             let-apoderado>
+                    <tr>
+                        <td colspan="7">
+                            <div class="p-3 w-full">
+                                <p-table [value]="apoderado.facultades" dataKey="tipo">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th scope="col" id="thpfapod_1" >Facultades</th>
+                                            <th scope="col" id="thpfapod_1" >Tipo de ejercicio</th>
+                                            <th scope="col" id="thpfapod_1" >Vigencia</th>
+                                            <th scope="col" id="thpfapod_1" >Limitantes</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template id="tmppffac" pTemplate="body" let-faculty>
+                                        <tr>
+                                            <td>{{faculty.tipo}}</td>
+                                            <td>{{ getExeType(faculty.tipoEj) }}</td>
+                                            <td>{{ checkIsEmpty(faculty.vig) }}</td>
+                                            <td>{{ checkIsEmpty(faculty.limit) }}</td>
+                                            
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template id="tmpfacpfm" pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="4">Sin facultades registradas</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-tabPanel>
+    <p-dialog   class="t150"
+                id="dmodpf-1"
+                header="Header"
+                [(visible)]="displayModalInter"
+                [modal]="true"
+                [draggable]="false"
+                [resizable]="false"
+                [closable]="false"
+                [closeOnEscape]="false">
+        <ng-template pTemplate="header" id="tmpmodpf">
+            <p></p>
+        </ng-template>
+        <ng-template pTemplate="body" id="tempmodpf">
+            <div class="card">
+                <table  class="p-datatable-gobinst"
+                        id="tablpf"
+                        rows="10"
+                        aria-label="Seleccion de Facultades">
+                    <tr>
+                        <th scope="col" class="t25" id="thpf-1">
+                            <label for="nombrefac"><p class="p-header">Facultades</p>
+                            </label>
+                        </th>
+                        <th scope="col" class="t25" id="thpf-1">
+                            <label for="nombretipo"><p class="p-header">Tipo de ejercicio</p>
+                            </label>
+                        </th>
+                        <th scope="col" class="t25" id="thpf-1">
+                            <label for="nombrelim"><p class="p-header">Limitantes</p>
+                            </label>
+                        </th>
+                        <th scope="col" class="t25" id="thpf-1">
+                            <label for="nombrevig"><p class="p-header">Vigencia</p>
+                            </label>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left" id="thpf-2">
+                                <label class="font-weight-label" for="optionsRadios1">
+                                    <input  #checkboxes
+                                            [(ngModel)]="domainActsCheck"
+                                            type="checkbox"
+                                            id="optionRadio1"
+                                            name="actosdom"
+                                            id="optionRadio1"
+                                            value="1">
+                                    <span class="ml-2">Actos de dominio</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="pepf">
+                                <div class="col-md-6 mb-3">
+                                    <p-dropdown *ngIf="isReady"
+                                                appendTo="body"
+                                                name="ejercicioad"
+                                                id="ejercicioaddpf"
+                                                optionValue="id"
+                                                optionLabel="nombre"
+                                                placeholder="Seleccionar"
+                                                [ngClass]="{'is-required' : checkIsRequired(domainActsCheck,domainActsExeType)}"
+                                                [options]="tipoejercicio"
+                                                [(ngModel)]="domainActsExeType">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="fmpf">
+                                <div class="col-md-12 mb-3">
+                                    <label for="domainActsLimit"></label>
+                                    <textarea   pInputText
+                                                type="text"
+                                                class="p-column-filter"
+                                                id="domainActsLimit"
+                                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                                [maxlength]=8000
+                                                [(ngModel)]="domainActsLimit">
+                                    </textarea>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="fmpf">
+                                <div class="col-md-6 mb-3">
+                                    <app-ng-calendar    ngDefaultControl
+                                                        class="ml-0 mr-0 tablecalendarc"
+                                                        inputId="dateactdom"
+                                                        locale="es"
+                                                        formatDate="dd-mm-yy"
+                                                        placeholder={{facultad.dateactdom}}
+                                                        [selectDate]="domainActsValidity"
+                                                        (OutDate)="getDataB4( $event, 'dateactdom' )">
+                                    </app-ng-calendar>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left" id="thpf-2">
+                                <label class="font-weight-label" for="optionsRadios2">
+                                    <input  #checkboxes
+                                            [(ngModel)]="adminActsCheck"
+                                            type="checkbox"
+                                            id="optionRadio2"
+                                            name="actosadmin"
+                                            id="optionRadio2" value="2">
+                                    <span class="ml-2">Actos de administración</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="pepf">
+                                <div class="col-md-6 mb-3">
+                                    <p-dropdown *ngIf="isReady"
+                                                appendTo="body"
+                                                name="ejercicioaa"
+                                                id="ejercicioaapf"
+                                                optionValue="id"
+                                                optionLabel="nombre"
+                                                placeholder="Seleccionar"
+                                                [ngClass]="{'is-required' : checkIsRequired(adminActsCheck,adminActsExeType)}"
+                                                [options]="tipoejercicio"
+                                                [(ngModel)]="adminActsExeType">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="fmpf">
+                                <div class="col-md-12 mb-3">
+                                    <label for="adminActsLimit"></label>
+                                    <textarea   pInputText
+                                                type="text"
+                                                class="p-column-filter"
+                                                id="adminActsLimit"
+                                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                                [maxlength]=8000
+                                                [(ngModel)]="adminActsLimit">
+                                    </textarea>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="fmpf">
+                                <div class="col-md-6 mb-3">
+                                    <app-ng-calendar    ngDefaultControl
+                                                        class="ml-0 mr-0 tablecalendarc"
+                                                        inputId="dateactadm"
+                                                        locale="es"
+                                                        formatDate="dd-mm-yy"
+                                                        [selectDate]="adminActsValidity"
+                                                        (OutDate)="getDataB4( $event, 'dateactadm' )"
+                                                        placeholder={{facultad.dateactadm}}>
+                                    </app-ng-calendar>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left" id="thpf-2">
+                                <label class="font-weight-label" for="optionsRadios3">
+                                    <input  #checkboxes
+                                            type="checkbox"
+                                            id="optionRadio3"
+                                            name="pleitcob"
+                                            value="3"
+                                            [(ngModel)]="collectionCheck">
+                                    <span class="ml-2">Pleitos y cobranzas</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="pepf">
+                                <div class="col-md-6 mb-3">
+                                    <p-dropdown *ngIf="isReady"
+                                                appendTo="body"
+                                                name="ejerciciopc"
+                                                id="ejerciciopcpf"
+                                                optionValue="id"
+                                                optionLabel="nombre"
+                                                placeholder="Seleccionar"
+                                                [options]="tipoejercicio"
+                                                [(ngModel)]="collectionExeType"
+                                                [ngClass]="{'is-required' : checkIsRequired(collectionCheck,collectionExeType)}">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="fmpf">
+                                <div class="col-md-12 mb-3">
+                                    <label for="collectionLimit"></label>
+                                    <textarea   pInputText
+                                                type="text"
+                                                class="p-column-filter"
+                                                id="collectionLimit"
+                                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                                [maxlength]=8000
+                                                [(ngModel)]="collectionLimit">
+                                    </textarea>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="fmpf">
+                                <div class="col-md-6 mb-3">
+                                    <app-ng-calendar    ngDefaultControl
+                                                        class="ml-0 mr-0 tablecalendarc"
+                                                        inputId="datepleicob"
+                                                        locale="es"
+                                                        formatDate="dd-mm-yy"
+                                                        placeholder={{facultad.datepleicob}}
+                                                        [selectDate]="collectionValidity"
+                                                        (OutDate)="getDataB4( $event, 'datepleicob' )">
+                                    </app-ng-calendar>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left" id="thpf-2">
+                                <label class="font-weight-label" for="optionsRadios4">
+                                    <input  #checkboxes
+                                            type="checkbox"
+                                            id="optionRadio4"
+                                            name="otorgartitul"
+                                            id="optionRadio4"
+                                            value="4"
+                                            [(ngModel)]="creditsTitlesCheck">
+                                    <span class="ml-2">Otorgar y suscribir titulos de créditos</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="pepf">
+                                <div class="col-md-6 mb-3">
+                                    <p-dropdown *ngIf="isReady"
+                                                appendTo="body"
+                                                name="ejercicioos"
+                                                id="ejercicioospf"
+                                                optionLabel="nombre"
+                                                placeholder="Seleccionar"
+                                                optionValue="id"
+                                                [options]="tipoejercicio"
+                                                [(ngModel)]="creditsTitlesExeType"
+                                                [ngClass]="{'is-required' : checkIsRequired(creditsTitlesCheck,creditsTitlesExeType)}">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="fmpf">
+                                <div class="col-md-12 mb-3">
+                                    <label for="creditsTitlesLimit"></label>
+                                    <textarea   pInputText
+                                                type="text"
+                                                class="p-column-filter"
+                                                id="creditsTitlesLimit"
+                                                oninput="this.value=this.value.replace(/<|>/g,'')"
+                                                [maxlength]=8000
+                                                [(ngModel)]="creditsTitlesLimit">
+                                    </textarea>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="fmpf">
+                                <div class="col-md-6 mb-3">
+                                    <app-ng-calendar    ngDefaultControl
+                                                        class="ml-0 mr-0 tablecalendarc"
+                                                        inputId="dateotorgtitul"
+                                                        locale="es"
+                                                        formatDate="dd-mm-yy"
+                                                        placeholder={{facultad.dateotorgtitul}}
+                                                        [selectDate]="creditsTitlesValidity"
+                                                        (OutDate)="getDataB4( $event, 'dateotorgtitul' )">
+                                    </app-ng-calendar>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left" id="thpf-2">
+                                <label class="font-weight-label" for="optionsRadios5">
+                                    <input #checkboxes [(ngModel)]="substitutionCheck" type="checkbox" id="optionRadio5" name="otrevdelsus" id="optionRadio5" value="5">
+                                    <span class="ml-2">Otorgamiento, revocación, delegación y sustitución</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="pepf">
+                                <div class="col-md-6 mb-3">
+                                    <p-dropdown *ngIf="isReady" appendTo="body" [ngClass]="{'is-required' : checkIsRequired(substitutionCheck,substitutionExeType)}" name="ejercicioor" id="ejercicioorpf" optionValue="id" [options]="tipoejercicio" [(ngModel)]="substitutionExeType" optionLabel="nombre" placeholder="Seleccionar"></p-dropdown>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="fmpf">
+                                <div class="col-md-12 mb-3">
+                                    <label for="substitutionLimit"></label>
+                                    <textarea pInputText type="text" class="p-column-filter" id="substitutionLimit" oninput="this.value=this.value.replace(/<|>/g,'')" [maxlength]=8000 [(ngModel)]="substitutionLimit"></textarea>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            
+                            <div class="row d-flex justify-content-center" id="fmpf">
+                                <div class="col-md-6 mb-3">
+                                    <app-ng-calendar class="ml-0 mr-0 tablecalendarc" ngDefaultControl inputId="dateotredesu" locale="es" formatDate="dd-mm-yy" [selectDate]="substitutionValidity" (OutDate)="getDataB4( $event, 'dateotredesu' )" placeholder={{facultad.dateotredesu}}></app-ng-calendar>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio mb-3 text-left" id="thpf-2">
+                                <label class="font-weight-label" for="optionsRadios6">
+                                    <input #checkboxes [(ngModel)]="specialMightCheck" type="checkbox" id="optionRadio6" name="podesp" id="optionRadio6" value="6">
+                                    <span class="ml-2">Poderes especiales</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="pepf">
+                                <div class="col-md-6 mb-3">
+                                    <p-dropdown *ngIf="isReady" appendTo="body" [ngClass]="{'is-required' : checkIsRequired(specialMightCheck,specialMightExeType)}" name="ejerciciope" id="ejerciciopepf" optionValue="id" [options]="tipoejercicio" [(ngModel)]="specialMightExeType" optionLabel="nombre" placeholder="Seleccionar"></p-dropdown>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="fmpf">
+                                <div class="col-md-12 mb-3">
+                                    <label for="specialMightLimit"></label>
+                                    <textarea pInputText type="text" class="p-column-filter" id="specialMightLimit" oninput="this.value=this.value.replace(/<|>/g,'')" [maxlength]=8000 [(ngModel)]="specialMightLimit"></textarea>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row d-flex justify-content-center" id="fmpf">
+                                <div class="col-md-6 mb-3">
+                                    <app-ng-calendar class="ml-0 mr-0 tablecalendarc" ngDefaultControl inputId="datepodesp" locale="es" formatDate="dd-mm-yy" [selectDate]="specialMightValidity" (OutDate)="getDataB4( $event, 'datepodesp' )" placeholder={{facultad.datepodesp}}></app-ng-calendar>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <button class="p-button-rounded p-button-danger mr-3" type="submit" id="EnviaBtn" (click)="closeInterModal()"> Agregar facultades </button>
+        </ng-template>
+
+        <ng-template pTemplate="footer" id="tmpbtnclspf">
+            <p-button (click)="closeInterModal()" label="Cerrar" class="btn modal-button-gral"></p-button>
+        </ng-template>
+    </p-dialog>
+
+    <p-dialog header="Header" class="h50" id="moddiagpf" [(visible)]="displayModalAd" [modal]="true"
+              [draggable]="false" [resizable]="false" [closable]="false">
+        <ng-template pTemplate="header">
+            <h3>Dictamen</h3>
+        </ng-template>
+        <p class="m-0 text-center">
+            <strong>{{ messageModalM }}</strong>
+        </p>
+            <ng-template pTemplate="footer">
+                <p-button (click)="closeAvisoModal()" label="Cerrar" class="btn modal-button-gral"></p-button>
+            </ng-template>
+    </p-dialog> 
+    <div class="modal-footer" id="pffootmod">
+        <button class="p-button-rounded p-button-danger" id="submit_guardar" (click)="guardarDictamen()">Guardar dictamen</button>
+    </div>
+</p-tabView>
+
+<p-dialog   header="Header"
+            [(visible)]="displayModalM"
+            [modal]="true"
+            [draggable]="false"
+            [resizable]="false" 
+            [closable]="false"
+            class="dialog50">
+    <ng-template pTemplate="header">
+        Error
+    </ng-template>
+        <p class="m-0">{{ messageModalM }}</p>
+    <ng-template pTemplate="footer">
+        <p-button (click)="closeModal()" label="Cerrar" class="btn modal-button-gral"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog class="h50" id="diagperfis-1" header="Header" [(visible)]="confirmDeleteDictum" [modal]="true" 
+    [draggable]="false" [resizable]="false" [closable]="false">
+    <ng-template pTemplate="header">
+        <h3>Confirmaci&oacute;n</h3>
+    </ng-template>
+    <p class="m-0">
+        Al eliminar el registro seleccionado, eliminará toda relación que tenga asociada a la poliza del archivo.
+        <br><br>
+        <strong>¿Desea continuar?</strong>
+    </p>
+        <ng-template pTemplate="footer" id="tmpfootfis-2">
+            <div class="p-dialog-footer__content-center" id="tmpfoot_pf">
+                <p-button class="btn modal-button-gral text-center" id="acceptFile" name="acceptFile"  label="Aceptar" (click)="acceptDeleteFile()"></p-button>
+                <p-button class="btn modal-button-gral text-center  p-dialog-footer__content-center--button-secundary" id="closeFile" name="closeFile"  label="Cancelar" (click)="closeDialogDeleteFile()"></p-button>
+            </div>
+        </ng-template>
+</p-dialog>

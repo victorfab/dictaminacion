@@ -1,0 +1,256 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingMisSolicitudes">
+                        <h6 class="panel-title">
+                            <strong>Folios</strong>
+                            <a  role="button"
+                                class="custom-button-link"
+                                data-toggle="collapse"
+                                href="#collapseMisSolicitudes"
+                                aria-expanded="true"
+                                aria-controls="collapseMisSolicitudes">
+                                - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseMisSolicitudes" class="collapse show" role="tabpanel" aria-labelledby="headingMisSolicitudes">
+                        <div class="panel-body">
+                            <div class="dataTables_scrollBody">
+                                <p-table #dt1
+                                        class="rowAlternate" 
+                                        [value]="dataFolios" 
+                                        dataKey="id"
+                                        [rows]="10"
+                                        [rowsPerPageOptions]="[10,25,50]"
+                                        [showCurrentPageReport]="true"
+                                        paginatorDropdownAppendTo="body"
+                                        currentPageReportTemplate="Total de registros: {totalRecords}" 
+                                        styleClass="p-datatable-gridlines"
+                                        [paginator]="true"
+                                        responsiveLayout="scroll"
+                                        scrollHeight="400px"
+                                        [globalFilterFields]="['comResComplemento','tipoDictamen','comResEdo','fechaResFechaRegistro','fechaResFechaCompromiso','fechaResFechaEnvio','abogado']"
+                                        [exportHeader]="'customExportHeader'">
+                                    <ng-template pTemplate="caption">
+                                        <div class="flex align-items-center justify-content-between text-right">
+                                            <h5 class="m-0"></h5>
+                                            <span class="p-input-icon-left">
+                                                <em class="pi pi-search mr-3"></em>
+                                                <input pInputText type="text" id="search" (input)="dt1.filterGlobal( $any($event.target).value, 'contains' )" placeholder="Buscar..." />
+                                                <label for="search"></label>
+                                                <button class="font20" type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                                            </span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="comResComplemento">Folio <p-sortIcon field="comResComplemento"></p-sortIcon></div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="tipoDictamen">Tipo dictamen <p-sortIcon field="tipoDictamen"></p-sortIcon></div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="comResEdo">Estado <p-sortIcon field="comResEdo"></p-sortIcon></div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="">Resultado atención <p-sortIcon field=""></p-sortIcon></div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="fechaResFechaRegistro">Fecha registro <p-sortIcon field="fechaResFechaRegistro"></p-sortIcon></div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="fechaResFechaCompromiso">Fecha compromiso <p-sortIcon field="fechaResFechaCompromiso"></p-sortIcon></div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="fechaResFechaEnvio">Fecha Respuesta <p-sortIcon field="fechaResFechaEnvio"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="abogado">Abogado seguimiento <p-sortIcon field="abogado"></p-sortIcon></div>
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-dataFolios>
+                                        <tr>
+                                            <td class="text-center">{{dataFolios.colFolio}}</td>
+                                            <td class="text-center">{{dataFolios.tipoDictamen}}</td>
+                                            <td class="text-center">{{dataFolios.comResEdo}}</td>
+                                            <td class="text-center">{{dataFolios.comResEstadoEstadoFolioSeg}}</td>
+                                            <td class="text-center">{{dataFolios.fechaResFechaRegistro}}</td>
+                                            <td class="text-center">{{dataFolios.fechaResFechaCompromiso}}</td>
+                                            <td class="text-center">{{dataFolios.fechaResFechaEnvio}}</td>
+                                            <td>{{dataFolios.abogado}}</td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="7">No se encontraron solicitudes.</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingApod">
+                        <h6 class="panel-title">
+                            <strong>Apoderados</strong>
+                            <a  role="button"
+                                class="custom-button-link"
+                                data-toggle="collapse"
+                                href="#collapseIntervinientes"
+                                aria-expanded="false"
+                                aria-controls="collapseIntervinientes">
+                                - Haz clic para ocultar o mostrar
+                            </a>
+                        </h6>
+                    </div>
+                    <br />
+                    <div id="collapseIntervinientes" class="collapse show" role="tabpanel" aria-labelledby="headingApod">
+                        <div class="panel-body">
+                            <div class="dataTables_scrollBody">
+                                <p-table #dt2
+                                    class="rowAlternate"
+                                    [value]="intervinientes"
+                                    dataKey="id"
+                                    [rows]="10"
+                                    [rowsPerPageOptions]="[10,25,50]"
+                                    [showCurrentPageReport]="true"
+                                    paginatorDropdownAppendTo="body"
+                                    currentPageReportTemplate="Total de registros: {totalRecords}"
+                                    styleClass="p-datatable-gridlines"
+                                    [paginator]="true"
+                                    responsiveLayout="scroll"
+                                    scrollHeight="600px"
+                                    [globalFilterFields]="['nombre','rfc','credito','designacion','contratarbanca','apertura','otras','vigencia']"
+                                    [exportHeader]="'customExportHeader'">
+                                    <ng-template pTemplate="caption">
+                                        <div class="flex align-items-center justify-content-between text-right">
+                                            <h5 class="m-0"></h5>
+                                            <span class="p-input-icon-left">
+                                                <em class="pi pi-search mr-3"></em>
+                                                <input pInputText type="text" id="search2" (input)="dt2.filterGlobal( $any($event.target).value, 'contains' )" placeholder="Buscar..." />
+                                                <label for="search2"></label>
+                                            </span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="nombre">Nombre<p-sortIcon field="nombre"></p-sortIcon></div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="rfc">RFC: <p-sortIcon field="rfc"></p-sortIcon></div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="credito">Contratar crédito sin garantías<p-sortIcon field="credito"></p-sortIcon></div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="designacion">Designación de intervinientes<p-sortIcon field="designacion"></p-sortIcon></div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="contratarbanca">Contratar banca electrónica<p-sortIcon field="contratarbanca"></p-sortIcon></div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="apertura">Apertura de cuentas de cheques <p-sortIcon field="apertura"></p-sortIcon></div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="otras">Otras<p-sortIcon field="otras"></p-sortIcon></div>
+                                            </th>
+                                            <th scope="col" class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="vigencia">Vigencia<p-sortIcon field="vigencia"></p-sortIcon></div>
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-intervinientes let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td>{{intervinientes.nombre}}</td>
+                                            <td>{{intervinientes.rfc}}</td>
+                                            <td class="text-center">{{intervinientes.tiposInterviniente.includes("1") ? "X" : "" }}</td>
+                                            <td class="text-center">{{intervinientes.tiposInterviniente.includes("2") ? "X" : "" }}</td>
+                                            <td class="text-center">{{intervinientes.tiposInterviniente.includes("3") ? "X" : "" }}</td>
+                                            <td class="text-center">{{intervinientes.tiposInterviniente.includes("4") ? "X" : "" }}</td>
+                                            <td>{{intervinientes.otros}}</td>
+                                            <td>{{intervinientes.fchVig}}</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingDoc">
+                        <h6 class="panel-title">
+                            <strong>Documentos</strong>
+                            <a  role="button"
+                                class="custom-button-link"
+                                data-toggle="collapse"
+                                href="#collapseDoc"
+                                aria-expanded="true"
+                                aria-controls="collapseDoc">
+                                - Haz clic para ocultar o mostrar
+                            </a>
+                        </h6>
+                    </div>
+                    <br />
+                    <div id="collapseDoc" class="panel-collapse show" role="tabpanel" aria-labelledby="headingDoc">
+                        <div class="panel-body">
+                            <div class="dataTables_scrollBody">
+                                <p-table #dt4
+                                        class="rowAlternate"
+                                        [value]="arrayFiles"
+                                        dataKey="id"
+                                        [rows]="10"
+                                        [rowsPerPageOptions]="[10,25,50]"
+                                        [showCurrentPageReport]="true"
+                                        paginatorDropdownAppendTo="body"
+                                        currentPageReportTemplate="Total de registros: {totalRecords}"
+                                        styleClass="p-datatable-gridlines"
+                                        [paginator]="true" 
+                                        responsiveLayout="scroll"
+                                        scrollHeight="400px"
+                                        [globalFilterFields]="['descripcionTipoDocumento','nombreTipoDocumento','fecha']"
+                                        [exportHeader]="'customExportHeader'">
+                                        <ng-template pTemplate="caption">
+                                            <div class="flex align-items-center justify-content-between text-right">
+                                                <h5 class="m-0"></h5>
+                                                <span class="p-input-icon-left">
+                                                    <em class="pi pi-search mr-3"></em>
+                                                    <input pInputText type="text" id="search" (input)="dt1.filterGlobal( $any($event.target).value, 'contains' )" placeholder="Buscar..." />
+                                                    <label for="search"></label>
+                                                    <button class="font20" type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                                                </span>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th scope="col" pSortableColumn="descripcionTipoDocumento">Tipo de Documento<p-sortIcon field="descripcionTipoDocumento"></p-sortIcon></th>
+                                                <th scope="col" pSortableColumn="nombreTipoDocumento">Nombre Documento <p-sortIcon field="nombreTipoDocumento"></p-sortIcon></th>
+                                                <th scope="col" pSortableColumn="fecha">Vigencia <p-sortIcon field="fecha"></p-sortIcon></th>
+                                                <th scope="col" pSortableColumn="ver">Ver </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-arrayFiles let-rowIndex="rowIndex">
+                                            <tr>
+                                                <td>{{arrayFiles.descripcionTipoDocumento}}</td>
+                                                <td>{{arrayFiles.nombreDocumento}}</td>
+                                                <td>{{arrayFiles.fecha}}</td>
+                                                <td>
+                                                    <button pButton pRipple class="btn btn-file custom-button-gral">ver</button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

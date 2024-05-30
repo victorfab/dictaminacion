@@ -1,0 +1,315 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingRegistroFolio">
+                        <h6 class="panel-title">
+                            <strong>Panel de datos </strong>
+                            <a class="custom-button-link" role="button" data-toggle="collapse" href="#collapseRegistroFolio" aria-expanded="true" aria-controls="collapseRegistro">
+                                - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseRegistroFolio" class="collapse show" role="tabpanel" aria-labelledby="headingRegistroFolio">
+                        <div class="panel-body"><br>
+                            <form class="form-horizontal">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="solicitante" class="col-sm-12 col-md-6 control-label">Solicitante: </label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <input class="form-control" id="solicitante" name="solicitante" type="text" value="{{solicitante}}" disabled>
+                                                </div>
+                                                <label for="region" class="col-sm-12 col-md-6 control-label"> Región: </label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <input class="form-control" id="region" name="region" type="text" value="{{region}}" disabled >
+                                                </div>
+                                                <label for="folio" class="col-sm-12 col-md-6 control-label">Folio: </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5" *ngIf="foliodata?.beanFolio?.complemento !== ''; else compl">
+                                                    <input disabled type="text" class="form-control" id="folio" value="{{foliodata?.beanFolio?.complemento}}">
+                                                </div>
+                                                <ng-template #compl>
+                                                    <div class="col-sm-12 col-md-12 form mb-5">
+                                                        <input disabled type="text" class="form-control" id="complemento" value="{{foliodata?.beanFolio?.folio}}">
+                                                    </div>
+                                                </ng-template>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="fecha_registro" class="col-sm-12 col-md-6 control-label">Fecha registro: </label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" id="fecha_registro" name="fecha_registro" value="{{fechaRegistro}}" disabled>
+                                                            <span class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </span>
+                                                    </div>
+                                                </div>
+                                                <label for="sucursal" class="col-sm-12 col-md-6 control-label">Sucursal: </label>
+                                                <div class="col-sm-12 col-md-12 col-sm-6-wider mb-5 mr-2">
+                                                    <input class="form-control" id="sucursal" name="sucursal" type="text" value="{{sucursal}}" disabled >
+                                                </div>
+                                                <div class="row form mb-4 ml-2">
+                                                    <label for="centro_costos" class="col-sm-12 col-md-3 control-label">CC:</label>
+                                                    <div class="col-sm-12 col-md-8 col-sm-2-wider mr-2">
+                                                        <input class="form-control" id="centro_costos" name="centro_costos" type="text" value="{{centroCosto}}" disabled>
+                                                    </div>
+                                                    <label for="estatus" class="col-sm-12 col-md-3 control-label">Resultado:</label>
+                                                    <div class="col-sm-12 col-md-8 col-sm-2-wider">
+                                                        <input class="form-control" id="estatus" type="text" value="{{estatus}}" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="razon_social" class="col-sm-4 col-md-4">Nombre, denominación o razón social: </label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <textarea disabled id="razon_social" maxlength="500" class="text-area-razon col-sm-12" rows="4">{{razonSocial}}</textarea>
+                                                    <label for="razon_social"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="origen" class="col-sm-12 col-md-6 text-left">Origen: </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input disabled type="text" class="form-control" id="origen" value="{{origen}}">
+                                                </div>
+                                                <label for="tipo_dictamen" class="col-sm-12 col-md-6 text-left">Tipo: </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input disabled type="text" class="form-control" id="tipo_dictamen" value="{{tipoFolio}}" >
+                                                </div>
+                                                <label for="seguimiento" class="col-sm-12 col-md-6 text-left">Abogado seguimiento: </label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <input disabled type="text" class="form-control" id="seguimiento" value="{{abogSeg}}">
+                                                </div>
+                                                <label for="abog_seg_tel" class="col-sm-12 col-md-6 text-left">Teléfono: </label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <input disabled type="text" class="form-control" id="abog_seg_tel" value="{{tel}}">
+                                                </div>
+                                                <label for="correo" class="col-sm-12 col-md-3 text-left">Correo: </label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <input disabled type="text" class="form-control" id="correo" nombre="correo" value="{{correo}}">
+                                                </div>
+                                                <div [ngStyle]="{'display': rol === segname ? 'block' : 'none'}">
+                                                    <label for="complemento" class="col-sm-12 col-md-6 text-left">Complemento: </label>
+                                                    <div class="col-sm-12 col-md-12 mb-5">                                                      
+                                                        <button pButton pRipple class="btn btn-file custom-button-gral" id="complemento" title="complemento" (click)="generarComplemento()" >
+                                                            GENERAR
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div [ngStyle]="{'display': rol === solname ? 'block' : 'none'}">
+                                                    <label for="complemento" class="col-sm-12 col-md-6 text-left">Complemento: </label>
+                                                    <div class="col-sm-12 col-md-12 mb-5">                                                      
+                                                        <button pButton pRipple class="btn btn-file custom-button-gral" id="complemento" title="complemento" (click)="generarComplemento()" >
+                                                            GENERAR
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div [ngStyle]="{'display': rol === adminname ? 'block' : 'none'}">
+                                                    <label for="complemento" class="col-sm-12 col-md-6 text-left">Complemento: </label>
+                                                    <div class="col-sm-12 col-md-12 mb-5">                                                      
+                                                        <button pButton pRipple class="btn btn-file custom-button-gral" id="complemento" title="complemento" (click)="generarComplemento()" >
+                                                            GENERAR
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="fecha_solicitud" class="col-sm-12 col-md-6">Fecha envío: </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <div class="input-group date" id="fecha_solicitud_1">
+                                                        <input disabled type="text" class="form-control" id="fecha_solicitud" value="{{fechaEnvio}}">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span> 
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div [hidden]="filePDFv === 'No se encontraron resultados.'">
+                                                    <div class="col-sm-12 col-md-12 mb-5" [hidden]="filePDFv === null || idDictamen === '0' || this.estatus === 'REC'">
+                                                        <div class="ml-3">
+                                                            <label for="tipo_dictamen" class="col-sm-12 col-md-6">Ver dictamen: </label>
+                                                            <a class="btn btn-default" id="btnPDF" title="PDF" (click)="previewDictamen()">
+                                                                <span><em class="pi pi-file-pdf red-color"></em></span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div [hidden]="foliodata?.beanFolio?.estatus !== 'REC'">
+                                                    <label for="rechazo" class="col-sm-12 col-md-6">Rechazo: </label>
+                                                    <div class="col-sm-12 col-md-12 mb-5">
+                                                        <textarea disabled id="rechazo" maxlength="500" class="text-area-razon col-sm-12" rows="4">{{ idTipoComentarioRchz }}</textarea>
+                                                    </div>
+                                                    <label for="rechazo_1" class="col-sm-12 col-md-6">Sub rechazo: </label>
+                                                    <div class="col-sm-12 col-md-12 mb-5">
+                                                        <textarea disabled id="rechazo_1" maxlength="500" class="text-area-razon col-sm-12" rows="4">{{ idSubTipoRchz }}</textarea>
+                                                    </div>
+                                                    <label for="subRechazoFinal" class="col-sm-12 col-md-6">Comentario abogado de seguimiento: </label>
+                                                    <div class="col-sm-12 col-md-12 mb-5">
+                                                        <textarea disabled id="subRechazoFinal" maxlength="500" class="text-area-razon col-sm-12" rows="4">{{ comentarioSeg }}</textarea>
+                                                    </div>
+                                                    <label for="comentariofin" class="col-sm-12 col-md-6">Comentario abogado externo: </label>
+                                                    <div class="col-sm-12 col-md-12 form mb-5">
+                                                        <textarea disabled rows="3" class="text-area-razon col-sm-12" id="comentariofin">{{ comentarioExt }}</textarea>
+                                                    </div>
+                                                    <label for="comentariofin_1" class="col-sm-12 col-md-6">Comentario solicitante: </label>
+                                                    <div class="col-sm-12 col-md-12 form mb-5">
+                                                        <textarea disabled rows="3" class="text-area-razon col-sm-12" id="comentariofin_1">{{ comentarioSol }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingDetalleDocs">
+                        <h6 class="panel-title">
+                            <strong>Documentación base del dictamen</strong>
+                            <a role="button" class="custom-button-link" data-toggle="collapse" href="#collapseDoc" aria-expanded="true" aria-controls="collapseDoc">
+                                - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseDoc" class="collapse show" role="tabpanel" aria-labelledby="headingDetalleDocs">
+                        <div class="panel-body mt-5" id="colfddoc">
+                            <form class="form-horizontal" id="formfdfolio">
+                                <p-table #dt
+                                        [value]="arrayFiles"
+                                        [rows]="5" 
+                                        [paginator]="true"
+                                        [rowsPerPageOptions]="[5,10,25,50]"
+                                        [globalFilterFields]="['descripcionTipoDocumento','nombreDocumento']" 
+                                        responsiveLayout="scroll"
+                                        [(selection)]="selectedarrayFiles" 
+                                        [rowHover]="true"
+                                        [showCurrentPageReport]="true"
+                                        paginatorDropdownAppendTo="body"
+                                        id="formfdarrayfiles">
+                                <ng-template pTemplate="caption">
+                                    <div class="flex align-items-center justify-content-between text-right">
+                                        <span class="p-input-icon-left">
+                                            <em class="pi pi-search mr-3"></em>
+                                            <input pInputText type="text" id="search3" (input)="dt.filterGlobal( $any($event.target).value, 'contains' )" placeholder="Buscar..." />
+                                            <label for="search3"></label>
+                                        </span>
+                                    </div>
+                                </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th scope="col" pSortableColumn="descripcionTipoDocumento">Tipo de documento<p-sortIcon field="descripcionTipoDocumento"></p-sortIcon></th>
+                                            <th scope="col" pSortableColumn="nombreDocumento">Nombre del documento<p-sortIcon field="nombreDocumento"></p-sortIcon></th>
+                                            <th scope="col" pSortableColumn="resultado">Resultado del documento<p-sortIcon field="resultado"></p-sortIcon></th>
+                                            <th scope="col" pSortableColumn="descRechazo">Motivo<p-sortIcon field="descRechazo"></p-sortIcon></th>
+                                            <th scope="col" pSortableColumn="descSubRechazo">Submotivo<p-sortIcon field="descSubRechazo"></p-sortIcon></th>
+                                            <th scope="col" pSortableColumn="comentario">Comentario<p-sortIcon field="comentario"></p-sortIcon></th>
+                                            <th scope="col" pSortableColumn="nombreDocumento">Acciones <p-sortIcon field="otras"></p-sortIcon></th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-arrayFiles let-rowIndex="rowIndex" id="tempfdbody-1">
+                                        <tr>
+                                            <td id="tdaf1">{{arrayFiles.descripcionTipoDocumento}}</td>
+                                            <td id="tdaf1" class="wordwarp">{{arrayFiles.nombreDocumento}}</td>
+                                            <td id="tdaf1">{{arrayFiles.resultado}}</td>
+                                            <td id="tdaf1">{{arrayFiles.descRechazo}}</td>
+                                            <td id="tdaf1">{{arrayFiles.descSubRechazo}}</td>
+                                            <td id="tdaf1">{{arrayFiles.comentario}}</td>
+                                            <td id="tdaf1">
+                                                <a class="btn btn-default mr-3" tabindex="0" id="btnPDF" title="PDF" (click)="previewArchivo( arrayFiles.idFilenet, arrayFiles.nombreDocumento, arrayFiles.descripcionTipoDocumento )">
+                                                    <span><em class="pi pi-file-pdf red-color"></em></span>
+                                                </a>
+                                                <a class="btn btn-default" tabindex="0" id="btnPDF" title="PDF" (click)="descargarArchivo( arrayFiles.idFilenet, arrayFiles.nombreDocumento, arrayFiles.descripcionTipoDocumento )">
+                                                    <span><em class="pi pi-arrow-down red-color"></em></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </form>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row xtra-top-pad-15 mb-5">
+                <div class="row col-md-12 justify-content-end">
+                    <button id="regresar" class="p-button-rounded p-button-danger" [routerLink]="['/solicitudes']"> Regresar </button>                                                                      
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog   class="dialog-mediuma"
+            header="Header"
+            [(visible)]="displayModalM"
+            [modal]="true"
+            [draggable]="false"
+            [resizable]="false" [closable]="false">
+    <ng-template pTemplate="header">
+        <div class="col-md-12 text-center">
+            <h3>{{ headerModalM }}</h3>
+        </div>
+    </ng-template>
+    <strong>{{ messageModalM }}</strong>
+        <ng-template pTemplate="footer">
+            <p-button   (click)="closeModal()"
+                        label="Cerrar"
+                        class="btn modal-button-gral text-center">
+            </p-button>
+        </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="displayModalF" [modal]="true" [draggable]="false" [resizable]="false" [closable]="false">
+    
+    <pdf-viewer
+        [src]="pdfSrc"
+        [page]="page"
+        [show-all]="false"
+        [stick-to-page]="false"
+        [render-text]="false"
+        [rotation]="0"
+        [original-size]="false"
+        [zoom]="0"
+        [zoom-scale]="'page-width'"
+        [fit-to-page]="true"
+        [autoresize]="true"
+        [show-borders]="false"
+        (after-load-complete)="afterLoadComplete($event)"
+        class="pdf-viewer"
+    ></pdf-viewer>
+
+    <ng-template pTemplate="footer" id="tmpfootfd">
+
+        <nav *ngIf="isLoaded">
+            <div class="row text-center">
+                <div class="col-md-12 text-center" id="tmpfootfd-1">
+                    <button class="btn custom-button-gral" type="button" (click)="prevPage()" [disabled]="page === 1" >
+                        Anterior
+                    </button>
+                    <button class="btn custom-button-gral" type="button" (click)="nextPage()" [disabled]="page === totalPages" >
+                        Siguiente
+                    </button>
+                    <button class="btn custom-button-gral" type="button" (click)="cerrarDialogF()" >
+                        Aceptar
+                    </button>
+                     <button class="btn custom-button-gral" type="button" (click)="downloadFileDict()">
+                        Descargar
+                    </button>
+                    <p>Página {{ page }} / {{ totalPages }}</p>
+                </div>
+            </div>
+          </nav>
+          
+    </ng-template>
+</p-dialog>

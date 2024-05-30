@@ -1,0 +1,958 @@
+/*CSS general para Dictaminacion */
+
+.topbar {
+    position: relative;
+    z-index: 50;
+    background-color: rgb(242, 242, 242);
+    box-shadow: 2px 5px 16px rgb(178, 178, 178);
+}
+
+.topbar .top-navbar {
+    min-height: 50px;
+    padding: 0;
+}
+
+.topbar .navbar {
+    margin-bottom: 0;
+}
+  
+.topbar .top-navbar .navbar-header {
+    padding-left: 10px;
+}
+
+.login-register {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100%;
+    width: 100%;
+    padding: 10% 0;
+    position: fixed;
+  }
+
+.login-sidebar {
+    padding: 0;
+    margin-top: 0;
+}
+
+.login-sidebar .login-box {
+    right: 0;
+    position: absolute;
+    height: 100%;
+}
+
+.loginbkgd {
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
+.loginbkgd:after {
+    content: "";
+    background-image: url("./img/temp_background.png");
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: 0.5;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: auto;
+}
+
+.card-header-title {
+    border-radius: 32px 32px 0 0;
+    background-color: rgb(236, 0, 0);
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+}
+  
+.card-body {
+    padding: 20rem 1.25rem;
+  }
+  
+.card-body-l {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+}
+
+.card-body-2 {
+    position: absolute;
+    top: 50%;
+    left: 65%;
+    transform: translate(-50%, -50%);
+}
+
+.card-body-l h1 {
+    font-size: 3rem;
+    margin-bottom: -27px;
+    margin-left: 5px;
+    color: rgb(255, 255, 255);
+}
+
+.card-body-l h2 {
+    font-size: 6rem;
+    font-weight: bolder;
+    color: rgb(255, 255, 255);
+    margin-bottom: 0;
+}
+
+.card-body-table {
+    padding: 0;
+  }
+
+a {
+    color:rgba(228, 0, 0, 1);
+}
+.main-container {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+.p-toolbar > .form-group {
+    width: 100%;
+}
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+/*Detalle para el contenedor del modal */
+.modal-max-content{
+    width: max-content;
+}
+/*Cuando los modales se vuelven 
+ * demasiado largos para la vista
+ * se desplazan independientemente 
+ * de la página con un scroll.
+ */
+.modal-scroll-file{
+    overflow: auto;
+}
+/*Header que contiene el nombre 
+ * de la sucursal, boton cerrar sesion
+ * Principal
+ */
+.header-modified {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1;
+    padding-bottom: 3px;
+    border-bottom: 0;
+    background-image: linear-gradient(-180deg, #ec0000 0, #cc0000 100%);
+}
+
+.show-b {
+    display: inline-block !important;
+}
+/*Header que contiene el perfil 
+ * del usuario
+ * y las opciones de navegacion
+ */
+.header-secundario {
+    padding-top: 3px;
+    padding-bottom: 5px;
+    background-color: #6c6867;
+    margin-bottom: 2em;
+}
+/*Combo de botones */
+.custom-button-link {
+    color: rgba(0, 0, 0, 1);
+    font-size: 13px;
+    font-weight: normal;
+}
+.custom-button-link-red {
+    color: rgba(228, 0, 0, 1);
+}
+.custom-button-gral {
+    color: rgba(228, 0, 0, 1);
+    border-color: rgba(228, 0, 0, 1);
+    background-color: rgba(255, 255, 255, 1);
+}
+/*Detalle para el icono de incio */
+.home-icon {
+    font-size: 20px;
+    color: #fdfefe;
+    margin-right: 5px;
+}
+/*Combo de container */
+.container-image-header {
+    margin-top: 25px;
+}
+/*Estilos para login */
+.container-label-login {
+    text-align: right;
+    margin-top: 15px;
+}
+.label-login {
+    color: #fdfefe;
+    font-size: 12px;
+    font-weight: bold;
+}
+/*Estilos para button */
+.logout-button {
+    font-size: 25px;
+    color: #fdfefe;
+    margin-top: 35px;
+}
+.xtra-top-pad-15 {
+    padding-top: 15px;
+}
+.xtra-top-pad-10 {
+    padding-top: 5px;
+}
+.flex-1 {
+    flex: 1;
+}
+.flex-2 {
+    flex: 2;
+}
+.flex-3 {
+    flex: 3;
+}
+.flex-4 {
+    flex: 4;
+}
+/*Estilos para los imputs */
+.input-grp-addon-fix {
+    border: 0;
+    background: transparent;
+    font-weight: bold;
+    color: #333;
+}
+.span-tag-style {
+    border: 0;
+    background: transparent;
+    font-weight: bold;
+    color: #333;
+    padding-left: 0;
+}
+.padding-top-zero {
+    padding-top: 0;
+}
+.padding-left-zero {
+    padding-left: 0;
+}
+.padding-right-zero {
+    padding-right: 0;
+}
+.margin-top-zero {
+    margin-top: 0;
+}
+.margin-top-10 {
+    margin-top: 10px;
+}
+.margin-top-5 {
+    margin-top: 5px;
+}
+/*Header secundario para el titulo */
+.header-secundario-titulo {
+    color: #fdfefe;
+    position: relative;
+    left: 55px;
+    bottom: 8px;
+}
+.input-border-radius-fix {
+    border-radius: 4px;
+}
+.pad-final {
+    padding-bottom: 60px;
+}
+.footer {
+    bottom: 0;
+    width: 101%;
+    height: 50px;
+    background-color: #6f716f;
+}
+/*Estilo para paginacion */
+.pagination>.active>a,
+.pagination>.active>span,
+.pagination>.active>a:hover,
+.pagination>.active>span:hover,
+.pagination>.active>a:focus,
+.pagination>.active>span:focus {
+    background-color: rgba(228, 0, 0, 1);
+    border-color: rgba(228, 0, 0, 1);
+}
+.pagination>li>a:hover,
+.pagination>li>span:hover,
+.pagination>li>a:focus,
+.pagination>li>span:focus {
+    color: rgba(228, 0, 0, 1);
+}
+.pagination>li>a,
+.pagination>li>span {
+    color: rgba(228, 0, 0, 1);
+}
+/*Estilos para los botones de descarga */
+.download-button {
+    font-size: 20px;
+    color: rgba(228, 0, 0, 1);
+}
+.span-tag-align {
+    text-align: left;
+}
+
+.text-align-right {
+    text-align: right;
+}
+/*Tipo de usuario */
+.div-tipo-usuario {
+    padding-right: 0;
+    margin-right: -20px;
+}
+.div-btn-header-sec {
+    padding-left: 0;
+}
+/*Container para botones */
+.container-btn-bottom {
+    padding-bottom: 3px;
+    background-color: #f5f5f5;
+}
+/*Label y panel */
+.form-horizontal .control-label.text-left {
+    text-align: left;
+}
+
+.font-weight-label {
+    font-weight: bold;
+}
+.panel-title.custom-bold {
+    font-weight: bold;
+}
+.hyphen-style {
+    width: 30px;
+}
+/*Fuentes para icono */
+.font-icon-alert {
+    font-size: 19px;
+    color: rgba(238, 162, 54, 1);
+}
+.alert-modified {
+    background-color: transparent;
+    color: rgba(228, 0, 0, 1);
+    border-color: rgba(228, 0, 0, 1);
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+/*Fuentes para boton de 
+ * descarga excel
+ */
+.excel-button {
+    color: rgba(32, 112, 68, 1);
+    font-size: 1.5em;
+}
+/*Fuentes para boton 
+ * de descarga PDF
+ */
+.pdf-button {
+    color: rgba(228, 0, 0, 1);
+    font-size: 1.5em;
+}
+.cntnr-hdr-admn-btn {
+    text-align: right;
+    padding-right: 0;
+}
+/*Estilos para el 
+ * header correspondiente 
+ * al modal
+ */
+.modal-header {
+    padding: 9px 15px;
+    border-bottom: 1px solid #eee;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.custom-button-red-gral {
+    background-color: #cc0000;
+    border-color: #cc0000;
+    color: rgba(255, 255, 255, 1);
+}
+/*background para el modal */
+.modal-footer {
+    background-color: #6f716f;
+}
+.red-color {
+    color: rgba(228, 0, 0, 1);
+}
+
+.input:focus {
+    outline: none;
+    border: 1px solid #6f716f;
+}
+.form-control:focus {
+    outline: none;
+    border: 1px solid #6f716f;
+}
+.margin-left-7 {
+    margin-left: 7px;
+}
+/*Backgrounds */
+option:checked,
+option:focus,
+option:hover {
+    background: linear-gradient(#d6d6d6, #d6d6d6);
+    background-color: #d6d6d6;
+    /* for IE */
+    color: #000000;
+}
+.white-color {
+    color: #fff;
+    background-color: #cecbcb;
+    min-width: 125px;
+}
+.white-color:focus,
+.white-color:hover {
+    color: #6f716f;
+}
+/*textarea razon */
+.text-area-razon {
+    overflow: auto;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+/*Textarea */
+textarea:focus {
+    outline: none;
+    border: 1px solid #6f716f;
+}
+.col-sm-1-wider {
+    width: 13.333333%;
+}
+.col-sm-1-thinner {
+    width: 6.333333%;
+}
+
+.white-bg {
+    background-color: #fff;
+    text-align: center;
+}
+.input-otras {
+    padding-left: 35px;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+input[type="file"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+   
+}
+/*Estilos para modal */
+.modal-lg {
+    width: 950px;
+}
+.modal-for-tiff {
+    width: 600px;
+    min-height: 90%;
+}
+/*estilo para boton de descarga */
+.download-button:hover, .custom-button-link-red:hover {
+    cursor: pointer;
+}
+table tbody th.dt-body-center,
+table tbody td.dt-body-center {
+  text-align: center;
+}
+.dt-head-center th{
+    text-align: center;
+}
+/*Detalle para scroll de tablas */
+.datatables-scroll-head-inner{
+    min-width: 100%;
+}
+.dataTables_scroll {
+    overflow: hidden;
+}
+.nowrap {
+    min-width:100%;
+}
+.turn-gray {
+    margin: auto;
+    text-align: center; 
+    background-color: #dedede;
+}
+.checkbox-inline, .radio-inline{
+    vertical-align: top;
+}
+/*Cursor*/
+.cursor-pointer {
+  cursor: pointer;
+}
+.text-wrap{
+    white-space:normal;
+}
+.fixed-width{
+    width:300px;
+}
+.error-message{
+    font-family: 'Tahoma,Verdana','Segoe',sans-serif;
+    color: red;
+}
+.index-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.color-footer{
+    background-color: #6f716f;
+}
+
+.footer-btn .btn+.btn{
+    margin-left: 10px;
+}
+
+.color-white{
+    color: white;
+}
+
+.santander-elementbox{
+    overflow:auto;
+}
+
+.hide-element{
+    display:none;
+}
+
+.bootstrap-datetimepicker-widget .datepicker-years thead,
+.bootstrap-datetimepicker-widget .datepicker-decades .disabled {
+  display: none;
+}
+
+/*tamaño de la imgen del logo */
+.img-logo{
+    width: 200px;
+}
+
+.size-14{
+    font-size: 14px;
+}
+/*pading 20 para algunos inputs */
+.pading-top-20{
+    padding-top: 20px;
+}
+
+.TipoUsuario {
+	color: white; 
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; 
+	font-size: x-large;
+	font-weight: 700;
+}
+
+.p-input-icon-left > .p-inputtext {
+    padding-left: 1rem;
+}
+
+.p-datatable-scrollable .p-datatable-thead > tr > th {
+    font-size: medium;
+} 
+
+.p-datatable-scrollable .p-datatable-thead>tr, .p-datatable-scrollable .p-datatable-tbody> tr {
+    font-size: medium;
+}
+
+.p-datatable.p-datatable-gridlines .p-paginator-bottom {
+    font-size: medium;
+}
+
+.p-button.p-button-icon-only {
+    /*margin-left: 5px;*/
+    background-color: transparent !important;
+    border: none;
+    font-size: 10px !important;
+}
+
+.p-input-icon-left > .p-button-icon-only {
+    margin: 0 0 5px 15px;
+}
+
+.p-input-icon-left, .p-input-icon-right {
+    font-size: medium;
+}
+
+.p-button.p-button-icon-only .pi{
+    font-size: 2rem !important;
+    color: rgba(228, 0, 0, 1);;
+}
+
+.p-datatable .p-datatable-header {
+    background: #ffffff;
+    border: none;
+}
+
+.p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th {
+    border: none;
+}
+
+.p-datatable.p-datatable-scrollable > .p-datatable-wrapper > .p-datatable-table > 
+.p-datatable-thead, .p-datatable.p-datatable-scrollable > .p-datatable-wrapper > 
+.p-datatable-table > .p-datatable-tfoot {
+    background: #ffffff;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+    background: #ffffff;
+}
+
+.p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td {
+    border-top: none;
+    border-bottom: 1;
+    border-left: none;
+    border-right: none;
+}
+
+.p-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+    border: none;
+}
+
+.p-input-icon-left > i:first-of-type {
+    left:  21.75rem;
+    color: #6c757d;
+}
+
+thead.p-datatable-thead {
+    text-align: left;
+    padding: 1rem 1rem;
+    border: 1px solid #dee2e6;
+    border-width: 0 0 1px 0;
+    font-weight: 700;
+    color: #343a40;
+    background: #f8f9fa;
+    transition: box-shadow 0.2s;
+    font-size: medium;
+}
+
+tbody.p-element.p-datatable-tbody {
+    text-align: left;
+    padding: 1rem 1rem;
+    border: 1px solid #dee2e6;
+    border-width: 0 0 1px 0;
+    color: #343a40;
+    background: #f8f9fa;
+    transition: box-shadow 0.2s;
+    font-size: medium;
+}
+
+.p-paginator .p-paginator-current {
+    font-size: medium;
+}
+
+.loading-spinner {
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+  
+.loader {
+    width: 60px;
+    height: 60px;
+    z-index: 10000000;
+}
+  
+.loading-spinner:before {
+    content: "";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(rgba(20, 20, 20, 0.8), rgba(0, 0, 0, 0.8));
+    background: -webkit-radial-gradient(
+        rgba(20, 20, 20, 0.8),
+        rgba(0, 0, 0, 0.8)
+    );
+    background: -webkit-gradient(
+        radial rgba(20, 20, 20, 0.8),
+        rgba(0, 0, 0, 0.8)
+    );
+    background: -ms-radial-gradient(rgba(20, 20, 20, 0.8), rgba(0, 0, 0, 0.8));
+    background: -moz-radial-gradient(rgba(20, 20, 20, 0.8), rgba(0, 0, 0, 0.8));
+    background: -o-radial-gradient(rgba(20, 20, 20, 0.8), rgba(0, 0, 0, 0.8));
+    z-index: -10000;
+}
+  
+.loading-spinner:not(:required) {
+    /*font: 0/0 a;*/
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+}
+  
+.loading-spinner:not(:required):after {
+    content: "";
+    display: block;
+    font-size: 10px;
+    width: 1em;
+    height: 1em;
+    margin-top: -0.5em;
+}
+
+  /******************** PRIME NG ************************************/
+
+.pi {
+    font-size: 13px;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    font-size: 13px;
+    font-weight: bold;
+    color: #e80000;
+}
+
+.p-dropdown {
+    /*width: 276px;*/
+    height: 35px;
+    border-radius: 3px;
+    border-color: #d5d2d2;
+    width: 100%;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+    margin: 0;
+    padding: 0.75rem 1.25rem;
+    border: 0 none;
+    color: #495057;
+    background: transparent;
+    transition: box-shadow 0.2s;
+    border-radius: 0;
+    width: 100%;
+}
+
+.p-dropdown-item {
+    cursor: pointer;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    white-space: initial !important;
+}
+
+.p-paginator .p-dropdown {
+    height: 36px;
+}
+
+.p-paginator {
+    height: 75px;
+}
+
+.p-autocomplete {
+    width: 372px;
+    height: 35px;
+    border-radius: 1px;
+    border-color: #d5d2d2;
+}
+
+.p-inputtext {
+    font-size: 14px;
+}
+
+.p-inputnumber {
+    width: 100%;
+}
+
+#descedit.p-inputtext {
+    width: 700px;
+}
+
+.p-element li span {
+    font-size: 14px;
+}
+
+.inputbuc input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance:textfield;
+}
+
+.p-calendar {
+    width: 370px;
+}
+
+.pi-calendar:before {
+    color: #e80000;
+}
+
+.pi-file-excel:before {
+    color: #e80000;
+}
+
+.p-calendar-w-btn .p-datepicker-trigger,
+.p-autocomplete-dd .p-autocomplete-dropdown {
+    border-color: #d5d2d2 !important;
+}
+
+#estatus > .p-dropdown {
+    width: 100%;
+}
+
+.pi-chevron-down:before {
+    color: #1c1c1c;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.pi-file-pdf:before,
+.pi-arrow-down {
+    font-size: 20px;
+}
+
+.p-datatable-header .p-inputtext {
+    width: 240px !important;
+    font-size: 15px;
+}
+
+.p-datatable .p-datatable-header {
+    margin: -20px 0 20px 0;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+    border-color: #e80000;
+    background: #e80000;
+}
+
+.p-checkbox-label {
+    line-height: 1;
+    font-size: 12px;
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+    border-color: #e80000;
+}
+
+.p-dialog .p-dialog-header .p-dialog-title {
+    font-weight: 700;
+    font-size: 2.25rem;
+}
+
+.p-dialog {
+    font-size: 16px;
+}
+
+.p-dialog .p-dialog-content {
+    overflow: hidden;
+}
+
+.p-dialog .p-dialog-footer button {
+    margin: 0 0.5rem 0 0;
+    width: auto;
+    color: rgba(228, 0, 0, 1);
+    border-color: rgba(228, 0, 0, 1);
+    background-color: rgba(255, 255, 255, 1);
+    font-size: 13px;
+}
+
+.p-dialog .p-dialog-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #eee;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.modaldictamen > .p-component-overlay > .p-element > .p-dialog-content {
+    overflow: scroll;
+    overflow-x: hidden;
+    padding-top: 15px;
+}
+
+.p-button:enabled:hover {
+    background: rgba(228, 0, 0, 1);
+    color: #ffffff;
+    border-color: rgba(228, 0, 0, 1);
+}
+
+nav.ng-star-inserted {
+    margin-top: 20px;
+}
+
+.pdf-viewer {
+    height: 100vh;
+    width: 80vw;
+    display: block;
+    margin: 0 auto;
+}
+
+.slainput {
+    width: 60px;
+}
+
+.slainput > .p-dropdown {
+    width: 100px !important;
+}
+
+div#collapseActosDominio {
+    height: 530px;
+}
+
+ul.docslist {
+    list-style-type: none;
+}
+
+.checked {
+    color: #63BA68;
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+.checkicon {
+    color: #63BA68;
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+.smallobl {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #63BA68;
+    font-size: 15px;
+}
+
+.notcheck {
+    color: transparent;
+}
+
+.doctext {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.5rem;
+    color: #000000;
+}
+
+/* small,
+strong {
+    color: #000000;
+} */
+
+

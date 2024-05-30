@@ -1,0 +1,631 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingMisSolicitudes">
+                        <h6 class="panel-title">
+                            <strong>Búsqueda de folios</strong>
+                            <a role="button" class="custom-button-link" data-toggle="collapse" href="#collapseMisSolicitudes" aria-expanded="true" aria-controls="collapseMisSolicitudes">
+                                - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseMisSolicitudes" class="collapse show" role="tabpanel" aria-labelledby="headingMisSolicitudes">
+                        <div class="panel-body">
+                            <form class="form-horizontal" id="form">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="folio" class="col-sm-12 col-md-6 control-label">
+                                                    Folio:
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input  class="form-control misSol"
+                                                            id="folio"
+                                                            name="folio"
+                                                            maxlength="50"
+                                                            type="text"
+                                                            [(ngModel)]="solicitudFolio"
+                                                            (ngModelChange)="getData( solicitudFolio, 'busquedaFolio' )">
+                                                </div>
+                                                <label for="estatus_folio" class="col-sm-12 col-md-6 control-label text-rigth">
+                                                    Estado: 
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <p-dropdown appendTo="body"
+                                                                name="estatus"
+                                                                class="estatus-dropdown"
+                                                                id="estatus"
+                                                                optionLabel="nombre"
+                                                                placeholder="Estatus de Instrucción"
+                                                                [options]="estatus"
+                                                                [(ngModel)]="estados"
+                                                                (onChange)="getData( $event, 'estado' )">
+                                                    </p-dropdown>
+                                                </div>
+                                                <label for="rfc" class="col-sm-12 col-md-6 control-label text-rigth">
+                                                    RFC: 
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input  class="form-control misSol"
+                                                            id="rfc"
+                                                            name="rfc"
+                                                            optionLabel="id"
+                                                            maxlength="13"
+                                                            [(ngModel)]="rfc"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12">
+                                                    <a  href="#panelBusq"
+                                                        class="custom-button-link-red"
+                                                        data-toggle="collapse"
+                                                        id="botonBusqueda"
+                                                        aria-expanded="false"
+                                                        aria-controls="panelBusq">
+                                                            BÚSQUEDA AVANZADA
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="buc" class="col-sm-12 col-md-6 control-label text-rigth">
+                                                    B.U.C.:
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input  class="form-control misSol"
+                                                            id="buc"
+                                                            name="buc"
+                                                            type="text"
+                                                            oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            maxlength="8"
+                                                            [(ngModel)]="bucNumber"
+                                                            (ngModelChange)="getData( bucNumber, 'buc' )" >
+                                                </div>
+                                                <label for="nombre_den" class="col-sm-12 col-md-12 control-label text-rigth">
+                                                    Nombre, denominación o razón social:
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input  class="form-control misSol"
+                                                            id="nombre_den"
+                                                            name="nombre_den"
+                                                            maxlength="100"
+                                                            [(ngModel)]="rasSoc"
+                                                            (ngModelChange)="getDataB( rasSoc, 'rzonSocial' )">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <hr class="mt-5">
+                                </div>
+                                <!-- Inicio panel de busqueda -->
+                                <div class="collapse" id="panelBusq">
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="desde" class="col-sm-12 col-md-6 control-label text-rigth">Desde: </label>
+                                                    <div class="col-sm-12 col-md-12 form mb-5">
+                                                        <app-ng-calendar    #busquedaAvanzadaDesde
+                                                                            ngDefaultControl
+                                                                            class="ml-0 mr-0"
+                                                                            name="ci_fini"
+                                                                            inputId="ci_fini"
+                                                                            locale="es"
+                                                                            formatDate="dd/mm/yy"
+                                                                            [maxDate]="dateToDay"
+                                                                            [selectDate]="dateInit"
+                                                                            (OutDate)="getData( $event, 'ci_fini' )">
+                                                        </app-ng-calendar>
+                                                    </div>
+                                                    <label for="hasta" class="col-sm-12 col-md-6 control-label text-rigth">Hasta: </label>
+                                                    <div class="col-sm-12 col-md-12 form mb-5">
+                                                        <app-ng-calendar    #busquedaAvanzadaHasta
+                                                                            ngDefaultControl
+                                                                            class="ml-0 mr-0"
+                                                                            name="ci_ffin"
+                                                                            inputId="ci_ffin"
+                                                                            locale="es"
+                                                                            formatDate="dd/mm/yy"
+                                                                            [maxDate]="dateToDay"
+                                                                            [selectDate]="dateEnd"
+                                                                            (OutDate)="getData( $event, 'ci_ffin' )">
+                                                        </app-ng-calendar>
+                                                    </div>
+                                                    <label for="banca" class="col-sm-12 col-md-6 control-label text-rigth">Banca: </label>
+                                                    <div class="col-sm-12 col-md-12 form mb-5">
+                                                        <app-ng-autocomp-cust   #inputBancos
+                                                                                name="banca"
+                                                                                id="banca"
+                                                                                [data_drop]="banca"
+                                                                                [data]="bancaAuto"
+                                                                                (itemSelect)="getDataB( $event, 'banca' )">
+                                                        </app-ng-autocomp-cust>
+                                                    </div>
+                                                    <label for="zona" class="col-sm-12 col-md-6 control-label text-rigth">Zona: </label>
+                                                    <div class="col-sm-12 col-md-12 form mb-5">
+                                                        <app-ng-autocomp-cust   #inputBancos
+                                                                                name="zona"
+                                                                                id="zona"
+                                                                                [data]="zonaAuto"
+                                                                                [data_drop]="zona"
+                                                                                (itemSelect)="getDataB( $event, 'zona' )">
+                                                        </app-ng-autocomp-cust>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="region" class="col-sm-12 col-md-6 control-label text-rigth">Región: </label>
+                                                    <div class="col-sm-12 col-md-12 mb-5">
+                                                        <p-dropdown name="region"
+                                                                    class="estatus-dropdown"
+                                                                    id="region"
+                                                                    optionLabel="nombre"
+                                                                    placeholder="Selecciona una región"
+                                                                    [options]="region"
+                                                                    [(ngModel)]="regiones"
+                                                                    (onChange)="getData( $event, 'region' )">
+                                                        </p-dropdown>
+                                                    </div>
+                                                    <label for="tipoDic" class="col-sm-12 col-md-6 control-label text-rigth">Tipo dictamen: </label>
+                                                    <div class="col-sm-12 col-md-12 mb-5">
+                                                        <p-dropdown name="tipoDic"
+                                                                    class="estatus-dropdown"
+                                                                    id="tipoDic"
+                                                                    optionLabel="nombre"
+                                                                    optionvalue="id"
+                                                                    placeholder="Selecciona un tipo de dictamen"
+                                                                    [options]="tipodictamen"
+                                                                    [(ngModel)]="tipodictamenes"
+                                                                    (onChange)="getDataB( $event, 'tipodictamen' )">
+                                                        </p-dropdown>
+                                                    </div>
+                                                    <label for="viglist" class="col-sm-12 col-md-6 control-label text-rigth">Vigencia de listado:  </label>
+                                                    <div class="col-sm-12 col-md-12 mb-5">
+                                                        <p-dropdown name="viglist"
+                                                                    class="estatus-dropdown"
+                                                                    id="viglist"
+                                                                    optionLabel="nombre"
+                                                                    optionvalue="id"
+                                                                    placeholder="Seleccionar"
+                                                                    [options]="viglistado"
+                                                                    [(ngModel)]="vigList"
+                                                                    (onChange)="getDataB( $event, 'viglistado' )"
+                                                                    [disabled]="this.dataFiltersb.tipoDict !== '1' && this.dataFiltersb.tipoDict !== '6'">
+                                                        </p-dropdown>
+                                                    </div>
+                                                    <label for="avisoupld" class="col-sm-12 col-md-6 control-label text-rigth">Aviso UPLD: </label>
+                                                    <div class="col-sm-12 col-md-12 mb-5">
+                                                        <p-dropdown name="avisoupld"
+                                                                    class="estatus-dropdown"
+                                                                    id="avisoupld"
+                                                                    optionLabel="nombre"
+                                                                    optionvalue="id"
+                                                                    placeholder="Seleccionar"
+                                                                    [options]="avisoupld"
+                                                                    [(ngModel)]="alertUpld"
+                                                                    (onChange)="getDataB( $event, 'avisoupld' )"
+                                                                    [disabled]="this.dataFiltersb.tipoDict !== '1'">
+                                                        </p-dropdown>
+                                                    </div>
+                                                    <label for="sol_propias" class="col-sm-12 col-md-6 control-label text-rigth">
+                                                        Solicitudes propias:
+                                                        </label>
+                                                    <div class="col-sm-12 col-md-12 mb-5">
+                                                        <p-dropdown *ngIf="isReady"
+                                                                    name="estatus-dropdown"
+                                                                    id="estatus-dropdown"
+                                                                    optionValue="id"
+                                                                    optionLabel="nombre"
+                                                                    placeholder="Seleccionar"
+                                                                    [options]="solpropias"
+                                                                    [(ngModel)]="requestSelf"
+                                                                    (onChange)="getDataB( $event, 'solpropias' )">
+                                                        </p-dropdown>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <!-- Fin panel de busqueda -->
+                                </div>
+                            </form>
+                            <div class="row xtra-top-pad-15">
+                                <div class="row col-md-12 justify-content-end">
+                                    <button (click)="limpiarFormulario()"
+                                            type="button"
+                                            id="limpiarAv"
+                                            class="p-button-rounded p-button-secondary">
+                                                Limpiar Datos
+                                    </button>
+                                    <div *ngIf="rol === 'Abogado externo'; else Interno">
+                                        <button (click)="obtenerSolExtAdv()"
+                                                type="button"
+                                                id="EnviaBtn"
+                                                class="p-button-rounded p-button-danger">
+                                                    Buscar
+                                        </button>
+                                    </div>
+                                    <ng-template #Interno>
+                                        <button (click)="obtenerSolIntAdv()"
+                                                type="button"
+                                                id="EnviaBtn"
+                                                class="p-button-rounded p-button-danger">
+                                                    Buscar
+                                        </button>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="rol === 'Abogado externo'; else InternoRes">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingDetalleInverv">
+                            <h6 class="panel-title">
+                                <strong id="foliosTxt">Resultados</strong>
+                                <a  class="custom-button-link"
+                                    role="button"
+                                    data-toggle="collapse"
+                                    href="#collapseDetalleInverv"
+                                    aria-expanded="false"
+                                    aria-controls="collapseDetalleInverv">
+                                        - Haz clic para ocultar o mostrar
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="collapseDetalleInverv" class="collapse show" role="tabpanel" aria-labelledby="headingDetalleInverv">
+                            <div class="panel-body"><br>
+                                <div class="dataTables_scrollBody">
+                                    <p-table #dt1
+                                            class="rowAlternate" 
+                                            [value]="dataTableSol" 
+                                            dataKey="id"
+                                            [rows]="10"
+                                            [rowsPerPageOptions]="[10,25,50]"
+                                            [showCurrentPageReport]="true"
+                                            paginatorDropdownAppendTo="body"
+                                            currentPageReportTemplate="Total de registros: {totalRecords}"
+                                            styleClass="p-datatable-gridlines"
+                                            [paginator]="true"
+                                            responsiveLayout="scroll"
+                                            scrollHeight="400px"
+                                            [globalFilterFields]="['colFolio','busquedaRazonSocial','tipoDictamen','comResEdo','fechaResFechaRegistro','fechaResFechaCompromiso','abogado']"
+                                            [exportHeader]="'customExportHeader'">
+                                        <ng-template pTemplate="caption">
+                                            <div class="flex align-items-center justify-content-between text-right">
+                                                <h5 class="m-0"></h5>
+                                                <span class="p-input-icon-left">
+                                                    <em class="pi pi-search mr-3"></em>
+                                                    <input  pInputText
+                                                            type="text"
+                                                            id="search"
+                                                            placeholder="Buscar..."
+                                                            (input)="dt1.filterGlobal( $any($event.target).value, 'contains' )"/>
+                                                    <label for="search"></label>
+                                                    <button type="button"
+                                                            pButton
+                                                            pRipple
+                                                            icon="pi pi-file-excel"
+                                                            class="p-button-success mr-2 font20"
+                                                            pTooltip="XLS"
+                                                            tooltipPosition="bottom"
+                                                            (click)="exportExcel()">
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="colFolio">Folio <p-sortIcon field="colFolio"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="busquedaRazonSocial">Nombre, denominación o razón social <p-sortIcon field="busquedaRazonSocial"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="tipoDictamen">Tipo dictamen <p-sortIcon field="tipoDictamen"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="comResEdo">Estado <p-sortIcon field="comResEdo"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="resultadoAtencion">Resultado atención <p-sortIcon field=""></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="fechaResFechaRegistro">Fecha registro <p-sortIcon field="fechaResFechaRegistro"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="fechaResFechaCompromiso">Fecha compromiso <p-sortIcon field="fechaResFechaCompromiso"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="abogado">Abogado seguimiento <p-sortIcon field="abogado"></p-sortIcon></div>
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" id="tmpsolbody" let-dataTableSol >
+                                            <tr>
+                                                <td *ngIf="dataTableSol.comResIdEstado === 'ACT'; else emitir" 
+                                                    (click)="vistaDetalleFolioExt( dataTableSol.colFolio )">
+                                                    <span class="text-center custom-button-link-red">
+                                                        {{dataTableSol.colFolio}}
+                                                    </span>
+                                                </td>                                                    
+                                                <ng-template #emitir>
+                                                    <td *ngIf="dataTableSol.userExt === uid && (dataTableSol.busquedaEstadoFolio === 'SEG1_OK' || dataTableSol.busquedaEstadoFolio === 'SEG2_RECH' || dataTableSol.busquedaEstadoFolio === 'ASIG_URG_EXT1' || dataTableSol.busquedaEstadoFolio === 'ASIG_URG_EXT2'); else nolink"
+                                                        (click)="vistaDetalleFolio( dataTableSol.colFolio, dataTableSol.resCodEdoPorOlExt )">
+                                                        <span class="text-center custom-button-link-red">
+                                                            {{dataTableSol.colFolio}}
+                                                        </span>
+                                                    </td>
+                                                </ng-template>
+                                                <ng-template #nolink>
+                                                    <td>
+                                                        <span class="text-center">
+                                                            {{dataTableSol.colFolio}}
+                                                        </span>
+                                                    </td>
+                                                </ng-template>
+                                                <td class="text-center">{{dataTableSol.busquedaRazonSocial}}</td>
+                                                <td class="text-center">{{dataTableSol.tipoDictamen}}</td>
+                                                <ng-container class="text-center">
+                                                    <td class="colorprior text-center" *ngIf="dataTableSol.prioridad === '1' && dataTableSol.comResIdEstado !== 'ACT'; else error">
+                                                        {{dataTableSol.resCodEdoPorOlExt}}
+                                                    </td>
+                                                    <ng-template #error>
+                                                        <ng-container *ngIf="dataTableSol.idTipoReingreso === '3' && dataTableSol.comResIdEstado !== 'ACT'; else turn">
+                                                            <td class="colorerror text-center">{{dataTableSol.resCodEdoPorOlExt}}</td>
+                                                        </ng-container>
+                                                    </ng-template>
+                                                    <ng-template #turn>
+                                                        <ng-container *ngIf="dataTableSol.idTipoReingreso === '8' && dataTableSol.comResIdEstado !== 'ACT'; else normal">
+                                                            <td class="colorturn text-center">{{dataTableSol.resCodEdoPorOlExt}}</td>
+                                                        </ng-container>
+                                                    </ng-template>
+                                                    <ng-template #normal>
+                                                        <td class="text-center">{{dataTableSol.resCodEdoPorOlExt}}</td>
+                                                    </ng-template>
+                                                </ng-container>
+                                                <td class="text-center">{{dataTableSol.comResEdo}}</td>
+                                                <td class="text-center">{{dataTableSol.fechaResFechaRegistro}}</td>
+                                                <td class="text-center">{{dataTableSol.fechaResFechaCompromiso}}</td>
+                                                <td>{{dataTableSol.abogado}}</td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="emptymessage">
+                                            <tr>
+                                                <td colspan="8">No se encontraron solicitudes.</td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #InternoRes>
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingDetalleInverv">
+                            <h6 class="panel-title">
+                                <strong id="foliosTxt">Folios</strong>
+                                <a class="custom-button-link" role="button" data-toggle="collapse" href="#collapseDetalleInverv" aria-expanded="false" aria-controls="collapseDetalleInverv">- Haz clic para ocultar o mostrar</a>
+                            </h6>
+                        </div>
+                        <div id="collapseDetalleInverv" class="collapse show" role="tabpanel" aria-labelledby="headingDetalleInverv">
+                            <div class="panel-body"><br>
+                                <div class="dataTables_scrollBody">
+                                    <p-table #dt1
+                                            class="rowAlternate headsticky" 
+                                            [value]="dataTableSol" 
+                                            dataKey="id"
+                                            [rows]="10"
+                                            [rowsPerPageOptions]="[10,25,50]" 
+                                            [showCurrentPageReport]="true"
+                                            paginatorDropdownAppendTo="body"
+                                            currentPageReportTemplate="Total de registros: {totalRecords}" 
+                                            styleClass="p-datatable-gridlines"
+                                            [paginator]="true"
+                                            responsiveLayout="scroll"
+                                            scrollHeight="400px"
+                                            (onFilter)="onFilter($event, dt1)"
+                                            [globalFilterFields]="['busquedaFolio','busquedaRazonSocial','tipoDictamen','comResEdo','resultadoAtencion','fechaResFechaRegistro','fechaResFechaCompromiso','abogado']"
+                                            [exportHeader]="'customExportHeader'">
+                                        <ng-template pTemplate="caption">
+                                            <div class="flex align-items-center justify-content-between text-right">
+                                                <h5 class="m-0"></h5>
+                                                <span class="p-input-icon-left">
+                                                    <em class="pi pi-search mr-3"></em>
+                                                    <input pInputText type="text" id="search3" [(ngModel)]="searchGlobal" (input)="dt1.filterGlobal( $any($event.target).value, 'contains' )" (ngModelChange)="getfilterGlobal( $event, 'searchGlobal' )" placeholder="Buscar..."/>
+                                                    <label for="search3"></label>
+                                                    <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2 font20" pTooltip="XLS" tooltipPosition="bottom"></button>
+                                                </span>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="busquedaFolio">Folio <p-sortIcon field="busquedaFolio"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="busquedaRazonSocial">Nombre, denominación o razón social <p-sortIcon field="busquedaRazonSocial"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="tipoDictamen">Tipo dictamen <p-sortIcon field="tipoDictamen"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="comResEdo">Estado <p-sortIcon field="comResEdo"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="resultadoAtencion">Resultado atención <p-sortIcon field="resultadoAtencion"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="fechaResFechaRegistro">Fecha registro <p-sortIcon field="fechaResFechaRegistro"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="compromiso">Fecha compromiso <p-sortIcon field="compromiso"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="fechaResFechaEnvio">Fecha de respuesta <p-sortIcon field="fechaResFechaEnvio"></p-sortIcon></div>
+                                                </th>
+                                                <!-- <th class="text-wrap fixed-width" scope="col" [hidden]="rol === 'Solicitante'">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="accion">Acción <p-sortIcon field="accion"></p-sortIcon></div>
+                                                </th> -->
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="abogado">Abogado seguimiento <p-sortIcon field="abogado"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col" [hidden]="rol === 'Solicitante'">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="abogadoext">Abogado externo <p-sortIcon field="abogadoext"></p-sortIcon></div>
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-dataTableSol [ngSwitch]="rol">
+                                            <tr>
+                                                <td *ngSwitchCase="'Solicitante'" class="text-center">
+                                                    <div class="text-center custom-button-link-red" 
+                                                            *ngIf="dataTableSol.estadoDesc === 'ATENDIDO' ||
+                                                                dataTableSol.estadoDesc === 'Atendido Dictamen' ||
+                                                                dataTableSol.estadoDesc === 'ATENDIDO RECHAZADO' ||
+                                                                dataTableSol.estadoDesc === 'ATENDIDO DICTAMEN';
+                                                            else sinlink"
+                                                            (click)="vistaDetalleFolio( dataTableSol.busquedaFolio, dataTableSol.estadoDesc )">
+                                                            {{dataTableSol.busquedaFolio}}</div>
+                                                    <ng-template #sinlink>
+                                                        <div class="text-center">{{dataTableSol.busquedaFolio}}</div>      
+                                                    </ng-template>
+                                                </td>
+                                                <td *ngSwitchCase="'Abogado de seguimiento'" class="text-center">
+                                                    <div class="text-center custom-button-link-red" 
+                                                        *ngIf="dataTableSol.comResIdEstado !== 'ACT';
+                                                        else dictaminar">
+                                                        <a [routerLink]="['/dictaminacion', dataTableSol.busquedaFolio ]"> {{dataTableSol.busquedaFolio}}</a>
+                                                    </div>
+                                                    <ng-template #dictaminar>
+                                                        <div class="text-center custom-button-link-red">
+                                                            <a [routerLink]="['/foliodetalle', dataTableSol.busquedaFolio ]"> {{dataTableSol.busquedaFolio}}</a>
+                                                        </div>
+                                                    </ng-template>
+                                                    <ng-template #sinlink>
+                                                        <div class="text-center">{{dataTableSol.busquedaFolio}}</div>
+                                                    </ng-template>
+                                                </td>
+                                                <td *ngSwitchCase="'Administrador'" class="text-center">
+                                                    <div class="text-center custom-button-link-red" 
+                                                            *ngIf="dataTableSol.estadoDesc === 'ATENDIDO' ||
+                                                                dataTableSol.estadoDesc === 'Atendido Dictamen' ||
+                                                                dataTableSol.estadoDesc === 'ATENDIDO RECHAZADO' ||
+                                                                dataTableSol.estadoDesc === 'ATENDIDO DICTAMEN';
+                                                            else sinlink"
+                                                            (click)="vistaDetalleFolio( dataTableSol.busquedaFolio, dataTableSol.estadoDesc )">
+                                                            {{dataTableSol.busquedaFolio}}</div>
+                                                    <ng-template #sinlink>
+                                                        <div class="text-center">{{dataTableSol.busquedaFolio}}</div>      
+                                                    </ng-template>
+                                                </td>
+                                                <td class="text-center">{{dataTableSol.busquedaRazonSocial}}</td>
+                                                <td class="text-center">{{dataTableSol.tipoDictamen}}</td>
+                                                <td *ngSwitchCase="'Solicitante'" class="text-center">
+                                                    {{dataTableSol.estadoDesc}}
+                                                </td>
+                                                <td *ngSwitchCase="'Solicitante'" class="text-center">
+                                                    {{dataTableSol.resultadoAtencion}}
+                                                </td>
+                                                <ng-container *ngSwitchCase="'Abogado de seguimiento'" class="text-center">
+                                                    <td class="colorprior text-center" *ngIf="dataTableSol.prioridad === '1' && dataTableSol.comResIdEstado !== 'ACT'; else error">
+                                                        {{dataTableSol.comResEstadoEstadoFolioSeg}}
+                                                    </td>
+                                                    <ng-template #error>
+                                                        <ng-container *ngIf="dataTableSol.idTipoReingreso === '3' && dataTableSol.comResIdEstado !== 'ACT'; else turn">
+                                                            <td class="colorerror  text-center">{{dataTableSol.comResEstadoEstadoFolioSeg}}</td>
+                                                        </ng-container>
+                                                    </ng-template>
+                                                    <ng-template #turn>
+                                                        <ng-container *ngIf="dataTableSol.idTipoReingreso === '8' && dataTableSol.comResIdEstado !== 'ACT'; else normal">
+                                                            <td class="colorturn  text-center">{{dataTableSol.comResEstadoEstadoFolioSeg}}</td>
+                                                        </ng-container>
+                                                    </ng-template>
+                                                    <ng-template #normal>
+                                                        <td class="text-center">{{dataTableSol.comResEstadoEstadoFolioSeg}}</td>
+                                                    </ng-template>
+                                                </ng-container>
+                                                <td *ngSwitchCase="'Abogado de seguimiento'" class="text-center">
+                                                    {{dataTableSol.comResEdo}}
+                                                </td>
+                                                <td *ngSwitchCase="'Administrador'" class="text-center">
+                                                    {{dataTableSol.estadoDesc}}
+                                                </td>
+                                                <td *ngSwitchCase="'Administrador'" class="text-center">
+                                                    {{dataTableSol.resultadoAtencion}}
+                                                </td>
+                                                <td class="text-center">{{dataTableSol.fechaResFechaRegistro}}</td>
+                                                <td class="text-center">{{dataTableSol.fechaResFechaCompromiso}}</td>
+                                                <td class="text-center">{{dataTableSol.fechaResFechaEnvio}}</td>
+                                                    
+                                                <!-- <ng-template #elseReplyDate>
+                                                        <div *ngIf="dataTableSol.resultadoAtencion !== 'REPORTADO'" [hidden]="rol === 'Abogado de seguimiento'">
+                                                            <div>
+                                                                <div    *ngIf="validateDateNow(dataTableSol.fechaResFechaCompromiso)"
+                                                                        class="text-center custom-button-link-red" 
+                                                                        (click)="reportFolio(dataTableSol.comResId)">
+                                                                        Reportar
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-template> -->
+                                                <td>{{dataTableSol.abogado}}</td>
+                                                <td [hidden]="rol === 'Solicitante'">{{dataTableSol.abogadoExt}}</td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="emptymessage">
+                                            <tr>
+                                                <td colspan="8">No se encontraron solicitudes.</td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+                <div class="row pad-final"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog class="dialog50" header="Header" [(visible)]="displayModalM" [modal]="true"
+    [draggable]="false" [resizable]="false" [closable]="false">
+    <ng-template pTemplate="header">
+        {{ headerModalM }}
+    </ng-template>
+    <p class="m-0">{{ messageModalM }}</p>
+        <ng-template pTemplate="footer">
+            <p-button (click)="closeModal()" label="Cerrar" class="btn modal-button-gral"></p-button>
+        </ng-template>
+</p-dialog>
+
+<p-dialog header="Header" [(visible)]="display" class="h50" [modal]="true" 
+    [draggable]="false" [resizable]="false">
+    <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <ng-template pTemplate="footer">
+            <p-button (click)="display=false" label="Ok" styleClass="p-button-text"></p-button>
+        </ng-template>
+</p-dialog>
+
+<p-dialog class="h50" header="Header" [(visible)]="displayModalFormErr" [modal]="true"
+    [draggable]="false" [resizable]="false" [closable]="false">
+    <ng-template pTemplate="header">
+        <h3>Error</h3>
+    </ng-template>
+    <strong>{{ messageModalM }}</strong>
+        <ng-template pTemplate="footer">
+            <p-button (click)="closeModalForm()" label="Cerrar" class="btn modal-button-gral"></p-button>
+        </ng-template>
+</p-dialog>

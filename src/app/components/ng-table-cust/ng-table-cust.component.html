@@ -1,0 +1,29 @@
+
+
+<p-table styleClass="p-datatable-gridlines" class="rowAlternate" [value]="rows" [paginator]="true" [scrollable]="true" [rows]="showItems"
+[showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" currentPageReportTemplate="Total de registros: {totalRecords}">
+    <ng-template pTemplate="header">
+        <tr class="headerst spaceUnder">
+            <th class="text-center" scope="col" *ngFor="let field of config.colums"
+                [id]="field.label.replace(' ', '_').replace(' ', '_')" 
+                [ngClass]="{'textxsmall': field.type == 'text-xsmall', 
+                            'textsmall': field.type == 'text-small', 
+                            'textmedium': field.type == 'text-medium', 
+                            'textlarge': field.type == 'text-large'}">
+                {{ field.label }}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row>
+        <tr>
+            <td *ngFor="let col of row" [id]="col.colName" [ngSwitch]="col.type"
+                [ngClass]="{'text-left': col.align == 'left', 
+                            'text-center': col.align == 'center', 
+                            'text-right': col.align == 'right' }">
+                <span *ngSwitchCase="'text'">{{ col.data }}</span>
+                <span *ngSwitchCase="'date'">{{ col.data | date: 'dd/MM/YYY' }}</span>
+                <span *ngSwitchCase="'time'">{{ col.data | date: 'mediumTime' }}</span>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

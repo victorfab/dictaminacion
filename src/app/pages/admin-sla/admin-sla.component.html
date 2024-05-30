@@ -1,0 +1,655 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingsla">
+                        <h6 class="panel-title"> SLA
+                            <a  class="custom-button-link"
+                                role="button"
+                                data-toggle="collapse"
+                                href="#collapsesla"
+                                aria-expanded="true"
+                                aria-controls="collapsesla">
+                                    - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapsesla" class="panel-collapse show" role="tabpanel" aria-labelledby="headingsla">
+                        <div class="panel-body">
+                            <p-toolbar>
+                                <div class="row col-md-12">
+                                    <div class="col-md-6">                                                
+                                        <div class="row form2 mb-5">
+                                            <div class="col-md-4">
+                                                <label for="solnva" class="control-label">Solicitud nueva (*):</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <p-inputNumber  #solnvaInput  
+                                                                [(ngModel)]="solnva" 
+                                                                mode="decimal"
+                                                                inputId="solnva" 
+                                                                [max]="24"
+                                                                [min]="1"
+                                                                [maxlength]="2" 
+                                                                [showButtons]="true"  
+                                                                [useGrouping]="false"
+                                                                [allowEmpty]="true"
+                                                                (onInput)="$event.value > 24 ? solnvaInput.value = null! : solnvaInput.value = $event.value; getData($event, 'solnva')">
+                                                </p-inputNumber>
+                                                <small class="p-error" *ngIf="solnvaInput.value === null">
+                                                    El campo es requerido.<br>
+                                                    Valores permitidos (1 - 24)
+                                                </small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="solnva" class="control-label">Hora (s)</label>
+                                            </div>
+                                        </div>
+                                        <div class="row form2 mb-5">
+                                            <div class="col-md-4">
+                                                <label for="actinf" class="control-label">Actualización de la información (*):</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <p-inputNumber  #actinfInput  
+                                                                [(ngModel)]="actinf" 
+                                                                mode="decimal"
+                                                                inputId="actinf" 
+                                                                [max]="24"
+                                                                [min]="1"
+                                                                [maxlength]="2" 
+                                                                [showButtons]="true"  
+                                                                [useGrouping]="false"
+                                                                [allowEmpty]="true"
+                                                                (onInput)="$event.value > 24 ? actinfInput.value = null! : actinfInput.value = $event.value; getData($event, 'actinf')">
+                                                </p-inputNumber>
+                                                <small class="p-error" *ngIf="actinfInput.value === null">
+                                                    El campo es requerido.<br>
+                                                    Valores permitidos (1 - 24)
+                                                </small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="actinf" class="control-label">Hora (s)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form2 mb-5">
+                                            <div class="col-md-4">
+                                                <label for="rechazo" class="control-label">Rechazo (*):</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <p-inputNumber  #rechazoInput  
+                                                                [(ngModel)]="rechazo" 
+                                                                mode="decimal"
+                                                                inputId="rechazo" 
+                                                                [max]="24"
+                                                                [min]="1"
+                                                                [maxlength]="2" 
+                                                                [showButtons]="true"  
+                                                                [useGrouping]="false"
+                                                                [allowEmpty]="true"
+                                                                (onInput)="$event.value > 24 ? rechazoInput.value = null! : rechazoInput.value = $event.value; getData($event, 'rechazo')">
+                                                </p-inputNumber>
+                                                <small class="p-error" *ngIf="rechazoInput.value === null">
+                                                    El campo es requerido.<br>
+                                                    Valores permitidos (1 - 24)
+                                                </small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="rechazo" class="control-label">Hora (s)</label>
+                                            </div>
+                                        </div>                                         
+                                        <div class="row form2 mb-5">
+                                            <div class="col-md-4">
+                                                <label for="error" class="control-label">Error (*):</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <p-inputNumber  #errorInput  
+                                                                [(ngModel)]="error" 
+                                                                mode="decimal"
+                                                                inputId="error" 
+                                                                [max]="24"
+                                                                [min]="1"
+                                                                [maxlength]="2" 
+                                                                [showButtons]="true"  
+                                                                [useGrouping]="false"
+                                                                [allowEmpty]="true"
+                                                                (onInput)="$event.value > 24 ? errorInput.value = null! : errorInput.value = $event.value; getData($event, 'error')">
+                                                </p-inputNumber>
+                                                <small class="p-error" *ngIf="errorInput.value === null">
+                                                    El campo es requerido.<br>
+                                                    Valores permitidos (1 - 24)
+                                                </small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="error" class="control-label">Hora (s)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-toolbar>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingdias">
+                        <h6 class="panel-title"> Horario laboral 
+                            <a  class="custom-button-link"
+                                role="button"
+                                data-toggle="collapse"
+                                href="#collapsedias"
+                                aria-expanded="true"
+                                aria-controls="collapsedias">
+                                    - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapsedias" class="panel-collapse show" role="tabpanel" aria-labelledby="headingdias">
+                        <div class="row col-md-12">
+                            <div class="col-md-6 p-2">                                                
+                                <div class="row form2 mb-5">                                              
+                                    <div class="col-md-3">
+                                        <label for="slalunesini" class="control-label pt-2">Lunes</label>
+                                    </div>
+                                    <div class="col-md-3 text-right">
+                                        <label for="slalunesini" class="control-label pt-2">Día inicia:(*):</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p-inputNumber  #slalunesiniInput  
+                                                        [(ngModel)]="slalunesini" 
+                                                        mode="decimal"
+                                                        inputId="slalunesini" 
+                                                        [max]="24"
+                                                        [min]="1"
+                                                        [maxlength]="2" 
+                                                        [showButtons]="true"  
+                                                        [useGrouping]="false"
+                                                        [allowEmpty]="true"
+                                                        (onInput)="$event.value > 12 ? slalunesiniInput.value = null! : slalunesiniInput.value = $event.value; getDataIni($event, 'slalunesini')">
+                                        </p-inputNumber>
+                                        <small class="p-error" *ngIf="slalunesiniInput.value === null">
+                                            El campo es requerido.<br>
+                                            Valores permitidos (1 - 12)
+                                        </small>
+                                    </div>
+                                    <div class="col-md-2 pt-2">
+                                        <p class="d-inline ml-3" name="indicahoralunesini" id="indicahoralunesini" >am.</p>
+                                    </div>
+                                </div>
+                                <div class="row form2 mb-5">
+                                    <div class="col-md-3">
+                                        <label for="slamartesini" class="control-label pt-2">Martes</label>
+                                    </div>
+                                    <div class="col-md-3 text-right">
+                                        <label for="slamartesini" class="control-label pt-2">Día inicia:(*):</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p-inputNumber  #slamartesiniInput  
+                                                        [(ngModel)]="slamartesini" 
+                                                        mode="decimal"
+                                                        inputId="slamartesini" 
+                                                        [max]="24"
+                                                        [min]="1"
+                                                        [maxlength]="2" 
+                                                        [showButtons]="true"  
+                                                        [useGrouping]="false"
+                                                        [allowEmpty]="true"
+                                                        (onInput)="$event.value > 12 ? slamartesiniInput.value = null! : slamartesiniInput.value = $event.value; getDataIni($event, 'slamartesini')">
+                                        </p-inputNumber>
+                                        <small class="p-error" *ngIf="slamartesiniInput.value === null">
+                                            El campo es requerido.<br>
+                                            Valores permitidos (1 - 12)
+                                        </small>
+                                    </div>
+                                    <div class="col-md-2 pt-2">
+                                        <p class="d-inline ml-3" name="indicahoramartesini" id="indicahoramartesini" >am.</p>
+                                    </div>
+                                </div>
+                                <div class="row form2 mb-5">
+                                    <div class="col-md-3">
+                                        <label for="slamiercolesini" class="control-label pt-2">Miercoles</label>
+                                    </div>
+                                    <div class="col-md-3 text-right">
+                                        <label for="slamiercolesini" class="control-label pt-2">Día inicia:(*):</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p-inputNumber  #slamiercolesiniInput  
+                                                        [(ngModel)]="slamiercolesini" 
+                                                        mode="decimal"
+                                                        inputId="slamiercolesini" 
+                                                        [max]="24"
+                                                        [min]="1"
+                                                        [maxlength]="2" 
+                                                        [showButtons]="true"  
+                                                        [useGrouping]="false"
+                                                        [allowEmpty]="true"
+                                                        (onInput)="$event.value > 12 ? slamiercolesiniInput.value = null! : slamiercolesiniInput.value = $event.value; getDataIni($event, 'slamiercolesini')">
+                                        </p-inputNumber>
+                                        <small class="p-error" *ngIf="slamiercolesiniInput.value === null">
+                                            El campo es requerido.<br>
+                                            Valores permitidos (1 - 12)
+                                        </small>
+                                    </div>
+                                    <div class="col-md-2 pt-2">
+                                        <p class="d-inline ml-3" name="indicahoramiercolesini" id="indicahoramiercolesini" >am.</p>
+                                    </div>
+                                </div>
+                                <div class="row form2 mb-5">
+                                    <div class="col-md-3">
+                                        <label for="slajuevesini" class="control-label">Jueves</label>
+                                    </div>
+                                    <div class="col-md-3 text-right">
+                                        <label for="slajuevesini" class="control-label">Día inicia:(*):</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p-inputNumber  #slajuevesiniInput  
+                                                        [(ngModel)]="slajuevesini" 
+                                                        mode="decimal"
+                                                        inputId="slajuevesini" 
+                                                        [max]="24"
+                                                        [min]="1"
+                                                        [maxlength]="2" 
+                                                        [showButtons]="true"  
+                                                        [useGrouping]="false"
+                                                        [allowEmpty]="true"
+                                                        (onInput)="$event.value > 12 ? slajuevesiniInput.value = null! : slajuevesiniInput.value = $event.value; getDataIni($event, 'slajuevesini')">
+                                        </p-inputNumber>
+                                        <small class="p-error" *ngIf="slajuevesiniInput.value === null">
+                                            El campo es requerido.<br>
+                                            Valores permitidos (1 - 12)
+                                        </small>
+                                    </div>
+                                    <div class="col-md-2 pt-2">
+                                        <p class="d-inline ml-3" name="indicahorajuevesini" id="indicahorajuevesini" >am.</p>     
+                                    </div>
+                                </div>
+                                <div class="row form2 mb-5">
+                                    <div class="col-md-3">
+                                        <label for="slaviernesini" class="control-label">Viernes</label>
+                                    </div>
+                                    <div class="col-md-3 text-right">
+                                        <label for="slaviernesini" class="control-label">Día inicia:(*):</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p-inputNumber  #slaviernesiniInput  
+                                                        [(ngModel)]="slaviernesini" 
+                                                        mode="decimal"
+                                                        inputId="slaviernesini" 
+                                                        [max]="24"
+                                                        [min]="1"
+                                                        [maxlength]="2" 
+                                                        [showButtons]="true"  
+                                                        [useGrouping]="false"
+                                                        [allowEmpty]="true"
+                                                        (onInput)="$event.value > 12 ? slaviernesiniInput.value = null! : slaviernesiniInput.value = $event.value; getDataIni($event, 'slaviernesini')">
+                                        </p-inputNumber>
+                                        <small class="p-error" *ngIf="slaviernesiniInput.value === null">
+                                            El campo es requerido.<br>
+                                            Valores permitidos (1 - 12)
+                                        </small>
+                                    </div>
+                                    <div class="col-md-2 pt-2">
+                                        <p class="d-inline ml-3" name="indicahoraviernesini" id="indicahoraviernesini" >am.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 p-2">                                                
+                                <div class="row form2 mb-5">
+                                    <div class="col-md-6 text-right">
+                                        <label for="slalunesfin" class="control-label pt-2">Día termina:(*):</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p-inputNumber  #slalunesfinInput  
+                                                        [(ngModel)]="slalunesfin" 
+                                                        mode="decimal"
+                                                        inputId="slalunesfin" 
+                                                        [max]="24"
+                                                        [min]="13"
+                                                        [maxlength]="2" 
+                                                        [showButtons]="true"  
+                                                        [useGrouping]="false"
+                                                        [allowEmpty]="true"
+                                                        (onBlur)="slalunesfinInput.value = slalunesfinInput.value < 12 ? null! : slalunesfinInput.value"
+                                                        (onInput)="($event.value && $event.value.toString().length > 1) ? ($event.value > 12 && $event.value < 25) ? slalunesfinInput.value = $event.value :  slalunesfinInput.value = null! : slalunesfinInput.value = $event.value; getDataFin($event, 'slalunesfin')">
+                                        </p-inputNumber>
+                                        <small class="p-error" *ngIf="slalunesfinInput.value === null">
+                                            El campo es requerido. <br>
+                                            Valores permitidos (13 - 24)
+                                        </small>
+                                    </div>
+                                    <div class="col-md-2 pt-2">
+                                        <p class="d-inline ml-3" name="indicahoralunesfin" id="indicahoralunesfin" >pm.</p>
+                                    </div>
+                                </div>
+                                <div class="row form2 mb-5">
+                                    <div class="col-md-6 text-right">
+                                        <label for="slamartesfin" class="control-label pt-2">Día termina:(*):</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p-inputNumber  #slamartesfinInput  
+                                                        [(ngModel)]="slamartesfin" 
+                                                        mode="decimal"
+                                                        inputId="slamartesfin" 
+                                                        [max]="24"
+                                                        [min]="13"
+                                                        [maxlength]="2" 
+                                                        [showButtons]="true"  
+                                                        [useGrouping]="false"
+                                                        [allowEmpty]="true"
+                                                        (onBlur)="slamartesfinInput.value = slamartesfinInput.value < 12 ? null! : slamartesfinInput.value"
+                                                        (onInput)="($event.value && $event.value.toString().length > 1) ? ($event.value > 12 && $event.value < 25) ? slamartesfinInput.value = $event.value :  slamartesfinInput.value = null! : slamartesfinInput.value = $event.value; getDataFin($event, 'slamartesfin')">
+                                        </p-inputNumber>
+                                        <small class="p-error" *ngIf="slamartesfinInput.value === null">
+                                            El campo es requerido. <br>
+                                            Valores permitidos (13 - 24)
+                                        </small>
+                                    </div>
+                                    <div class="col-md-2 pt-2">
+                                        <p class="d-inline ml-3" name="indicahoramartesfin" id="indicahoramartesfin" >pm.</p>
+                                    </div>
+                                </div>
+                                <div class="row form2 mb-5">
+                                    <div class="col-md-6 text-right">
+                                        <label for="slamiercolesfin" class="control-label">Día termina:(*):</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p-inputNumber  #slamiercolesfinInput  
+                                                        [(ngModel)]="slamiercolesfin" 
+                                                        mode="decimal"
+                                                        inputId="slamiercolesfin" 
+                                                        [max]="24"
+                                                        [min]="13"
+                                                        [maxlength]="2" 
+                                                        [showButtons]="true"  
+                                                        [useGrouping]="false"
+                                                        [allowEmpty]="true"
+                                                        (onBlur)="slamiercolesfinInput.value = slamiercolesfinInput.value < 12 ? null! : slamiercolesfinInput.value"
+                                                        (onInput)="($event.value && $event.value.toString().length > 1) ? ($event.value > 12 && $event.value < 25) ? slamiercolesfinInput.value = $event.value :  slamiercolesfinInput.value = null! : slamiercolesfinInput.value = $event.value; getDataFin($event, 'slamiercolesfin')">
+                                        </p-inputNumber>
+                                        <small class="p-error" *ngIf="slamiercolesfinInput.value === null">
+                                            El campo es requerido. <br>
+                                            Valores permitidos (13 - 24)
+                                        </small>
+                                    </div>
+                                    <div class="col-md-2 pt-2">
+                                        <p class="d-inline ml-3" name="indicahoramiercolesfin" id="indicahoramiercolesfin" >pm.</p>
+                                    </div>
+                                </div>
+                                <div class="row form2 mb-5">                                        
+                                    <div class="col-md-6 text-right">
+                                        <label for="slajuevesfin" class="control-label">Día termina:(*):</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p-inputNumber  #slajuevesfinInput  
+                                                        [(ngModel)]="slajuevesfin" 
+                                                        mode="decimal"
+                                                        inputId="slajuevesfin" 
+                                                        [max]="24"
+                                                        [min]="13"
+                                                        [maxlength]="2" 
+                                                        [showButtons]="true"  
+                                                        [useGrouping]="false"
+                                                        [allowEmpty]="true"
+                                                        (onBlur)="slajuevesfinInput.value = slajuevesfinInput.value < 12 ? null! : slajuevesfinInput.value"
+                                                        (onInput)="($event.value && $event.value.toString().length > 1) ? ($event.value > 12 && $event.value < 25) ? slajuevesfinInput.value = $event.value :  slajuevesfinInput.value = null! : slajuevesfinInput.value = $event.value; getDataFin($event, 'slajuevesfin')">
+                                        </p-inputNumber>
+                                        <small class="p-error" *ngIf="slajuevesfinInput.value === null">
+                                            El campo es requerido. <br>
+                                            Valores permitidos (13 - 24)
+                                        </small>
+                                    </div>
+                                    <div class="col-md-2 pt-2">
+                                        <p class="d-inline ml-3" name="indicahorajuevesfin" id="indicahorajuevesfin" >pm.</p>
+                                    </div>
+                                </div>
+                                <div class="row form2 mb-5">
+                                    <div class="col-md-6 text-right">
+                                        <label for="slaviernesfin" class="control-label">Día termina:(*):</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p-inputNumber  #slaviernesfinInput  
+                                                        [(ngModel)]="slaviernesfin"
+                                                        mode="decimal"
+                                                        inputId="slaviernesfin" 
+                                                        [max]="24"
+                                                        [min]="13"
+                                                        [maxlength]="2" 
+                                                        [showButtons]="true"  
+                                                        [useGrouping]="false"
+                                                        [allowEmpty]="true"
+                                                        (onBlur)="slaviernesfinInput.value = slaviernesfinInput.value < 12 ? null! : slaviernesfinInput.value"
+                                                        (onInput)="($event.value && $event.value.toString().length > 1) ? ($event.value > 12 && $event.value < 25) ? slaviernesfinInput.value = $event.value :  slaviernesfinInput.value = null! : slaviernesfinInput.value = $event.value; getDataFin($event, 'slaviernesfin')">
+                                        </p-inputNumber>
+                                        <small class="p-error" *ngIf="slaviernesfinInput.value === null">
+                                            El campo es requerido. <br>
+                                            Valores permitidos (13 - 24)
+                                        </small>
+                                    </div>
+                                    <div class="col-md-2 pt-2">
+                                        <p class="d-inline ml-3" name="indicahoraviernesfin" id="indicahoraviernesfin" >pm.</p>  
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" 
+                                            class="p-button-rounded p-button-danger" 
+                                            pButton
+                                            (click)="guardarSLA_HL()"
+                                            [disabled]="!(solnvaInput.value&&actinfInput.value&&rechazoInput.value&&errorInput.value&&slalunesiniInput.value&&slamartesiniInput.value&&slamiercolesiniInput.value&&slajuevesiniInput.value&&slaviernesiniInput.value&&slalunesfinInput.value&&slamartesfinInput.value&&slamiercolesfinInput.value&&slajuevesfinInput.value&&slaviernesfinInput.value)"> 
+                                            Modificar 
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingdias">
+                        <h6 class="panel-title"> Horario laboral - festivos no oficiales 
+                            <a  role="button"
+                                class="custom-button-link"
+                                data-toggle="collapse"
+                                href="#collapseNoOficiales"
+                                aria-expanded="true"
+                                aria-controls="collapseNoOficiales">
+                                    - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseNoOficiales" class="collapse show" role="tabpanel" aria-labelledby="headingdias">
+                        <div class="panel-body">
+                            <div>
+                                <p-toast></p-toast>
+                                <p-toolbar>
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="desde" class="control-label text-rigth"> Fecha: </label>
+                                                <div class="form">
+                                                    <app-ng-calendar    class="ml-0 mr-0"
+                                                                        name="ci_fini"
+                                                                        inputId="ci_fini"
+                                                                        locale="es"
+                                                                        [selectDate]="ci_fini"
+                                                                        formatDate="dd/mm/yy"
+                                                                        (OutDate)="getData( $event, 'ci_fini' )">
+                                                    </app-ng-calendar>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="desc" class="control-label"> Descripción (*): </label>
+                                                <input  class="form-control"
+                                                        id="desc"
+                                                        type="string"
+                                                        name="desc"
+                                                        [(ngModel)]="descripcion"
+                                                        required>
+                                                <br>
+                                                <div class="text-right">
+                                                    <button type="button"
+                                                            pButton
+                                                            class="p-button-rounded p-button-danger" 
+                                                            [disabled]="!(descripcion&&descripcion.length>0)"
+                                                            (click)="guardarDiaNoOficial()"> 
+                                                            Agregar 
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </p-toolbar>
+                                <p-table [value]="diasinhabiles"
+                                         dataKey="id"
+                                         editMode="row"
+                                         responsiveLayout="scroll">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th scope="col">Fecha</th>
+                                                <th scope="col" class="th80">Descripción</th>
+                                                <th scope="col"></th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body"let-diainhabil let-editing="editing" let-ri="rowIndex">
+                                            <tr [pEditableRow]="diainhabil">
+                                                <td>
+                                                    <p-cellEditor>
+                                                        <ng-template pTemplate="input">
+                                                            <br>
+                                                            <app-ng-calendar    name="fechaedit"
+                                                                                inputId="fechaedit"
+                                                                                locale="es"
+                                                                                formatDate="dd/mm/yy"
+                                                                                [selectDate]="dateEdit"
+                                                                                (OutDate)="getData( $event, 'fechaedit' )">
+                                                            </app-ng-calendar>
+                                                            <label for="fechaedit"></label>
+                                                        </ng-template>
+                                                        <ng-template pTemplate="output">
+                                                            {{diainhabil.dia}}{{'/'}}{{diainhabil.mes}}{{'/'}}{{diainhabil.anio}}
+                                                        </ng-template>
+                                                    </p-cellEditor>
+                                                </td>
+                                                
+                                                <td>
+                                                    <p-cellEditor>
+                                                        <ng-template pTemplate="input">
+                                                            <input  id="descedit"
+                                                                    name="descedit"
+                                                                    pInputText
+                                                                    type="text"
+                                                                    [(ngModel)]="diainhabiledit">
+                                                            <label for="descedit"></label>
+                                                        </ng-template>
+                                                        <ng-template pTemplate="output">
+                                                            {{diainhabil.descripcion}}
+                                                        </ng-template>
+                                                    </p-cellEditor>
+                                                </td>
+                                                <td>
+                                                    <div class="row justify-content-center" [ngClass]="{'edit-sla': editing }">
+                                                        <button *ngIf="!editing" 
+                                                                pButton pRipple type="button" 
+                                                                pInitEditableRow icon="pi pi-pencil" 
+                                                                (click)="onRowEditInit(diainhabil, ri)" 
+                                                                [disabled]="((indexActiveEdit!==-1 && indexActiveEdit!==ri))"
+                                                                class="p-button-rounded p-button-text">
+                                                        </button>
+                                                        <button *ngIf="editing" 
+                                                                pButton 
+                                                                pRipple 
+                                                                type="button"  
+                                                                pSaveEditableRow 
+                                                                icon="pi pi-check" 
+                                                                (click)="onRowEditSave(diainhabil, diainhabil.id, ri)" 
+                                                                [disabled]="(indexActiveEdit!==-1 && indexActiveEdit!==ri)"
+                                                                class="p-button-rounded mr-2">
+                                                        </button>
+                                                        <button *ngIf="editing" 
+                                                                pButton pRipple 
+                                                                type="button" 
+                                                                pCancelEditableRow icon="pi pi-times" 
+                                                                (click)="onRowEditCancel(diainhabil, ri)" 
+                                                                [disabled]="(indexActiveEdit!==-1 && indexActiveEdit!==ri)"
+                                                                class="p-button-rounded p-button-text p-button-danger ml-1">
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <button pButton 
+                                                            pRipple 
+                                                            type="button" 
+                                                            icon="pi pi-trash" 
+                                                            class="p-button-rounded m"
+                                                            [disabled]="((indexActiveEdit!==-1 && indexActiveEdit!==ri)) || indexActiveEdit===ri"
+                                                            (click)="eliminarDiaInhabil( diainhabil.id )">
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog   header="Header" 
+            [(visible)]="dialogConfirm" 
+            [modal]="true" 
+            class="h50"
+            [draggable]="false" 
+            [resizable]="false" 
+            [closable]="false">
+    <ng-template pTemplate="header">
+        <h3>{{ titleDialog }}</h3>
+    </ng-template>
+    <p class="m-0">
+        <strong>{{ messageDialog }}</strong>
+    </p>
+        <ng-template pTemplate="footer">
+            <div class="p-dialog-footer__content-center">
+                <p-button   class="btn modal-button-gral text-center" 
+                            id="acceptFile" 
+                            name="acceptFile"  
+                            label="Aceptar"
+                            (click)="closeDialog()">
+                </p-button>
+            </div>
+        </ng-template>
+</p-dialog>
+
+<p-dialog   header="Header"
+            class="h50"
+            [(visible)]="confirmDeleteDay"
+            [modal]="true" 
+            [draggable]="false"
+            [resizable]="false"
+            [closable]="false">
+    <ng-template pTemplate="header">
+        <h3>Confirmaci&oacute;n</h3>
+    </ng-template>
+    <p class="m-0">
+        <strong>¿Desea eliminar el registro seleccionado?</strong>
+    </p>
+        <ng-template pTemplate="footer">
+            <div class="p-dialog-footer__content-center">
+                <p-button   class="btn modal-button-gral text-center"
+                            id="acceptFile"
+                            name="acceptFile"
+                            label="Aceptar"
+                            (click)="deleteDayItem()">
+                </p-button>
+                <p-button   class="btn modal-button-gral text-center p-dialog-footer__content-center--button-secundary"
+                            id="closeFile"
+                            name="closeFile"
+                            label="Cancelar"
+                            (click)="closeDialogDeleteDay()">
+                </p-button>
+            </div>
+        </ng-template>
+</p-dialog>

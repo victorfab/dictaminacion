@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="44px" viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>icono-pagar_en_comercios</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="APP" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="app/acerca/01-puntos-grid_v2" transform="translate(-259.000000, -668.000000)">
+            <g id="Group-2-Copy-6" transform="translate(187.000000, 622.000000)">
+                <g id="icono-pagar_en_comercios" transform="translate(58.000000, 32.000000)">
+                    <polygon id="Fill-1" points="0 72 72 72 72 0.003 0 0.003"></polygon>
+                    <g id="Group-18" transform="translate(12.000000, 15.000000)">
+                        <path d="M2.9883,0.0006 L4.5153,0.0006 C5.3253,0.0006 6.0753,0.4356 6.4833,1.1376 L12.3003,11.2086" id="Stroke-2" stroke="#E20714" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M10.4619,8.0337 L41.9169,8.0337 C44.2959,8.0337 45.7809,10.6077 44.5929,12.6657 L39.1479,22.1067 C38.2179,23.7147 36.5019,24.7047 34.6449,24.7047 L23.0859,24.7047 C21.2289,24.7047 19.5129,23.7147 18.5829,22.1067 L10.4619,8.0337 Z" id="Stroke-4" stroke="#E20714" stroke-width="1.8" stroke-linejoin="round"></path>
+                        <path d="M15.3282,36.0576 L19.4862,28.8546 C20.4162,27.2436 20.4132,25.2576 19.4802,23.6466 L18.3432,21.6846" id="Stroke-6" stroke="#E20714" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M15.3282,38.4996 L37.3152,38.4996" id="Stroke-8" stroke="#E20714" stroke-width="1.8" stroke-linejoin="round"></path>
+                        <path d="M17.001,38.4996 C17.001,40.4346 15.435,42.0006 13.5,42.0006 C11.568,42.0006 10.002,40.4346 10.002,38.4996 C10.002,36.5676 11.568,34.9986 13.5,34.9986 C15.435,34.9986 17.001,36.5676 17.001,38.4996" id="Fill-10" fill="#FFFFFF"></path>
+                        <path d="M17.001,38.4996 C17.001,40.4346 15.435,42.0006 13.5,42.0006 C11.568,42.0006 10.002,40.4346 10.002,38.4996 C10.002,36.5676 11.568,34.9986 13.5,34.9986 C15.435,34.9986 17.001,36.5676 17.001,38.4996 Z" id="Stroke-12" stroke="#E20714" stroke-width="1.8" stroke-linejoin="round"></path>
+                        <path d="M41.1006,38.4996 C41.1006,40.4346 39.5346,42.0006 37.5996,42.0006 C35.6646,42.0006 34.1016,40.4346 34.1016,38.4996 C34.1016,36.5676 35.6646,34.9986 37.5996,34.9986 C39.5346,34.9986 41.1006,36.5676 41.1006,38.4996" id="Fill-14" fill="#FFFFFF"></path>
+                        <path d="M41.1006,38.4996 C41.1006,40.4346 39.5346,42.0006 37.5996,42.0006 C35.6646,42.0006 34.1016,40.4346 34.1016,38.4996 C34.1016,36.5676 35.6646,34.9986 37.5996,34.9986 C39.5346,34.9986 41.1006,36.5676 41.1006,38.4996 Z" id="Stroke-16" stroke="#E20714" stroke-width="1.8" stroke-linejoin="round"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

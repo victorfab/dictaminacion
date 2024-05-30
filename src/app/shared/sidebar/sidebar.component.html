@@ -1,0 +1,125 @@
+<!-- Left Sidebar  -->
+<aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <div *ngFor="let item of _profileService.menus">
+                    <div  *ngIf="item.active" [routerLink]="item.url" routerLinkActive="active" >
+                        <div *ngIf="item.id !== 7 && item.id !== 8">
+                            <li>
+                                <a class="pointer">
+                                    <div class="iconmenusb  {{ item.icono }}"></div>
+                                    <span class="font-menu bs-linebreak">{{ item.name }}</span>
+                                </a>
+                            </li>
+                        </div>
+                        <div *ngIf="item.id === 7 || item.id === 8">
+                            <li>
+                                <a class="pointer" (click)="cambiarPerfil()">
+                                    <div class="iconmenusb  {{ item.icono }}"></div>
+                                    <span class="font-menu bs-linebreak">{{ item.name }}</span>
+                                </a>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <li>
+                        <a class="pointer" (click)="openBuzonModal()">
+                            <div class="iconmenusb alert_icon_gray"></div>
+                            <span class="font-menu bs-linebreak">Buz&oacute;n de ayuda</span>
+                        </a>
+                    </li>
+                </div>
+            </ul>
+        </nav>
+        <!-- Fin Sidebar navigation -->
+    </div>
+    <!-- Fin Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- Fin Left Sidebar  -->
+
+<!-- ============================================================== -->
+    <!-- Modal Cerrar sesión -->
+    <!-- ============================================================== -->
+    <p-dialog class="modalSignAccess" id="logout" name="logout" header="" [visible]="displayModalL" [draggable]="false" [modal]="true"
+        [showHeader]="false" [closable]="false">
+        <div class="row mt-2 mb-2">
+            <div class="col-12 text-center">
+                <div class="icon-cancel-modal">
+                    <img src="./assets/img/flamaroja.svg" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center mt-5">
+                <div class="fw-bolder">
+                    ¿Seguro que desea abandonar la sesión?
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-6">
+                <button (click)="closeModalL()" id="salir" pButton pRipple type="button" label="No"
+                    class="p-button-rounded p-button-secondary" autofocus></button>
+            </div>
+            <div class="col-6">
+                <button (click)="logout()" id="no" pButton pRipple type="button" label="Si"
+                    class="p-button-rounded p-button-danger"></button>
+            </div>
+        </div>
+    </p-dialog>
+
+    <p-dialog   styleClass="dialog-medium"
+                id="declaraaside"
+                header="Header"
+                [(visible)]="modalBuzonActive"
+                [modal]="true"
+                [draggable]="false"
+                [resizable]="false"
+                [closable]="false">
+        <ng-template pTemplate="header">
+            <h3>Buz&oacute;n de ayuda</h3>
+        </ng-template>
+        <ng-template pTemplate="body">
+            <div class="textalignleft">
+                <p>
+                    <strong>Si requieres asesoría, escríbenos a <u class="info-email-help"><a [href]="'mailto:ayudadictaminacion@santander.com.mx'">ayudadictaminacion@santander.com.mx</a></u> y uno de nuestros asesores
+                        jurídicos te contactará vía correo electrónico: </strong>
+                </p>
+                <div class="mb-2">
+                    <ul>
+                        <li>
+                            Amelia Pérez Soriano.
+                        </li>
+                        <li>
+                            Jorge Alberto Hernández Santuario.
+                        </li>
+                        <li>
+                            Hugo César Ramos Contla.
+                        </li>
+                        <li>
+                            Jessica Daniela Vides Remond (Coordinador).
+                        </li>
+                    </ul>
+                </div>
+                <p> Ponemos a tu disposición los siguientes materiales para tu consulta: </p>
+                <a href="../../../assets/manual/Criterios_Operativos_y_Legales_de_la_UD.pdf" target="_blank">Criterios operativos y legales de la UD</a><br />
+                <a href="../../../assets/manual/Guia_de_Operaciones.pdf" target="_blank">Guía de Operaciones</a><br />
+                <a href="../../../assets/manual/Manual_Usuario_Solicitante.pdf" target="_blank">Manual de Usuario Solicitante</a><br />
+                <a href="../../../assets/manual/Material_Capacitacion_Folio_Complemento.pdf" target="_blank">Material de capacitación folio complemento</a><br />
+                <a href="../../../assets/manual/Material_Capacitacion_Folio_Nuevo_PS_PM.pdf" target="_blank">Material de capacitación folio nuevo</a><br />
+            </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <p-button   class="btn modal-button-gral text-center" 
+                        id="closeBuzon" 
+                        name="closeBuzon"
+                        (click)="closeBuzonModal()" 
+                        label="Aceptar">
+            </p-button>
+        </ng-template>
+    </p-dialog>

@@ -1,0 +1,235 @@
+
+@import '_variables.scss';
+
+.p-button {
+    font-size: get-font-pixels(small);
+    color: #ffffff !important;
+    background: $scotia-red !important;
+    border: 1px solid $scotia-red !important;
+    padding: 0.3rem 1rem !important;
+}
+
+.p-button-danger,
+.btn-danger {
+  color: get-color($white);
+  background-color: $scotia-red;
+  border: 1px solid $scotia-red;
+  border-radius: 2rem;
+  padding: 0.5rem 4rem;
+  span {
+    color: $white;
+  }
+}
+
+.p-button-table-success {
+  color: get-color($white);
+  background-color: $verde;
+  border: 1px solid $verde;
+  border-radius: 2rem;
+  padding: 0.5rem 4rem;
+  span {
+    color: $white;
+  }
+}
+
+.p-button:disabled {
+  background-color: $light-gray !important;
+  color: $dark-gray !important;
+  border-color: $dark-gray !important;
+  span {
+    color: $dark-gray !important;
+  }
+}
+
+button:disabled {
+  background-color: $light-gray !important;
+  color: $dark-gray !important;
+  border-color: $dark-gray !important;
+}
+
+.p-button.p-button-table-success:enabled:hover,
+.p-buttonset.p-button-table-success > .p-button-table-success:enabled:hover,
+.p-splitbutton.p-button-table-success > .p-button-table-success:enabled:hover {
+    border: 1px solid $verde;
+}
+
+.p-fileupload-row button:not(:disabled),
+[type=button]:not(:disabled),
+[type=reset]:not(:disabled),
+[type=submit]:not(:disabled) {
+  border: 1px solid $boston-red;
+  background-color: $boston-red;
+  color: $white !important;
+}
+
+.p-datepicker-title [type=button]:not(:disabled) {
+  color: $dark-gray !important;
+  background-color: transparent;
+  border-color: $dark-gray;
+}
+
+.p-button.p-button-danger:enabled:hover,
+.p-buttonset.p-button-danger > .p-button:enabled:hover,
+.p-splitbutton.p-button-danger > .p-button:enabled:hover {
+    border: 1px solid $boston-red;
+}
+
+.p-button-outlined {
+  background-color: $white;
+  border: 1px solid $scotia-red;
+  padding: 0.5rem 4rem;
+  color: $scotia-red;
+}
+
+.p-button.p-button-outlined:enabled:hover,
+.p-buttonset.p-button-outlined > .p-button:enabled:hover,
+.p-splitbutton.p-button-outlined > .p-button:enabled:hover {
+  border: 1px solid $dark-gray;
+  background-color: $light-gray;
+  color: $dark-gray;
+}
+
+.btn-lg,
+.btn-group-lg > .btn {
+  padding: 0.5rem 5rem;
+}
+
+.p-button {
+  background: transparent;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 2px solid $black;
+}
+
+.p-button:enabled:hover,
+.p-button:enabled:active {
+  background: $scotia-red !important;
+  color: $white !important;
+  border-bottom: none;
+}
+
+.p-button-secondary,
+.p-button-secondary:not(:disabled),
+.p-button-secondary:not(:disabled),
+.p-button-secondary:not(:disabled) {
+  color: get-color($scotia-red) !important;
+  border: solid 1px get-color($scotia-red);
+  border-radius: 2rem;
+  background-color: get-color($light-gray);
+  padding: 0.5rem 4rem;
+  margin-right: 20px;
+}
+
+.p-button.p-button-secondary:enabled:hover,
+.p-buttonset.p-button-secondary > .p-button:enabled:hover,
+.p-splitbutton.p-button-secondary > .p-button:enabled:hover,
+.p-splitbutton.p-button-secondary > .p-button:enabled:visited {
+  color: get-color($white);
+  border: solid 1px get-color($scotia-red);
+  background-color: get-color($scotia-red);
+}
+
+.btn-transparent {
+  border: 0 i !important;
+  background-color: none !important;
+}
+
+.btndescargadoc a {
+  text-decoration: none;
+}
+
+.consBtn button {
+  width: 137px;
+  padding: 10px;
+  margin: 10px;
+  float: left;
+}
+
+.btnmr {
+  margin-right: 120px;
+}
+
+.estatus-dropdown > .p-dropdown > .p-dropdown-trigger span {
+  color: #ffffff;
+}
+
+.estatus-dropdown > .p-dropdown > .p-dropdown-trigger {
+  background-color: #cc0000;
+}
+
+.estatus-dropdown > .p-dropdown > .p-dropdown-trigger:hover {
+  background-color: transparent;
+}
+
+.estatus-dropdown > .p-dropdown > .p-dropdown-trigger span:hover {
+  color: #000000;
+}
+
+.estatus-dropdown > .p-disabled > .p-dropdown-trigger {
+  background-color: transparent;
+  opacity: .65
+}
+
+.p-button.p-button-icon-only {
+  padding: 0.35rem 0 !important;
+}
+
+.p-datepicker-next,
+.p-datepicker-prev {
+  background-color: $grafito !important;
+  [type=button]:not(:disabled) {
+    color: $white;
+  }
+}
+
+.p-datepicker .p-datepicker-header 
+.p-datepicker-prev:enabled:hover, 
+.p-datepicker .p-datepicker-header 
+.p-datepicker-next:enabled:hover {
+  border-color: transparent !important;
+  background: $optimal-gray !important;
+}
+
+select#vigList:disabled,
+select#upld:disabled {
+  background-color: #f1f1f1 !important;
+  border-radius: 0.5rem;
+}
+
+.p-button.p-button-success,
+.p-buttonset.p-button-success > .p-button, 
+.p-splitbutton.p-button-success > .p-button {
+  background: transparent !important;
+  border: none !important;
+  position: absolute;
+  .p-button.p-button-success:enabled:hover {
+    background: transparent !important;
+  }
+}
+
+.p-button.p-button-success:enabled:hover {
+  background: transparent !important;
+  color: $scotia-red !important;
+  border-bottom: none;
+}
+
+span.p-button-icon.pi.pi-file-excel {
+  font-size: 1.5rem;
+}
+
+.custom-button-link-red {
+  color: $scotia-red;
+  cursor: pointer;
+}
+.pi-chevron-right:before {
+  color: white;
+}
+
+.pi-chevron-down:before {
+  color: white;
+}
+
+.p-inputnumber-button {
+  height: 10px;
+}

@@ -1,0 +1,35 @@
+<p-dropdown [options]="data" 
+            [(ngModel)]="parentForm"
+            appendTo="body"
+            [name]="name" 
+            [placeholder]="placeholder"
+            (onChange)="itemSelectEmitter($event)">
+
+            <!-- 
+                Contenedor que refleja el item selecionado al colapsar el panel
+                del dropdown.
+            -->
+            <ng-template pTemplate="selectedItem">
+                <div *ngIf="parentForm">
+                    <div>
+                        {{ parentForm.descripcion }}
+                    </div>
+                </div>
+            </ng-template>
+
+            <!-- 
+                Contenedor que visualiza los items que contiene la lista para
+                su respectiva selección
+             -->
+            <ng-template let-item pTemplate="item">
+                <div    class="flex align-items-center w-full"
+                        tooltipPosition="top" 
+                        [pTooltip]="item.ayuda">
+                        <span>
+                            {{item.descripcion}}
+                        </span>
+                </div>
+            </ng-template>
+            
+</p-dropdown>
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="50px" viewBox="0 0 44 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>icono-recompensas</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="PROTOTIPO-ACTUALIZADO" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="MIS-PUNTOS/01_MIS-PUNTOS_productos" transform="translate(-255.000000, -548.000000)">
+            <g id="Group-2-Copy-12" transform="translate(214.000000, 527.000000)">
+                <g id="icono-recompensas" transform="translate(27.000000, 10.000000)">
+                    <polygon id="Fill-1" points="0 72 71.997 72 71.997 0 0 0"></polygon>
+                    <g id="Group-14" transform="translate(15.000000, 11.000000)">
+                        <path d="M40.5639,25.1095 L17.6349,48.0385 C16.1859,49.4875 13.8369,49.4875 12.3849,48.0385 L1.1499,36.8005 C-0.1461,35.5045 -0.1461,33.3985 1.1499,32.0995 L24.2109,9.0415 C25.2429,8.0095 26.6949,7.5145 28.1409,7.7035 L37.7049,8.9455 C39.1719,9.1345 40.3269,10.2925 40.5159,11.7595 L41.7849,21.5215 C41.9589,22.8415 41.5059,24.1675 40.5639,25.1095 Z" id="Stroke-2" stroke="#EC0000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M34.8012,17.3737 C34.8012,19.8607 32.7852,21.8737 30.3012,21.8737 C27.8142,21.8737 25.8012,19.8607 25.8012,17.3737 C25.8012,14.8897 27.8142,12.8737 30.3012,12.8737 C32.7852,12.8737 34.8012,14.8897 34.8012,17.3737 Z" id="Stroke-4" stroke="#EC0000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M25.8012,15.8737 C25.8012,15.8737 13.8012,15.8737 13.8012,0.8737" id="Stroke-6" stroke="#EC0000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M16.8012,40.8742 L16.8012,25.8742" id="Stroke-8" stroke="#EC0000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M10.0512,34.6735 C9.3342,34.2595 9.0882,33.3415 9.4992,32.6245 C9.9162,31.9075 10.8342,31.6615 11.5512,32.0755 C12.2682,32.4895 12.5112,33.4075 12.1002,34.1245 C11.6862,34.8415 10.7682,35.0875 10.0512,34.6735" id="Fill-10" fill="#EC0000"></path>
+                        <path d="M21.6018,32.6245 C21.8778,32.1465 22.5618,31.9635 23.6538,32.0755 C24.2938,32.9635 24.4768,33.6465 24.2028,34.1245 C23.7888,34.8415 22.8678,35.0875 22.1538,34.6735 C21.4368,34.2595 21.1908,33.3415 21.6018,32.6245 Z" id="Fill-12" fill="#EC0000"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

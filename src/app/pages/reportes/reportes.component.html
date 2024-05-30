@@ -1,0 +1,831 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-group " id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingReportes">
+                        <h6 class="panel-title">
+                            <strong>Generar reporte</strong>
+                            <a  role="button" 
+                                class="custom-button-link"
+                                data-toggle="collapse"
+                                href="#collapseReportes"
+                                aria-expanded="true"
+                                aria-controls="collapseReportes">
+                                - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseReportes" class="collapse show" role="tabpanel" aria-labelledby="headingReportes">
+                        <div class="panel-body">
+                            <form class="form-horizontal" id="formr">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12 mt-5">
+                                            <div class="form-group">
+                                                <label for="tiporep" class="col-sm-12 col-md-6 control-label">
+                                                    Tipo de reporte (*)
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <p-dropdown name="tiporep"
+                                                                class="estatus-dropdown"
+                                                                id="tiporep"
+                                                                optionLabel="nombre"
+                                                                placeholder="Seleccionar"
+                                                                [options]="tipoRep"
+                                                                [(ngModel)]="tipoReporte"
+                                                                (onChange)="getData( $event, 'tiporep' )">
+                                                    </p-dropdown>
+                                                </div>
+                                                <label for="regiong" class="col-sm-12 col-md-6 control-label text-rigth">
+                                                    Región 
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <p-dropdown name="regiong"
+                                                                class="estatus-dropdown"
+                                                                id="regiong"
+                                                                optionLabel="nombre"
+                                                                placeholder="Seleccionar"
+                                                                [options]="regionData"
+                                                                [(ngModel)]="region"
+                                                                (onChange)="getData( $event, 'region' )">
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 mt-5">
+                                            <div class="form-group">
+                                                <label for="ci_fini" class="col-sm-12 col-md-6 control-label text-rigth">Registrado desde
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <app-ng-calendar    class="ml-0 mr-0"
+                                                                        name="ci_fini"
+                                                                        inputId="ci_fini"
+                                                                        locale="es"
+                                                                        formatDate="dd/mm/yy"
+                                                                        value=""
+                                                                        [maxDate]="dateToDay"
+                                                                        (OutDate)="getData( $event, 'ci_fini' )">
+                                                    </app-ng-calendar>
+                                                </div>
+                                                <label for="ci_ffin" class="col-sm-12 col-md-6 control-label text-rigth">Registrado hasta </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <app-ng-calendar    #busquedaAvanzadaHasta
+                                                                        name="ci_ffin"
+                                                                        inputId="ci_ffin"
+                                                                        locale="es"
+                                                                        formatDate="dd/mm/yy"
+                                                                        value=""
+                                                                        [maxDate]="dateToDay"
+                                                                        (OutDate)="getData( $event, 'ci_ffin' )">
+                                                    </app-ng-calendar>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <hr class="mt-5">
+                                </div>
+                            </form>
+                            <div class="row xtra-top-pad-15">
+                                <div class="row col-md-12 justify-content-end">
+                                    <button (click)="limpiarFormulario()"
+                                            type="button"
+                                            id="limpiarAv"
+                                            class="p-button-rounded p-button-secondary">
+                                                Limpiar datos
+                                    </button>
+                                    <div>
+                                        <button (click)="validarTipo()"
+                                                type="button"
+                                                id="EnviaBtn"
+                                                class="p-button-rounded p-button-danger">
+                                                    Buscar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" [hidden]="centralCuentas">
+                    <div class="card-header" role="tab" id="headingDetalleInverv">
+                        <h6 class="panel-title">
+                            <strong id="foliosTxt">Folios</strong>
+                            <a class="custom-button-link"
+                                role="button"
+                                data-toggle="collapse"
+                                href="#collapseDetalleInverv"
+                                aria-expanded="false"
+                                aria-controls="collapseDetalleInverv">
+                                - Haz clic para ocultar o mostrar
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseDetalleInverv" class="collapse show" role="tabpanel" aria-labelledby="headingDetalleInverv">
+                        <div class="panel-body"><br>
+                            <div class="dataTables_scrollBody">
+                                <p-table #dt1
+                                        class="rowAlternate" 
+                                        [value]="dataTableCentCtas" 
+                                        dataKey="id"
+                                        [rows]="10"
+                                        [rowsPerPageOptions]="[10,25,50]" 
+                                        [showCurrentPageReport]="true"
+                                        paginatorDropdownAppendTo="body"
+                                        currentPageReportTemplate="Total de registros: {totalRecords}" 
+                                        styleClass="p-datatable-gridlines"
+                                        [paginator]="true"
+                                        responsiveLayout="scroll"
+                                        scrollHeight="400px"
+                                        [globalFilterFields]="['idFolio','buc','folio','fchEnvio','razonSocial','beanZonaRespuesta.region','beanZonaRespuesta.zonaSolicitante','beanZonaRespuesta.banca','beanVigencia.vigencia','beanVigencia.tipoVigencia','beanVigencia.fechaVigencia','tipoDictamen','avisoUpld']"
+                                        [exportHeader]="'customExportHeader'">
+                                    <ng-template pTemplate="caption">
+                                        <div class="flex align-items-center justify-content-between text-right">
+                                            <h5 class="m-0"></h5>
+                                            <span class="p-input-icon-left">
+                                                <em class="pi pi-search mr-3"></em>
+                                                <label for="search1"></label>
+                                                <input pInputText
+                                                        type="text"
+                                                        id="search1"
+                                                        (input)="dt1.filterGlobal( $any($event.target).value, 'contains' )"
+                                                        placeholder="Buscar..." />
+                                                <button type="button"
+                                                        pButton
+                                                        pRipple
+                                                        icon="pi pi-file-excel"
+                                                        (click)="exportExcelCC()"
+                                                        class="p-button-success mr-2 font20"
+                                                        pTooltip="XLS"
+                                                        tooltipPosition="bottom">
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="idFolio">ID<p-sortIcon field="idFolio"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="buc">BUC <p-sortIcon field="buc"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="folio">Folios <p-sortIcon field="folio"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="fchEnvio">Fecha envío <p-sortIcon field="fchEnvio"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="razonSocial">Nombre o razón social <p-sortIcon field="razonSocial"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="beanZonaRespuesta.region">Región <p-sortIcon field="beanZonaRespuesta.region"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="beanZonaRespuesta.zonaSolicitante">Zona <p-sortIcon field="beanZonaRespuesta.zonaSolicitante"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="beanZonaRespuesta.banca">Banca <p-sortIcon field="beanZonaRespuesta.banca"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="beanVigencia.vigencia">Vigencia <p-sortIcon field="beanVigencia.vigencia"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="beanVigencia.tipoVigencia">Tipo de vigencia <p-sortIcon field="beanVigencia.tipoVigencia"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="beanVigencia.fechaVigencia">Fecha de vencimiento <p-sortIcon field="beanVigencia.fechaVigencia"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="tipoDictamen">Tipo dictamen <p-sortIcon field="tipoDictamen"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="avisoUpld">Aviso UPLD <p-sortIcon field="avisoUpld"></p-sortIcon></div>
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" id="tmpsolbody" let-dataTableCentCtas >
+                                        <tr>
+                                            <td class="text-center">{{dataTableCentCtas.idFolio}}</td>
+                                            <td class="text-center">{{dataTableCentCtas.buc}}</td>
+                                            <td class="text-center custom-button-link-red">{{dataTableCentCtas.folio}}</td>
+                                            <td class="text-center">{{dataTableCentCtas.beanVigencia?.fchEnvio}}</td>
+                                            <td class="text-center">{{dataTableCentCtas.razonSocial}}</td>
+                                            <td class="text-center">{{dataTableCentCtas.beanZonaRespuesta.region}}</td>
+                                            <td class="text-center">{{dataTableCentCtas.beanZonaRespuesta.zonaSolicitante}}</td>
+                                            <td class="text-center">{{dataTableCentCtas.beanZonaRespuesta.banca}}</td>
+                                            <td class="text-center">{{dataTableCentCtas.beanVigencia.vigencia}}</td>
+                                            <td class="text-center">{{dataTableCentCtas.beanVigencia.tipoVigencia}}</td>
+                                            <td class="text-center">{{dataTableCentCtas.beanVigencia.fechaVigencia}}</td>
+                                            <td class="text-center">{{dataTableCentCtas.tipoDictamen}}</td>
+                                            <td class="text-center">{{dataTableCentCtas.avisoUpld}}</td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="13">No se encontraron reportes.</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" [hidden]="calidadJuridica">
+                    <div class="card-header" role="tab" id="headingCalidadJur">
+                        <h6 class="panel-title">
+                            <strong id="foliosTxt">Folios</strong>
+                            <a class="custom-button-link" role="button" data-toggle="collapse" href="#collapseCalidadJur" aria-expanded="false" aria-controls="collapseCalidadJur">
+                                - Haz clic para ocultar o mostrar
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseCalidadJur" class="collapse show" role="tabpanel" aria-labelledby="headingCalidadJur">
+                        <div class="panel-body"><br>
+                            <div class="dataTables_scrollBody">
+                                <p-table #dt2
+                                        class="rowAlternate" 
+                                        [value]="dataTableCalidadJur" 
+                                        dataKey="id"
+                                        [rows]="10"
+                                        [rowsPerPageOptions]="[10,25,50]" 
+                                        [showCurrentPageReport]="true"
+                                        paginatorDropdownAppendTo="body"
+                                        currentPageReportTemplate="Total de registros: {totalRecords}" 
+                                        styleClass="p-datatable-gridlines"
+                                        [paginator]="true"
+                                        responsiveLayout="scroll"
+                                        scrollHeight="400px"
+                                        [globalFilterFields]="['beanDatosDictamen.numConsecutivo','folio','beanZonaRespuesta.sucursalSolicitante','centroCosto','beanDatosDictamen.nombreSolicitante','beanDatosDictamen.origen','buc','beanZonaRespuesta.region','beanZonaRespuesta.zonaSolicitante','beanZonaRespuesta.banca','razonSocial',
+                                                               'beanFechasRespuesta.fechaRegistro','beanFechasRespuesta.fechaCompromiso','beanFechasRespuesta.fechaEnvio','beanDatosDictamen.abogadoSeguimiento','beanDatosDictamen.tipoDict','escrituraPoliza','beanDatosDictamen.abogadoExterno','estadoFolio','beanReporteReingreso.primeraCausaReingreso','beanReporteReingreso.confirmacion','aclaracionCausaReingreso','beanReporteReingreso.comentario',
+                                                               'tatencionAe']"
+                                        [exportHeader]="'customExportHeader'">
+                                        <ng-template pTemplate="caption">
+                                            <div class="flex align-items-center justify-content-between text-right">
+                                                <h5 class="m-0"></h5>
+                                                <span class="p-input-icon-left">
+                                                    <em class="pi pi-search mr-3"></em>
+                                                    <label for="search_2"></label>
+                                                    <input pInputText
+                                                            type="text"
+                                                            id="search_2"
+                                                            (input)="dt2.filterGlobal( $any($event.target).value, 'contains' )"
+                                                            placeholder="Buscar..." />
+                                                    <button type="button"
+                                                            pButton
+                                                            pRipple
+                                                            icon="pi pi-file-excel"
+                                                            (click)="exportExcelDict(true)"
+                                                            class="p-button-success mr-2 font20"
+                                                            pTooltip="XLS"
+                                                            tooltipPosition="bottom">
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosDictamen.numConsecutivo">Número consecutivo<p-sortIcon field="beanDatosDictamen.numConsecutivo"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="folio">Folio<p-sortIcon field="folio"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanZonaRespuesta.sucursalSolicitante">Sucursal<p-sortIcon field="beanZonaRespuesta.sucursalSolicitante"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="centroCosto">Centro de costo<p-sortIcon field="centroCosto"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosDictamen.nombreSolicitante">Nombre solicitante<p-sortIcon field="beanDatosDictamen.nombreSolicitante"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosDictamen.origen">Origen<p-sortIcon field="beanDatosDictamen.origen"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="buc">B.U.C.<p-sortIcon field="buc"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanZonaRespuesta.region">Región<p-sortIcon field="beanZonaRespuesta.region"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanZonaRespuesta.zonaSolicitante">Zona<p-sortIcon field="beanZonaRespuesta.zonaSolicitante"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanZonaRespuesta.banca">Banca<p-sortIcon field="beanZonaRespuesta.banca"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="razonSocial">Razón social<p-sortIcon field="razonSocial"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanFechasRespuesta.fechaRegistro">Fecha solicitud<p-sortIcon field="beanFechasRespuesta.fechaRegistro"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanFechasRespuesta.fechaCompromiso">Fecha compromiso<p-sortIcon field="beanFechasRespuesta.fechaCompromiso"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanFechasRespuesta.fechaEnvio">Fecha envío<p-sortIcon field="beanFechasRespuesta.fechaEnvio"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosDictamen.abogadoSeguimiento">Abogado seguimiento<p-sortIcon field="beanDatosDictamen.abogadoSeguimiento"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosDictamen.tipoDict">Tipo dictamen<p-sortIcon field="beanDatosDictamen.tipoDict"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="escrituraPoliza">Escritura póliza<p-sortIcon field="escrituraPoliza"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosDictamen.abogadoExterno">Abogado externo<p-sortIcon field="beanDatosDictamen.abogadoExterno"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="estadoFolio">Estado solicitud<p-sortIcon field="estadoFolio"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanReporteReingreso.primeraCausaReingreso">Primera causa de reingreso<p-sortIcon field="beanReporteReingreso.primeraCausaReingreso"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanReporteReingreso.confirmacion">Confirmación<p-sortIcon field="beanReporteReingreso.confirmacion"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="aclaracionCausaReingreso">Aclaración a causa de reingreso<p-sortIcon field="aclaracionCausaReingreso"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanReporteReingreso.comentario">Comentario<p-sortIcon field="beanReporteReingreso.comentario"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="tatencionAe">TAtenciónAE<p-sortIcon field="tatencionAe"></p-sortIcon></div>
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" id="tmpsolbody" let-dataTableCalidadJur >
+                                            <tr>
+                                                <td class="text-center">{{dataTableCalidadJur.beanDatosDictamen.numConsecutivo}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.folio}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanZonaRespuesta.sucursalSolicitante}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.centroCosto}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanDatosDictamen.nombreSolicitante}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanDatosDictamen.origen}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.buc}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanZonaRespuesta.region}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanZonaRespuesta.zonaSolicitante}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanZonaRespuesta.banca}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.razonSocial}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanFechasRespuesta.fechaRegistro}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanFechasRespuesta.fechaCompromiso}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanFechasRespuesta.fechaEnvio}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanDatosDictamen.abogadoSeguimiento}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanDatosDictamen.tipoDict}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.escrituraPoliza}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanDatosDictamen.abogadoExterno}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.estadoFolio}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanReporteReingreso.primeraCausaReingreso}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanReporteReingreso.confirmacion}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanReporteReingreso.aclaracionCausaReingreso}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.beanReporteReingreso.comentario}}</td>
+                                                <td class="text-center">{{dataTableCalidadJur.tatencionAe}}</td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="emptymessage">
+                                            <tr>
+                                                <td colspan="13">No se encontraron reportes.</td>
+                                            </tr>
+                                        </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>          
+                </div>
+                <div class="card" [hidden]="dictaminacion">
+                    <div class="card-header" role="tab" id="headingDictaminacion">
+                        <h6 class="panel-title">
+                            <strong id="foliosTxt">Folios</strong>
+                            <a class="custom-button-link"
+                                role="button"
+                                data-toggle="collapse"
+                                href="#collapseDictaminacion"
+                                aria-expanded="false"
+                                aria-controls="collapseDictaminacion">
+                                    - Haz clic para ocultar o mostrar
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseDictaminacion" class="collapse show" role="tabpanel" aria-labelledby="headingDictaminacion">
+                        <div class="panel-body"><br>
+                            <div class="dataTables_scrollBody">
+                                <p-table #dt3
+                                        class="rowAlternate" 
+                                        [value]="dataTableReports" 
+                                        dataKey="id"
+                                        [rows]="10"
+                                        [rowsPerPageOptions]="[10,25,50]" 
+                                        [showCurrentPageReport]="true"
+                                        paginatorDropdownAppendTo="body"
+                                        currentPageReportTemplate="Total de registros: {totalRecords}" 
+                                        styleClass="p-datatable-gridlines"
+                                        [paginator]="true"
+                                        responsiveLayout="scroll"
+                                        scrollHeight="400px"
+                                        id="tabreports"
+                                        [globalFilterFields]="['beanDatosFolio.idFolio','beanDatosAbogados.idUsuarioSolicitante','beanDatosComplemento.tipoReingreso','beanFechaDictaminacion.beanFechasRespuesta.fechaRegistro','beanFechaDictaminacion.beanFechasRespuesta.fechaCompromiso','beanDatosFolio.anio','beanDatosFolio.mes','beanIdZona.regionSolicitante','beanIdZona.idZonaSolicitante','beanZonaRespuesta.zonaSolicitante','beanIdZona.regionIngreso',
+                                                               'beanZonaRespuesta.datoPymeRegion','beanZonaRespuesta.datoPymeZona','centroCosto','beanZonaRespuesta.sucursalSolicitante','beanDatosFolio.buc','beanDatosFolio.razonSocial','beanDatosFolio.fechaModifRazonSoc','beanDatosFolio.numeroFolio','beanDatosComplemento.numeroFolioComplemento','folio','beanDatosComplemento.folioComplemento','beanDatosComplemento.comentarioComplemento','beanDatosFolio.tipoDictamen',
+                                                               'beanDatosAbogados.abogadoSeguimiento','beanDatosAbogados.abogadoSeguimientoAnterior','beanFechaDictaminacion.fechaReporteAsunto','beanFechaDictaminacion.fechaReasignacion','beanDatosAbogados.reasignadoPor','beanDatosAbogados.abogadoExterno','beanSeguimientoDict.idTipoRechazoSeguimiento1','beanComentarioDictamen.comentarioRechazoSeguimiento1','beanFechaDictaminacion.fechaSeguimiento1',
+                                                               'beanSeguimientoDict.idTipoRechazoSeguimiento2','beanComentarioDictamen.comentarioRechazoSeguimiento2','beanFechaDictaminacion.fechaLlegaAbogadoSeguimiento1','beanFechaDictaminacion.fechaGrabaAbogadoSeguimiento1','beanFechaDictaminacion.fechaLlegadaAbogadoExterno','beanFechaDictaminacion.fechaGrabaAbogadoExterno','beanSeguimientoDict.minutosAbogadoExterno','beanSeguimientoDict.cantidadReingresosAbogadoFinal','beanFechaDictaminacion.fechaFinalizacion',
+                                                               'beanEstadoDictamen.codigoEstadoDictamen','beanEstadoDictamen.codigoEstado','beanEstadoDictamen.codigoEstadoPorRol','beanEstadoDictamen.rolAnterior','beanEstadoDictamen.rolActual','beanDatosAbogados.idUsuarioActual','beanComentarioDictamen.comentarioComplementoInicial','beanSeguimientoDict.idSubtipoRechazoSeguimiento1','beanSeguimientoDict.idSubtipoRechazoSeguimiento2','beanEstadoDictamen.idClasePersona','beanSeguimientoDict.rechazoAbogadoExterior','beanSeguimientoDict.subtipoRechazoExterno',
+                                                               'beanComentarioDictamen.comentarioExterno','beanComentarioDictamen.mensajeExterno1','beanComentarioDictamen.mensajeSeguimiento1','beanComentarioDictamen.mensajeExterno2','beanComentarioDictamen.mensajeSeguimiento2','beanSLAInfo.folioSLA','beanSLAInfo.despachoSLA','beanSLAInfo.abogEnvSLA','beanSLAInfo.abogPubSLA']"
+                                        [exportHeader]="'customExportHeader'">
+                                        <ng-template pTemplate="caption" id="tmprep_01">
+                                            <div class="flex align-items-center justify-content-between text-right">
+                                                <h5 class="m-0"></h5>
+                                                <span class="p-input-icon-left">
+                                                    <em class="pi pi-search mr-3"></em>
+                                                    <label for="search2"></label>
+                                                    <input pInputText
+                                                            type="text"
+                                                            id="search2"
+                                                            (input)="dt3.filterGlobal( $any($event.target).value, 'contains' )"
+                                                            placeholder="Buscar..." />
+                                                    <button type="button"
+                                                            pButton
+                                                            pRipple
+                                                            icon="pi pi-file-excel"
+                                                            (click)="exportExcelDict(false)"
+                                                            class="p-button-success mr-2 font20"
+                                                            pTooltip="XLS"
+                                                            tooltipPosition="bottom">
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosFolio.idFolio">ID<p-sortIcon field="beanDatosFolio.idFolio"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosAbogados.idUsuarioSolicitante">Id usuario solicitante<p-sortIcon field="beanDatosAbogados.idUsuarioSolicitante"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosComplemento.tipoReingreso">Tipo reingreso<p-sortIcon field="beanDatosComplemento.tipoReingreso"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanFechaDictaminacion.beanFechasRespuesta.fechaRegistro">Fecha solicitud<p-sortIcon field="beanFechaDictaminacion.beanFechasRespuesta.fechaRegistro"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanFechaDictaminacion.beanFechasRespuesta.fechaCompromiso">Fecha compromiso<p-sortIcon field="beanFechaDictaminacion.beanFechasRespuesta.fechaCompromiso"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosFolio.anio">Año<p-sortIcon field="beanDatosFolio.anio"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosFolio.mes">Mes<p-sortIcon field="beanDatosFolio.mes"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanIdZona.regionSolicitante">Regi&oacute;n<p-sortIcon field="beanIdZona.regionSolicitante"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanIdZona.idZonaSolicitante">Id zona<p-sortIcon field="beanIdZona.idZonaSolicitante"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanZonaRespuesta.zonaSolicitante">Zona<p-sortIcon field="beanZonaRespuesta.zonaSolicitante"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanIdZona.regionIngreso">Regi&oacute;n de ingreso<p-sortIcon field="beanIdZona.regionIngreso"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanZonaRespuesta.datoPymeRegion">Dato pyme regi&oacute;n<p-sortIcon field="beanZonaRespuesta.datoPymeRegion"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanZonaRespuesta.datoPymeZona">Dato pyme zona<p-sortIcon field="beanZonaRespuesta.datoPymeZona"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="centroCosto">Centro costo<p-sortIcon field="centroCosto"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanZonaRespuesta.sucursalSolicitante">Sucursal<p-sortIcon field="beanZonaRespuesta.sucursalSolicitante"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosFolio.buc">B.U.C.<p-sortIcon field="beanDatosFolio.buc"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosFolio.razonSocial">Raz&oacute;n social<p-sortIcon field="beanDatosFolio.razonSocial"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosFolio.fechaModifRazonSoc">Fecha modificación raz&oacute;n social<p-sortIcon field="beanDatosFolio.fechaModifRazonSoc"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosFolio.numeroFolio">N&uacute;mero folio<p-sortIcon field="beanDatosFolio.numeroFolio"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosComplemento.numeroFolioComplemento">N&uacute;mero folio complemento<p-sortIcon field="beanDatosComplemento.numeroFolioComplemento"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="folio">Folio<p-sortIcon field="folio"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosComplemento.folioComplemento">Folio complemento<p-sortIcon field="beanDatosComplemento.folioComplemento"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosComplemento.comentarioComplemento">Comentario complemento<p-sortIcon field="beanDatosComplemento.comentarioComplemento"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosFolio.tipoDictamen">Tipo dictamen<p-sortIcon field="beanDatosFolio.tipoDictamen"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosAbogados.abogadoSeguimiento">Abogado seguimiento<p-sortIcon field="beanDatosAbogados.abogadoSeguimiento"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosAbogados.abogadoSeguimientoAnterior">Abogado seguimiento anterior<p-sortIcon field="beanDatosAbogados.abogadoSeguimientoAnterior"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanFechaDictaminacion.fechaReporteAsunto">Fecha reporte asunto<p-sortIcon field="beanFechaDictaminacion.fechaReporteAsunto"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanFechaDictaminacion.fechaReasignacion">Fecha reasignaci&oacute;n<p-sortIcon field="beanFechaDictaminacion.fechaReasignacion"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosAbogados.reasignadoPor">Reasignado por<p-sortIcon field="beanDatosAbogados.reasignadoPor"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosAbogados.abogadoExterno">Abogado externo<p-sortIcon field="beanDatosAbogados.abogadoExterno"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanSeguimientoDict.idTipoRechazoSeguimiento1">Id tipo rechazo seguimiento 1<p-sortIcon field="beanSeguimientoDict.idTipoRechazoSeguimiento1"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanComentarioDictamen.comentarioRechazoSeguimiento1">Comentario seguimiento (último)<p-sortIcon field="beanComentarioDictamen.comentarioRechazoSeguimiento1"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanFechaDictaminacion.fechaSeguimiento1">Fecha seguimiento 1<p-sortIcon field="beanFechaDictaminacion.fechaSeguimiento1"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanComentarioDictamen.comentarioConfirmacion">Comentario confirmaci&oacute;n<p-sortIcon field="beanComentarioDictamen.comentarioConfirmacion"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanSeguimientoDict.idTipoRechazoSeguimiento2">Id tipo rechazo seguimiento 2<p-sortIcon field="beanSeguimientoDict.idTipoRechazoSeguimiento2"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanComentarioDictamen.comentarioRechazoSeguimiento2">Comentario rechazo seguimiento 2<p-sortIcon field="beanComentarioDictamen.comentarioRechazoSeguimiento2"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanFechaDictaminacion.fechaLlegaAbogadoSeguimiento1">Fecha llegada abogado seguimiento 1 <p-sortIcon field="beanFechaDictaminacion.fechaLlegaAbogadoSeguimiento1"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanFechaDictaminacion.fechaGrabaAbogadoSeguimiento1">Fecha graba abogado seguimiento 1<p-sortIcon field="beanFechaDictaminacion.fechaGrabaAbogadoSeguimiento1"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanFechaDictaminacion.fechaLlegadaAbogadoExterno">Fecha llegada abogado externo<p-sortIcon field="beanFechaDictaminacion.fechaLlegadaAbogadoExterno"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanFechaDictaminacion.fechaGrabaAbogadoExterno">Fecha graba abogado externo<p-sortIcon field="beanFechaDictaminacion.fechaGrabaAbogadoExterno"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanSeguimientoDict.minutosAbogadoExterno">Minutos abogado externo<p-sortIcon field="beanSeguimientoDict.minutosAbogadoExterno"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanSeguimientoDict.cantidadReingresosAbogadoFinal">Cantidad regresos abogado final<p-sortIcon field="beanSeguimientoDict.cantidadReingresosAbogadoFinal"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanFechaDictaminacion.fechaFinalizacion">Fecha publicaci&oacute;n<p-sortIcon field="beanFechaDictaminacion.fechaFinalizacion"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanEstadoDictamen.codigoEstadoDictamen">C&oacute;digo estado dictamen<p-sortIcon field="beanEstadoDictamen.codigoEstadoDictamen"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanEstadoDictamen.codigoEstado">C&oacute;digo Estado<p-sortIcon field="beanEstadoDictamen.codigoEstado"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanEstadoDictamen.codigoEstadoPorRol">C&oacute;digo estado por rol<p-sortIcon field="beanEstadoDictamen.codigoEstadoPorRol"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanEstadoDictamen.rolAnterior">Rol anterior<p-sortIcon field="beanEstadoDictamen.rolAnterior"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanEstadoDictamen.rolActual">Rol actual<p-sortIcon field="beanEstadoDictamen.rolActual"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanDatosAbogados.idUsuarioActual">Id usuario actual<p-sortIcon field="beanDatosAbogados.idUsuarioActual"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanComentarioDictamen.comentarioComplementoInicial">Comentario solicitante (último)<p-sortIcon field="beanComentarioDictamen.comentarioComplementoInicial"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanSeguimientoDict.idSubtipoRechazoSeguimiento1">Subtipo rechazo seguimiento 1<p-sortIcon field="beanSeguimientoDict.idSubtipoRechazoSeguimiento1"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanSeguimientoDict.idSubtipoRechazoSeguimiento2">Subtipo rechazo seguimiento 2<p-sortIcon field="beanSeguimientoDict.idSubtipoRechazoSeguimiento2"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanEstadoDictamen.idClasePersona">Clase persona <p-sortIcon field="beanEstadoDictamen.idClasePersona"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanSeguimientoDict.rechazoAbogadoExterior">Rechazo abogado externo<p-sortIcon field="beanSeguimientoDict.rechazoAbogadoExterior"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanSeguimientoDict.subtipoRechazoExterno">Subtipo rechazo externo<p-sortIcon field="beanSeguimientoDict.subtipoRechazoExterno"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanComentarioDictamen.comentarioExterno">Comentario externo (último)<p-sortIcon field="beanComentarioDictamen.comentarioExterno"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanComentarioDictamen.mensajeExterno1">Mensaje externo 1<p-sortIcon field="beanComentarioDictamen.mensajeExterno1"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanComentarioDictamen.mensajeSeguimiento1">Mensaje seguimiento 1<p-sortIcon field="beanComentarioDictamen.mensajeSeguimiento1"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanComentarioDictamen.mensajeExterno2">Mensaje externo 2<p-sortIcon field="beanComentarioDictamen.mensajeExterno2"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanComentarioDictamen.mensajeSeguimiento2">Mensaje Seguimiento 2<p-sortIcon field="beanComentarioDictamen.mensajeSeguimiento2"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanSLAInfo.folioSLA">SLA folio<p-sortIcon field="beanSLAInfo.folioSLA"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanSLAInfo.despachoSLA">SLA despacho<p-sortIcon field="beanSLAInfo.despachoSLA"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanSLAInfo.abogEnvSLA">SLA abogado envío<p-sortIcon field="beanSLAInfo.abogEnvSLA"></p-sortIcon></div>
+                                                </th>
+                                                <th class="text-wrap fixed-width" scope="col">
+                                                    <div class="justify-content-center align-items-center" pSortableColumn="beanSLAInfo.abogPubSLA">SLA abogado publicaci&oacute;n<p-sortIcon field="beanSLAInfo.abogPubSLA"></p-sortIcon></div>
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" id="tmpsolbody" let-dataTableReports >
+                                            <tr>
+                                                <td class="text-center">{{dataTableReports.beanDatosFolio.idFolio}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosAbogados.idUsuarioSolicitante}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosComplemento.tipoReingreso}}</td>
+                                                <td class="text-center">{{dataTableReports.beanFechaDictaminacion.beanFechasRespuesta.fechaRegistro}}</td>
+                                                <td class="text-center">{{dataTableReports.beanFechaDictaminacion.beanFechasRespuesta.fechaCompromiso}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosFolio.anio}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosFolio.mes}}</td>
+                                                <td class="text-center">{{dataTableReports.beanIdZona.regionSolicitante}}</td>
+                                                <td class="text-center">{{dataTableReports.beanIdZona.idZonaSolicitante}}</td>
+                                                <td class="text-center">{{dataTableReports.beanZonaRespuesta.zonaSolicitante}}</td>
+                                                <td class="text-center">{{dataTableReports.beanIdZona.regionIngreso}}</td>
+                                                <td class="text-center">{{dataTableReports.beanZonaRespuesta.datoPymeRegion}}</td>
+                                                <td class="text-center">{{dataTableReports.beanZonaRespuesta.datoPymeZona}}</td>
+                                                <td class="text-center">{{dataTableReports.centroCosto}}</td>
+                                                <td class="text-center">{{dataTableReports.beanZonaRespuesta.sucursalSolicitante}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosFolio.buc}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosFolio.razonSocial}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosFolio.fechaModifRazonSoc}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosFolio.numeroFolio}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosComplemento.numeroFolioComplemento}}</td>
+                                                <td class="text-center">{{dataTableReports.folio}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosComplemento.folioComplemento}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosComplemento.comentarioComplemento}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosFolio.tipoDictamen}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosAbogados.abogadoSeguimiento}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosAbogados.abogadoSeguimientoAnterior}}</td>
+                                                <td class="text-center">{{dataTableReports.beanFechaDictaminacion.fechaReporteAsunto}}</td>
+                                                <td class="text-center">{{dataTableReports.beanFechaDictaminacion.fechaReasignacion}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosAbogados.reasignadoPor}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosAbogados.abogadoExterno}}</td>
+                                                <td class="text-center">{{dataTableReports.beanSeguimientoDict.idTipoRechazoSeguimiento1}}</td>
+                                                <td class="text-center">{{dataTableReports.beanComentarioDictamen.comentarioRechazoSeguimiento1}}</td>
+                                                <td class="text-center">{{dataTableReports.beanFechaDictaminacion.fechaSeguimiento1}}</td>
+                                                <td class="text-center">{{dataTableReports.beanComentarioDictamen.comentarioConfirmacion}}</td>
+                                                <td class="text-center">{{dataTableReports.beanSeguimientoDict.idTipoRechazoSeguimiento2}}</td>
+                                                <td class="text-center">{{dataTableReports.beanComentarioDictamen.comentarioRechazoSeguimiento2}}</td>
+                                                <td class="text-center">{{dataTableReports.beanFechaDictaminacion.fechaLlegaAbogadoSeguimiento1}}</td>
+                                                <td class="text-center">{{dataTableReports.beanFechaDictaminacion.fechaGrabaAbogadoSeguimiento1}}</td>
+                                                <td class="text-center">{{dataTableReports.beanFechaDictaminacion.fechaLlegadaAbogadoExterno}}</td>
+                                                <td class="text-center">{{dataTableReports.beanFechaDictaminacion.fechaGrabaAbogadoExterno}}</td>
+                                                <td class="text-center">{{dataTableReports.beanSeguimientoDict.minutosAbogadoExterno}}</td>
+                                                <td class="text-center">{{dataTableReports.beanSeguimientoDict.cantidadReingresosAbogadoFinal}}</td>
+                                                <td class="text-center">{{dataTableReports.beanFechaDictaminacion.fechaFinalizacion}}</td>
+                                                <td class="text-center">{{dataTableReports.beanEstadoDictamen.codigoEstadoDictamen}}</td>
+                                                <td class="text-center">{{dataTableReports.beanEstadoDictamen.codigoEstado}}</td>
+                                                <td class="text-center">{{dataTableReports.beanEstadoDictamen.codigoEstadoPorRol}}</td>
+                                                <td class="text-center">{{dataTableReports.beanEstadoDictamen.rolAnterior}}</td>
+                                                <td class="text-center">{{dataTableReports.beanEstadoDictamen.rolActual}}</td>
+                                                <td class="text-center">{{dataTableReports.beanDatosAbogados.idUsuarioActual}}</td>
+                                                <td class="text-center">{{dataTableReports.beanComentarioDictamen.comentarioComplementoInicial}}</td>
+                                                <td class="text-center">{{dataTableReports.beanSeguimientoDict.idSubtipoRechazoSeguimiento1}}</td>
+                                                <td class="text-center">{{dataTableReports.beanSeguimientoDict.idSubtipoRechazoSeguimiento2}}</td>
+                                                <td class="text-center">{{dataTableReports.beanEstadoDictamen.idClasePersona}}</td>
+                                                <td class="text-center">{{dataTableReports.beanSeguimientoDict.rechazoAbogadoExterior}}</td>
+                                                <td class="text-center">{{dataTableReports.beanSeguimientoDict.subtipoRechazoExterno}}</td>
+                                                <td class="text-center">{{dataTableReports.beanComentarioDictamen.comentarioExterno}}</td>
+                                                <td class="text-center">{{dataTableReports.beanComentarioDictamen.mensajeExterno1}}</td>
+                                                <td class="text-center">{{dataTableReports.beanComentarioDictamen.mensajeSeguimiento1}}</td>
+                                                <td class="text-center">{{dataTableReports.beanComentarioDictamen.mensajeExterno2}}</td>
+                                                <td class="text-center">{{dataTableReports.beanComentarioDictamen.mensajeSeguimiento2}}</td>
+                                                <td class="text-center">{{dataTableReports.beanSLAInfo.folioSLA}}</td>
+                                                <td class="text-center">{{dataTableReports.beanSLAInfo.despachoSLA}}</td>
+                                                <td class="text-center">{{dataTableReports.beanSLAInfo.abogEnvSLA}}</td>
+                                                <td class="text-center">{{dataTableReports.beanSLAInfo.abogPubSLA}}</td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="emptymessage">
+                                            <tr>
+                                                <td colspan="13">No se encontraron reportes.</td>
+                                            </tr>
+                                        </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>              
+                </div>
+            </div>
+            <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingAvalRepo">
+                        <h6 class="panel-title">
+                            <strong>Reporte disponible</strong>
+                            <a role="button"
+                                class="custom-button-link"
+                                data-toggle="collapse"
+                                href="#collapseAvalRepo"
+                                aria-expanded="true"
+                                aria-controls="collapseAvalRepo">
+                                    - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseAvalRepo" class="collapse show" role="tabpanel" aria-labelledby="headingAvalRepo">
+                        <div class="panel-body"><br>
+                            <div class="dataTables_scrollBody">
+                                <p-table #dt4
+                                        class="rowAlternate" 
+                                        [value]="dataTableAvalRepo" 
+                                        dataKey="id"
+                                        [rows]="10"
+                                        [rowsPerPageOptions]="[10,25,50]" 
+                                        [showCurrentPageReport]="true"
+                                        paginatorDropdownAppendTo="body"
+                                        currentPageReportTemplate="Total de registros: {totalRecords}" 
+                                        styleClass="p-datatable-gridlines"
+                                        [paginator]="true"
+                                        responsiveLayout="scroll"
+                                        scrollHeight="400px"
+                                        [exportHeader]="'customExportHeader'">
+                                    <ng-template pTemplate="caption">
+                                        <div class="flex align-items-center justify-content-between text-right">
+                                            <h5 class="m-0"></h5>
+                                            <span class="p-input-icon-left">
+                                                <em class="pi pi-search mr-3"></em>
+                                                <label for="searchrepo"></label>
+                                                <input pInputText type="text" id="searchrepo" (input)="dt4.filterGlobal( $any($event.target).value, 'contains' )" placeholder="Buscar..." />
+                                            </span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="archivo">Archivo<p-sortIcon field="archivo"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="tiporepo">Tipo de reporte<p-sortIcon field="tiporepo"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="descarga">Descarga<p-sortIcon field="descarga"></p-sortIcon></div>
+                                            </th>
+                                            <th class="text-wrap fixed-width" scope="col">
+                                                <div class="justify-content-center align-items-center" pSortableColumn="disponible">Disponible hasta<p-sortIcon field="disponible"></p-sortIcon></div>
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" id="tmpsolbody" let-dataTableAvalRepo >                                                <tr>
+                                            <td class="text-center">{{dataTableAvalRepo.nombreReporte}}</td>
+                                            <td class="text-center">{{dataTableAvalRepo.tipoReporte}}</td>
+                                            <td>
+                                                <a class="btn btn-default" tabindex="0" id="btnFile" title="Reporte" (click)="descargarArchivo( dataTableAvalRepo.nombreReporte )">
+                                                    <span><em class="pi pi-arrow-down red-color"></em></span>
+                                                </a>
+                                            </td>
+                                            <td class="text-center">{{dataTableAvalRepo.idFolio}}</td>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="4">No se encontraron reportes.</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+<p-dialog class="dialog50" header="Header" [(visible)]="displayModalM" [modal]="true"
+    [draggable]="false" [resizable]="false" [closable]="false">
+    <ng-template pTemplate="header">
+        {{ headerModalM }}
+    </ng-template>
+    <p class="m-0">{{ messageModalM }}</p>
+        <ng-template pTemplate="footer">
+            <p-button (click)="closeModal()" label="Cerrar" class="btn modal-button-gral"></p-button>
+        </ng-template>
+</p-dialog>

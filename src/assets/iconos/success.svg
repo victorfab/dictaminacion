@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>02. Elements / Commons / Radio / Selected ON Copy 2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="App-V_1.2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="02.-Elements-/-Commons-/-Radio-/-Selected-ON">
+            <g id="Misc/Rounded-Checkbox">
+                <circle id="Background" fill="#63B468" cx="27" cy="27" r="27"></circle>
+                <polyline id="Check" stroke="#FFFFFF" points="12.2727273 28.2272727 20.8636364 36.8181818 40.5 17.1818182"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>

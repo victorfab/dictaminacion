@@ -1,0 +1,66 @@
+<header class="topbar">
+    <nav class="navbar top-navbar navbar-expand-md navbar-light">
+        <!-- ============================================================== -->
+        <!-- Logo -->
+        <!-- ============================================================== -->
+        <div class="navbar-header">
+            <ul class="nav">
+                <!-- Icono Logo -->
+                <img src="../../../assets/img/flamaroja.svg" class="ml-3 mr-3 logo-flama" alt="Loogo Santander">
+                <!-- Fin Icono Logo -->
+            </ul>
+        </div>
+    </nav>
+</header>
+<!-- ============================================================== -->
+<!-- Main wrapper -->
+<!-- ============================================================== -->
+<div class="transmitContainer" id="transmitContainer"></div>
+<div id="transmitModalContainer"></div>
+
+<section id="wrapper" class="login-register login-sidebar loginbkgd">
+    <div class="card-body-l">
+        <h2>Dictaminación</h2>
+        <div class="logofiduciario"><img src="../../../assets/img/logosantder.png" alt="logo fiduciario" /></div>
+    </div>
+    <div class="login-box cardside">
+        <div class="card-body">
+            <form ngNativeValidate class="form-horizontal form-material" id="loginform" name="loginform">
+                <div class="form-group m-t-40">
+                    <span>
+                        <label for="usuario">Usuario</label>
+                        <input class="form-control misSol" type="text" name="usuario" id="usuario" pInputText [(ngModel)]="user" autocomplete="off">
+                    </span>
+                </div>
+                <div class="form-group mt-5">
+                    <span>
+                        <label for="rol">Rol</label>
+                        <input class="form-control misSol" name="rol" type="text" id="rol" pInputText [(ngModel)]="rol" autocomplete="off">
+                    </span>
+                </div>
+                <div class="mb-5"></div>
+                <div class="form-group text-center m-t-20">
+                    <div class="col-xs-12">
+                        <button class="p-button-rounded p-button-danger" name="loginBtn" id="loginBtn" (click)="obtenerPerfil()" pButton pRipple type="submit" label="ENTRAR"></button>
+        
+                    </div>
+                </div>
+            </form>
+        </div>
+
+<!--     <div class="login-box card">
+        <div class="card-body">
+        <input name="usuario" type="text" id="usuario" pInputText [(ngModel)]="user" autocomplete="off">
+        <label for="usuario"></label>
+        <h2 class="color-white">Usuario</h2>
+        <input name="rol" type="text" id="rol" pInputText [(ngModel)]="rol" autocomplete="off">
+        <label for="rol"></label>
+        <h2 class="color-white">Rol</h2>
+        <button class="p-button-rounded p-button-danger" name="loginBtn" id="loginBtn" routerLink="/solicitudes" pButton pRipple type="submit" label="ENTRAR"> Entrar </button> -->
+
+
+    </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- End Wrapper -->

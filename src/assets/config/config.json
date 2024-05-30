@@ -1,0 +1,13 @@
+
+{
+    "app_path": "https://gateway-service-mx-dictaminacion-dev.apps.str01.mex.dev.mx1.paas.cloudcenter.corp/",
+    "tokenbearer": "https://gateway-service-mx-dictaminacion-dev.apps.str01.mex.dev.mx1.paas.cloudcenter.corp/oauth/token",
+    "catalogo": "https://gateway-service-mx-dictaminacion-dev.apps.str01.mex.dev.mx1.paas.cloudcenter.corp/catalogo/v1",
+    "folio": "https://gateway-service-mx-dictaminacion-dev.apps.str01.mex.dev.mx1.paas.cloudcenter.corp/folio/v1",
+    "dictamen": "https://gateway-service-mx-dictaminacion-dev.apps.str01.mex.dev.mx1.paas.cloudcenter.corp/dictamen/v1",
+    "usuario": "https://gateway-service-mx-dictaminacion-dev.apps.str01.mex.dev.mx1.paas.cloudcenter.corp/user_management/v1",
+    "reportes": "https://gateway-service-mx-dictaminacion-dev.apps.str01.mex.dev.mx1.paas.cloudcenter.corp/reportes/v1",
+    "filenet": "https://gateway-service-mx-dictaminacion-dev.apps.str01.mex.dev.mx1.paas.cloudcenter.corp/filenet/v1",
+    "datap": "OTcxODNiNWYtZjI2ZS00YWQ2LTkyNjAtZDhhNTQyZDE3MjkyOjdjfTNSZ31zJT5zTnFmUl9qJGUhIypJempbNU1kZA==",
+    "sireta": "/session/v1/access"
+}

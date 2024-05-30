@@ -1,0 +1,31 @@
+<div class="col-lg-12 header-secundario">
+	<div id="divTipoUsuario" class="col-lg-4 w-50 mt-2">
+		<a [routerLink]="['/solicitudes']">
+            <span class="glyphicon glyphicon-home home-icon" aria-hidden="true" >
+			    <span class="TipoUsuario ml-5 mr-2"><strong>{{rolUsuario}}</strong></span>
+		    </span>
+        </a>
+	</div>
+	<div class="pull-right">
+        <div class="row">
+            <div *ngFor="let item of _profileService.menus">   
+                <div *ngIf="item.active"> 
+                    <a [routerLink]="item.url" routerLinkActive="active"
+                    aria-expanded="false" >
+                         <div *ngIf="item.id !== 7 && item.id !== 8">
+                            <button id="item.name" type="button" class="btn btn-danger btn-md">
+                                {{ item.name }}
+                            </button>
+                        </div>
+                        <div *ngIf="item.id === 7 || item.id === 8">
+                            <button id="item.name" (click)="cambiarPerfil()" type="button" class="btn btn-danger btn-md">
+                                {{ item.name }}
+                            </button>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+	</div>
+	<div class="col-lg-1"></div>
+</div>

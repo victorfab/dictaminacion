@@ -1,0 +1,16 @@
+<div class="main-wrapper">
+
+    <app-header [rolUser]="rolUserUpdated"></app-header>
+    <app-sidebar (rolUser)="updateData($event)"></app-sidebar>
+
+    <!-- <modal-error></modal-error> -->
+    
+    <div class="page-wrapper">
+        <div class="main-container">
+            <div class="container-fluid">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+
+</div>

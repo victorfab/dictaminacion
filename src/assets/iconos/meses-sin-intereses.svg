@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24.09 24.09">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #ec0000;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 0.7px;
+      }
+
+      .cls-2 {
+        fill: #ec0000;
+      }
+    </style>
+  </defs>
+  <title> Master_Iconos_recompensas</title>
+  <g id="Layer_6" data-name="Layer 6">
+    <g>
+      <path class="cls-1" d="M18.11,6.69H6A1.89,1.89,0,0,0,4.19,8.48v7.28A1.65,1.65,0,0,0,5.84,17.4H18.25a1.65,1.65,0,0,0,1.65-1.65h0V8.42A1.84,1.84,0,0,0,18.11,6.69Z"/>
+      <rect class="cls-2" x="4.19" y="9.19" width="15.71" height="1.57"/>
+    </g>
+  </g>
+</svg>

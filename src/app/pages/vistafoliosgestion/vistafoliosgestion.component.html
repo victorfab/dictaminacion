@@ -1,0 +1,409 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingRegistroFolio">
+                        <h6 class="panel-title">
+                            <strong>Panel de Datos </strong>
+                            <a href="#collapseRegistroFolio" role="button" class="custom-button-link" id="btnregfol" data-toggle="collapse" aria-controls="collapseRegistroFolio" aria-expanded="true">
+                                - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseRegistroFolio" class="collapse show" role="tabpanel" aria-labelledby="headingRegistroFolio">
+                        <div class="panel-body"><br>
+                            <form class="form-horizontal">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div id="fgform-1" class="form-group"> 
+                                                <label for="solicitante" class="col-sm-12 col-md-6 control-label">Solicitante</label>
+                                                <div class="col-sm-12 col-md-12 mb-5"> 
+                                                    <input disabled type="text" class="form-control" id="solicitante" value="{{foliodata?.beanEmitirDictamen?.solicitante}}" >
+                                                </div>
+                                                <label for="centro_costos" class="col-sm-12 col-md-6 control-label">CC</label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <input disabled type="text" class="form-control" id="centro_costos" value="{{foliodata?.beanBusqueda?.centroCosto}}">
+                                                </div>
+                                                <label for="region" class="col-sm-12 col-md-6 control-label">Región</label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <input disabled type="text" class="form-control" id="region" value="{{foliodata?.beanZonaRespuesta?.region}}">
+                                                </div>
+                                                <label for="zona" class="col-sm-12 col-md-6 control-label">Zona</label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <input disabled type="text" class="form-control" id="zona" value="{{foliodata?.beanZonaRespuesta?.zona}}">
+                                                </div>
+                                                <label for="tipo_dictamen" class="col-sm-12 col-md-6 control-label">Tipo de Dictamen</label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input disabled type="text" class="form-control" id="tipo_dictamen" value="{{tipoDictamen}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="fgform-2" class="col-md-6 col-sm-12"> 
+                                            <div class="form-group">
+                                                <label for="origen" class="col-sm-12 col-md-6 control-label">Origen</label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input disabled type="text" class="form-control" id="origen" value="{{foliodata?.beanComplementoSeg?.origen}}">
+                                                </div>
+                                                <label for="sucursal" class="col-sm-12 col-md-6 control-label">Sucursal</label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input disabled type="text" class="form-control" id="sucursal" value="{{foliodata?.beanZonaRespuesta?.sucursal}}">
+                                                </div>
+                                                <label for="banca" class="col-sm-12 col-md-6 control-label">Banca</label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input disabled type="text" class="form-control" id="banca" value="{{foliodata?.beanZonaRespuesta?.banca}}">
+                                                </div>
+                                                <label for="fecha_solicitud" class="col-sm-12 col-md-6 control-label">Fecha de Solicitud</label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <div class="input-group date" id="fecha_solicitud">
+                                                        <input disabled type="text" class="form-control"  id="fecha_solicitud" value="{{foliodata?.beanFechasRespuesta?.fechaRegistro}}">
+                                                        <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"> </span> </span>
+                                                    </div>
+                                                </div>
+                                                <label for="folio" class="col-sm-12 col-md-6 control-label">Folio: </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5" *ngIf="foliodata?.beanFolio?.complemento !== ''; else compl">
+                                                    <input disabled type="text" class="form-control" id="folio" value="{{foliodata?.beanFolio?.complemento}}">
+                                                </div>
+                                                <ng-template #compl>
+                                                    <div class="col-sm-12 col-md-12 form mb-5">
+                                                        <input disabled type="text" class="form-control" id="folio" value="{{foliodata?.beanFolio?.folio}}">
+                                                    </div>
+                                                </ng-template>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <label for="nombre" class="col-sm-12 col-md-6 control-label">Comentario</label>
+                                            <div class="col-sm-12 col-md-12 form mb-5">
+                                                <textarea disabled rows="3" class="text-area-razon col-sm-12" id="nombre">{{foliodata?.beanReingresos?.comReingreso}}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group"> 
+                                                <label for="buc" class="col-sm-12 col-md-6 control-label">Buc</label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <input disabled type="text" class="form-control" id="buc" value="{{foliodata?.beanFolio?.buc}}">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingDetalleDocs">
+                        <h6 class="panel-title">
+                            <strong>Documentación base del dictamen</strong>
+                            <a href="#collapseDoc" id="detalledocs" class="custom-button-link" role="button" data-toggle="collapse" aria-controls="collapseDoc" aria-expanded="true">
+                                - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseDoc" class="collapse show" role="tabpanel" aria-labelledby="headingDetalleDocs">
+                        <div class="panel-body mt-5">
+                            <form id="frmdocs" class="form-horizontal">
+                                <p-table #dt
+                                    [value]="arrayFiles"
+                                    [rows]="10" 
+                                    [paginator]="true" 
+                                    [globalFilterFields]="['descripcionTipoDocumento','nombreDocumento']" 
+                                    [showCurrentPageReport]="true"
+                                    paginatorDropdownAppendTo="body"
+                                    [(selection)]="selectedarrayFiles" 
+                                    [rowHover]="true" 
+                                    dataKey="id"
+                                    responsiveLayout="scroll"
+                                    currentPageReportTemplate="Página {{ page }} / {{ totalPages }}" 
+                                    >
+                                <ng-template pTemplate="caption">
+                                    <div class="flex align-items-center justify-content-between text-right">
+                                        <span class="p-input-icon-left">
+                                            <em class="pi pi-search mr-3"></em>
+                                            <input pInputText type="text" id="search3" (input)="dt.filterGlobal( $any($event.target).value, 'contains' )" placeholder="Buscar..." />
+                                            <label for="search3"></label>
+                                        </span>
+                                    </div>
+                                </ng-template>
+                                    <ng-template id="tmpfilesfgh" pTemplate="header">
+                                        <tr>
+                                            <th scope="col" pSortableColumn="descripcionTipoDocumento">Tipo de documento (*): <p-sortIcon field="tipo"></p-sortIcon></th>
+                                            <th scope="col" pSortableColumn="nombreDocumento">Nombre documento (*): <p-sortIcon field="nombre"></p-sortIcon></th>
+                                            <th scope="col" pSortableColumn="otras">Acciones <p-sortIcon field="otras"></p-sortIcon></th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template id="tmplfilesfg" pTemplate="body" let-arrayFiles let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td>{{ arrayFiles.descripcionTipoDocumento }}</td>
+                                            <td class="wordwarp">{{ arrayFiles.nombreDocumento }}</td>
+                                            <td>
+                                                <a class="btn btn-default mr-3" tabindex="0" id="btnPDF" title="PDF" (click)="previewArchivo( arrayFiles.idFilenet, arrayFiles.nombreDocumento, arrayFiles.descripcionTipoDocumento )">
+                                                    <span><em class="pi pi-file-pdf red-color"></em></span>
+                                                </a>
+                                                <a class="btn btn-default" tabindex="0" id="btnPDF" title="PDF" (click)="descargarArchivo( arrayFiles.idFilenet, arrayFiles.nombreDocumento, arrayFiles.descripcionTipoDocumento )">
+                                                    <span><em class="pi pi-arrow-down red-color"></em></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </form>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingFacApod">
+                        <h6 class="panel-title">
+                            <strong>Registro de las facultades por apoderado</strong>
+                            <a role="button" class="custom-button-link" data-toggle="collapse" href="#collapseFacApod" aria-expanded="true" aria-controls="collapseRegistro">
+                                - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseFacApod" class="collapse show" role="tabpanel" aria-labelledby="headingFacApod">
+                        <div>   
+                            <p-toast></p-toast>
+                                <div class="panel-body"><br>
+                                    <form class="form-horizontal">
+                                        <div class="col-lg-12 xtra-top-pad-15" id="facapodtab">
+                                            <p-table #dt1
+                                                [value]="apoderados"
+                                                [rows]="10" 
+                                                [paginator]="true" 
+                                                [globalFilterFields]="['nombre','buc']" 
+                                                responsiveLayout="scroll"
+                                                [(selection)]="selectedapoderados" 
+                                                [rowHover]="true" 
+                                                dataKey="id"
+                                                currentPageReportTemplate="Página {{ page }} / {{ totalPages }}" 
+                                                [showCurrentPageReport]="true"
+                                                paginatorDropdownAppendTo="body">
+                                            <ng-template pTemplate="caption">
+                                                <div class="flex align-items-center justify-content-between text-right">
+                                                    <span class="p-input-icon-left">
+                                                        <em class="pi pi-search mr-3"></em>
+                                                        <input pInputText type="text" id="search2" (input)="dt1.filterGlobal( $any($event.target).value, 'contains' )" placeholder="Buscar..." />
+                                                        <label for="search2"></label>
+                                                    </span>
+                                                </div>
+                                            </ng-template>
+                                                <ng-template id="tmpheadapodfg" pTemplate="header">
+                                                    <tr>
+                                                        <th scope="col" id="thpdfg-1" pSortableColumn="nombre">Nombre apoderado<p-sortIcon field="tipo"></p-sortIcon></th>
+                                                        <th scope="col" id="thpdfg-1" pSortableColumn="buc">BUC<p-sortIcon field="nombre"></p-sortIcon></th>
+                                                        <th scope="col" id="thpdfg-1" pSortableColumn="apertura">Apertura de cuentas cheques<p-sortIcon field="otras"></p-sortIcon></th>
+                                                        <th scope="col" id="thpdfg-1" pSortableColumn="designacion">Designación de Intervinientes<p-sortIcon field="tipo"></p-sortIcon></th>
+                                                        <th scope="col" id="thpdfg-1" pSortableColumn="banca">Contratar banca electrónica<p-sortIcon field="nombre"></p-sortIcon></th>
+                                                        <th scope="col" id="thpdfg-1" pSortableColumn="credito">Contratar crédito sin garantías<p-sortIcon field="otras"></p-sortIcon></th>
+                                                        <th scope="col" id="thpdfg-1" pSortableColumn="otras">Otras<p-sortIcon field="otras"></p-sortIcon></th>
+                                                    </tr>
+                                                </ng-template>
+                                                <ng-template id="tmpbodyapodfg" pTemplate="body" let-apoderados let-rowIndex="rowIndex">
+                                                    <tr>
+                                                        <td>{{ apoderados.nombre }}</td>
+                                                        <td>{{ apoderados.buc }}</td>
+                                                        <td class="text-center" id="thpdfg-2">{{ apoderados.tiposInterviniente.includes("1") ? "X" : "" }}</td>
+                                                        <td class="text-center" id="thpdfg-2">{{ apoderados.tiposInterviniente.includes("2") ? "X" : "" }}</td>
+                                                        <td class="text-center" id="thpdfg-2">{{ apoderados.tiposInterviniente.includes("3") ? "X" : "" }}</td>
+                                                        <td class="text-center" id="thpdfg-2">{{ apoderados.tiposInterviniente.includes("4") ? "X" : "" }}</td>
+                                                        <td class="text-center" id="thpdfg-2">{{ apoderados.tiposInterviniente.includes("5") ? "X" : "" }}</td>
+                                                        <td>{{ apoderados.otros }}</td>
+                                                    </tr>
+                                                </ng-template>
+                                            </p-table>
+                                        </div>
+                                    </form>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingDoc">
+                        <h6 class="panel-title">
+                            <strong>Asignar Dictamen</strong>
+                            <a role="button" class="custom-button-link" data-toggle="collapse" href="#collapseAsignar" aria-expanded="true" aria-controls="collapseRegistro">
+                                - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseAsignar" class="collapse show" role="tabpanel" aria-labelledby="headingDoc">
+                        <div class="panel-body mt-5">
+                            <form class="form-horizontal">
+                                <div class="col-12">
+                                    <div class="row" *ngIf="foliodata?.beanFolio?.estatusPorRol === 'SEG2_RECH' || 
+                                                            foliodata?.beanFolio?.estatusPorRol === 'ASIG_URG_EXT1' ||
+                                                            foliodata?.beanFolio?.estatusPorRol === 'ASIG_URG_EXT2' ||
+                                                            foliodata?.beanFolio?.estatusPorRol === 'SEG1_OK';
+                                                        else seguimiento">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group"> 
+                                                <label for="abogexttipodict" class="col-sm-12 col-md-6 control-label">Tipo solicitud</label>
+                                                <input class="col-sm-12 col-md-8 mb-4 form-control" disabled type="text" id="abogexttipodict" value="{{tipoDictamen}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="abogextdropdown" class="col-sm-12 col-md-6 text-left">Abogado externo</label>
+                                                <div class="col-sm-12 col-md-9 mb-5">
+                                                    <p-dropdown *ngIf="isReady" name="abogadoext" id="abogextdropdown" optionValue="id" [options]="abogext" optionLabel="nombre" (onChange)="getData( $event, 'abogadoext' )" placeholder="Seleccionar"></p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-right">
+                                            <button class="p-button-rounded p-button-danger mr-3" (click)="reasignarDictamenExt()">Enviar</button>
+                                            <button class="p-button-rounded p-button-secondary" id="cancela" [routerLink]="['/gestiondiaria']">Cancelar</button>
+                                        </div>
+                                    </div>
+                                    <ng-template #seguimiento>
+                                        <div class="row" *ngIf="foliodata?.beanFolio?.estatusPorRol === 'EXT_RECH' || 
+                                                                foliodata?.beanFolio?.estatusPorRol === 'EXT_OK' ||
+                                                                foliodata?.beanFolio?.estatusPorRol === 'SEG2_OK' ||
+                                                                foliodata?.beanFolio?.estatusPorRol === 'SOL' ||
+                                                                foliodata?.beanFolio?.estatusPorRol === 'ASIG_URG_SEG' ||
+                                                                foliodata?.beanFolio?.estatusPorRol === 'ASIG_URG_EXT1';
+                                                            else alternos">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group"> 
+                                                    <label for="seguimientoregion" class="col-sm-12 col-md-3 text-left">Región</label>
+                                                    <div class="col-sm-12 col-md-9 mb-5">
+                                                        <p-dropdown class="estatus-dropdown" name="seguimientoregion" id="seguimientoregion" [options]="region" [(ngModel)]="regiones" optionLabel="nombre" placeholder="Seleccionar" (onChange)="getData( $event, 'region' )"></p-dropdown>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="seguimientodropdown" class="col-sm-12 col-md-6 text-left">Abogado Seguimiento</label>
+                                                    <div class="col-sm-12 col-md-9 mb-5">
+                                                        <p-dropdown *ngIf="isReady" name="seguimientodropdown" id="seguimientodropdown" optionValue="id" [options]="abogseg" optionLabel="nombre" (onChange)="getData( $event, 'abogado' )" placeholder="Seleccionar"></p-dropdown>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 text-right">
+                                                <button class="p-button-rounded p-button-danger mr-3" (click)="reasignarDictamenSeg()">Enviar</button>
+                                                <button class="p-button-rounded p-button-secondary" id="cancela" [routerLink]="['/gestiondiaria']">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template #alternos>
+                                        <div class="row" *ngIf="foliodata?.beanFolio?.estatusPorRol === 'ASIG_URG' &&
+                                                                foliodata?.beanFolio?.estatus === 'PEN';
+                                                            else seg">
+                                                <div class="col-md-6 col-sm-12">
+                                                    <div class="form-group"> 
+                                                        <label for="alternoexternotipo" class="col-sm-12 col-md-6 control-label">Tipo solicitud</label>
+                                                        <input class="col-sm-12 col-md-8 mb-4 form-control" disabled type="text" id="alternoexternotipo" value="{{tipoDictamen}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="alternoexternodrop" class="col-sm-12 col-md-6 text-left">Abogado externo</label>
+                                                        <div class="col-sm-12 col-md-9 mb-5">
+                                                            <p-dropdown *ngIf="isReady" name="alternoexternodrop" id="alternoexternodrop" optionValue="id" [options]="abogext" optionLabel="nombre" (onChange)="getData( $event, 'abogadoext' )" placeholder="Seleccionar"></p-dropdown>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 text-right">
+                                                    <button class="p-button-rounded p-button-danger mr-3" (click)="reasignarDictamenExt()">Enviar</button>
+                                                    <button class="p-button-rounded p-button-secondary" id="cancela" [routerLink]="['/gestiondiaria']">Cancelar</button>
+                                                </div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template #seg>
+                                        <div class="row">
+                                                <div class="col-md-6 col-sm-12">
+                                                    <div class="form-group"> 
+                                                        <label for="seguimientoregion-2" class="col-sm-12 col-md-3 text-left">Región</label>
+                                                        <div class="col-sm-12 col-md-9 mb-5">
+                                                            <p-dropdown class="estatus-dropdown" name="seguimientoregion-2" id="seguimientoregion-2" [options]="region" [(ngModel)]="regiones" optionLabel="nombre" placeholder="Seleccionar" (onChange)="getData( $event, 'region' )"></p-dropdown>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="solicitantedrop-2" class="col-sm-12 col-md-6 text-left">Abogado Seguimiento</label>
+                                                        <div class="col-sm-12 col-md-9 mb-5">
+                                                            <p-dropdown *ngIf="isReady" name="solicitantedrop-2" id="solicitantedrop-2" optionValue="id" [options]="abogseg" optionLabel="nombre" (onChange)="getData( $event, 'abogado' )" placeholder="Seleccionar"></p-dropdown>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 text-right">
+                                                        <button class="p-button-rounded p-button-danger mr-3" (click)="reasignarDictamenSeg()">Enviar</button>
+                                                        <button class="p-button-rounded p-button-secondary" id="cancela" [routerLink]="['/gestiondiaria']">Cancelar</button>
+                                                </div>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog id="dialogoPdf"
+          [modal]="true"
+          [resizable]="false" 
+          [closable]="false"
+          [draggable]="false" 
+          [(visible)]="displayModalF" >
+    
+    <pdf-viewer
+        [src]="pdfSrc"
+        [page]="page"
+        [stick-to-page]="false"
+        [show-all]="false"
+        [rotation]="0"
+        [render-text]="false"
+        [zoom]="0"
+        [original-size]="false"
+        [fit-to-page]="true"
+        [zoom-scale]="'page-width'"
+        [show-borders]="false"
+        [autoresize]="true"
+        (after-load-complete)="afterLoadComplete($event)"
+        class="pdf-viewer">
+    </pdf-viewer>
+
+    <ng-template pTemplate="footer">
+
+        <nav id="navload" *ngIf="isLoaded">
+            <div class="row text-center">
+                <div class="col-md-12 text-center">
+                    <button type="button" class="btn custom-button-gral" [disabled]="page === 1" (click)="prevPage()" >
+                        Anterior
+                    </button>
+                    <button type="button" class="btn custom-button-gral" [disabled]="page === totalPages" (click)="nextPage()" >
+                        Siguiente
+                    </button>
+                    <button type="button" class="btn custom-button-gral" (click)="cerrarDialogF()" >
+                        Aceptar
+                    </button>
+                     <button type="button" class="btn custom-button-gral" (click)="downloadFileDict()">
+                        Descargar
+                    </button>
+                    <p>Página {{ page }} / {{ totalPages }}</p>
+                </div>
+            </div>
+          </nav>
+          
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Header" class="h50" [(visible)]="displayModalAd" [modal]="true"
+    [draggable]="false" [resizable]="false" [closable]="false">
+    <ng-template pTemplate="header">
+        <h4>Dictamen</h4>
+    </ng-template>
+    <p class="mt-5 text-center">
+        {{ messageModalM }}
+    </p>
+        <ng-template pTemplate="footer">
+            <p-button (click)="closeAvisoModal()" label="Cerrar" class="btn modal-button-gral"></p-button>
+        </ng-template>
+</p-dialog> 

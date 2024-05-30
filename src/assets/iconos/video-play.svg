@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24.09 24.09">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ec0000;
+      }
+
+      .cls-1 {
+        stroke: #ec0000;
+        stroke-miterlimit: 10;
+        stroke-width: 0.6px;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <title> Master_Iconos_recompensas</title>
+  <g id="Layer_1" data-name="Layer 1">
+    <g>
+      <circle class="cls-2" cx="12.05" cy="12.05" r="7.45"/>
+    </g>
+    <g>
+      <path class="cls-1" d="M10.79,15.43a.44.44,0,0,1-.44-.44V9.57A.44.44,0,0,1,11,9.19l4.32,2.57a.44.44,0,0,1,0,.74L11,15.35A.44.44,0,0,1,10.79,15.43Z"/>
+    </g>
+  </g>
+  
+</svg>

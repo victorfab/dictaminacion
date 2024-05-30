@@ -1,0 +1,714 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingRegistroFolio">
+                        <h6 class="panel-title">
+                            <strong>Panel de datos </strong>
+                            <a  class="custom-button-link"
+                                role="button"
+                                data-toggle="collapse"
+                                href="#collapseRegistroFolio"
+                                aria-expanded="true"
+                                aria-controls="collapseRegistro">
+                                    - Haz clic para ocultar o mostrar 
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseRegistroFolio" class="collapse show" role="tabpanel" aria-labelledby="headingRegistroFolio">
+                        <div class="panel-body"><br>
+                            <form #formseccion1="ngForm" id="form1" class="form-horizontal" >
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="solicitante" class="col-sm-12 col-md-6 control-label">
+                                                        Solicitante
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <input  class="form-control"
+                                                            id="solicitante"
+                                                            name="solicitante"
+                                                            type="text"
+                                                            disabled
+                                                            [(ngModel)]="solicitante">
+                                                </div>
+                                                <label for="region" class="col-sm-12 col-md-6 control-label">
+                                                        Región
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <input  class="form-control"
+                                                            id="region"
+                                                            name="region"
+                                                            type="text"
+                                                            disabled
+                                                            [(ngModel)]="region">
+                                                </div>
+                                                <label for="tipo_folio" class="col-sm-12 col-md-6 control-label">
+                                                        Tipo de folio (*)
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form1 mb-5">
+                                                    <p-dropdown *ngIf="isReady"
+                                                                name="tipofolio"
+                                                                class="estatus-dropdown"
+                                                                id="tipofolio"
+                                                                [options]="tipofolio"
+                                                                [(ngModel)]="tipoFolio"
+                                                                optionLabel="nombre"
+                                                                placeholder="Seleccionar"
+                                                                (onChange)="getData( $event, 'tipfolios' )"
+                                                                placeholder="{{tipoFolio}}" >
+                                                    </p-dropdown>
+                                                    <br />
+                                                </div>
+                                                <label for="tiporeingreso" class="col-sm-12 col-md-6 control-label">
+                                                    Causa de reingreso (*)
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form1 mb-5">
+                                                    <!-- <p-dropdown class="estatus-dropdown"
+                                                                name="reingresos"
+                                                                id="reingresos"
+                                                                optionLabel="nombre"
+                                                                placeholder="Seleccionar"
+                                                                [options]="reingresosData"
+                                                                [(ngModel)]="reingresos"
+                                                                (onChange)="getData( $event, 'tiporeing' )">
+                                                    </p-dropdown> -->
+                                                    <app-ng-dropdown    appendTo="body"
+                                                                        name="reingresos"
+                                                                        class="estatus-dropdown"
+                                                                        id="reingresos"
+                                                                        optionLabel="nombre"
+                                                                        [data]="reingresosData"
+                                                                        [name]="'reingresos'"
+                                                                        [parentForm]="reingresos"
+                                                                        [placeholder]="'Seleccionar'"
+                                                                        (itemSelect)="getDataA( $event, 'tiporeing' )">
+                                                    </app-ng-dropdown>
+                                                </div>
+                                                <div [hidden]="dataFiltersb.tiporeing !== '3'">
+                                                    <label  for="subreingreso"
+                                                            class="col-sm-12 col-md-6 control-label">
+                                                                Tipo de error (*)
+                                                    </label>
+                                                    <div class="col-sm-12 col-md-12 form1 mb-5">
+                                                        <!-- <p-dropdown class="estatus-dropdown"
+                                                                    name="subreingresos"
+                                                                    id="subreingresos"
+                                                                    optionLabel="descripcion"
+                                                                    [options]="subreingresosData"
+                                                                    [(ngModel)]="subreingresos"
+                                                                    (onChange)="getDataA( $event, 'subtiporeing' )"
+                                                                    placeholder="Seleccionar">
+                                                        </p-dropdown> -->
+                                                        <app-ng-dropdown    appendTo="body"
+                                                                            name="subreingresos"
+                                                                            class="estatus-dropdown"
+                                                                            id="subreingresos"
+                                                                            [data]="subreingresosData"
+                                                                            [name]="'subreingresos'"
+                                                                            [parentForm]="subreingresos"
+                                                                            [placeholder]="'Seleccionar'"
+                                                                            (itemSelect)="getDataA( $event, 'subtiporeing' )">
+                                                        </app-ng-dropdown>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label  for="fecha_registro"
+                                                        class="col-sm-12 col-md-6 control-label">
+                                                            Fecha registro
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <div class="input-group date">
+                                                        <input  type="text"
+                                                                class="form-control"
+                                                                id="fecha_registro"
+                                                                name="fecha_registro"
+                                                                disabled
+                                                                [(ngModel)]="fechaRegistro">
+                                                            <span class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row form mb-4 ml-2">
+                                                    <label  for="sucursal"
+                                                            class="col-sm-12 col-md-3 control-label">
+                                                                Sucursal
+                                                    </label>
+                                                    <div class="col-sm-12 col-md-8 col-sm-2-wider mr-2">
+                                                        <input  class="form-control"
+                                                                id="sucursal"
+                                                                name="sucursal"
+                                                                type="text"
+                                                                disabled
+                                                                [(ngModel)]="zona">
+                                                    </div>
+                                                    <label  for="centro_costos"
+                                                            class="col-sm-12 col-md-3 control-label">
+                                                                CC
+                                                    </label>
+                                                    <div class="col-sm-12 col-md-8 col-sm-2-wider">
+                                                        <input  class="form-control"
+                                                                id="centro_costos"
+                                                                name="centro_costos"
+                                                                type="text"
+                                                                disabled
+                                                                [(ngModel)]="cc">
+                                                    </div>
+                                                </div>
+                                                <label  for="folio"
+                                                        class="col-sm-12 col-md-6 control-label mt-3">
+                                                            Folio
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input  type="text"
+                                                            class="form-control"
+                                                            id="folio"
+                                                            value="{{folio}}"
+                                                            disabled>
+                                                </div>
+                                                <label  for="comReingreso"
+                                                        class="col-sm-12 col-md-6 control-label">
+                                                            Comentario
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form1 mb-5">
+                                                    <textarea   class="form-control col-sm-12 text-area-razon validateEnvio"
+                                                                id="comReingreso"
+                                                                name="comReingreso"
+                                                                [(ngModel)]="comreingreso"
+                                                                maxlength="4000"
+                                                                rows="3" >
+                                                    </textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label  for="nombre"
+                                                        class="col-sm-12 col-md-6 text-left">
+                                                            Nombre, denominación o razón social
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 mb-5">
+                                                    <textarea   id="razon_social"
+                                                                maxlength="500"
+                                                                class="text-area-razon col-sm-12"
+                                                                rows="4"
+                                                                disabled>{{razonSocial}}
+                                                    </textarea>
+                                                    <label for="razon_social"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label  for="origen"
+                                                        class="col-sm-12 col-md-6 control-label">
+                                                            Origen (*)
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form1 mb-5">
+                                                    <p-dropdown appendTo="body"
+                                                                name="origen"
+                                                                class="estatus-dropdown"
+                                                                id="origen"
+                                                                placeholder={{tiporigen}}
+                                                                optionLabel="nombre"
+                                                                placeholder="Seleccionar"
+                                                                (onChange)="getData( $event, 'tiporigen' )"
+                                                                [required]="true"
+                                                                [options]="origen"
+                                                                [(ngModel)]="tiporigen">
+                                                    </p-dropdown>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                            <label  for="rfc"
+                                                    class="col-sm-12 col-md-6 control-label">
+                                                        RFC (*)
+                                            </label>
+                                            <div class="col-sm-12 col-md-12 form1 mb-5">
+                                                <input  maxlength="13"
+                                                        type="text"
+                                                        class="form-control buc_class"
+                                                        id="rfc"
+                                                        name="rfc"
+                                                        [(ngModel)]="datorfc"
+                                                        pTooltip="Valida que el RFC coincida con nuestro cliente y con su tipo de persona (física o moral)"
+                                                        (ngModelChange)="getData( datorfc, 'rfc' )"
+                                                        (focusout)="obtenerRFC()"
+                                                        [required]="true">
+                                                <small  class="p-error"
+                                                        *ngIf="datorfc === undefined || datorfc === '' ">
+                                                            Campo requerido
+                                                </small>
+                                            </div>
+                                            <div [hidden]="!tipoempresa || tipoempresa.length <= 0">
+                                                <label  for="origen"
+                                                        class="col-sm-12 col-md-6 control-label">
+                                                            Sub tipo de dictamen (*)
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form1 mb-5">
+                                                    <p-dropdown name="tipoempresas"
+                                                                class="estatus-dropdown"
+                                                                id="tipoempresas"
+                                                                optionLabel="descripcion"
+                                                                placeholder="Seleccionar"
+                                                                optionValue="clave"
+                                                                [options]="tipoempresa"
+                                                                [(ngModel)]="tipoempresas"
+                                                                (onChange)="getData( $event, 'tipoempresa' )">
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label  for="buc"
+                                                        class="col-sm-12 col-md-6 control-label">
+                                                            B.U.C. (*)
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form1 mb-5">
+                                                    <input  type="text"
+                                                            class="form-control buc_class"
+                                                            id="buc"
+                                                            name="buc"
+                                                            disabled
+                                                            maxlength="8"
+                                                            [(ngModel)]="buc"
+                                                            (ngModelChange)="getData( bucusuario, 'buc' )">
+                                                </div>
+                                            </div>
+                                            <label  for="buc"
+                                                    class="col-sm-12 col-md-6 control-label">
+                                                        Tipo de dictamen (*) 
+                                            </label>
+                                            <div class="col-sm-12 col-md-12 form1 mb-5">
+                                                <p-dropdown name="tipodictamenes"
+                                                            class="estatus-dropdown"
+                                                            id="tipodictamenes"
+                                                            optionLabel="descripcion"
+                                                            optionValue="valor"
+                                                            placeholder="Seleccionar"
+                                                            [options]="tipodictamen"
+                                                            [(ngModel)]="tipodictamenes"
+                                                            [formControl]="t_dictamen"
+                                                            (onChange)="getData( $event, 'tipodictamen' )"
+                                                            [required]="true"
+                                                            placeholder={{tipdict}}>
+                                                </p-dropdown>
+                                                <br />
+                                                <small  class="p-error"
+                                                        *ngIf="tipodictamenes === undefined">
+                                                            Campo requerido
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingDoc">
+                        <h6 class="panel-title">
+                            <strong>Documentación base del dictamen</strong>
+                            <a  class="custom-button-link"
+                                role="button"
+                                data-toggle="collapse"
+                                href="#collapseDoc"
+                                aria-expanded="false"
+                                aria-controls="collapseDoc">
+                                    - Haz clic para ocultar o mostrar
+                            </a>
+                        </h6>
+                    </div>
+                    <div id="collapseDoc" class="collapse show" role="tabpanel" aria-labelledby="headingDoc">
+                        <br />
+                        <p-message severity="info" text="En un complemento, recuerda subir únicamente los documentos nuevos. No es necesario cargar los que ya han sido dictaminados."></p-message>
+                        <div class="panel-body mt-5">
+                            <form id="form3" class="form-horizontal mb-5">
+                                <div class="form-group">
+                                    <ul class="docslist mb-5">
+                                        <div>
+                                            <li class="mb-3 doclist" *ngIf="tipodocumento && tipodocumento.length > 0">
+                                                <div class="row">
+                                                    <div class="col-4 col-sm-2 text-center">
+                                                        <strong>Recibido</strong>
+                                                    </div>
+                                                    <div class="col-8 col-sm-10">
+                                                        <strong>Documento(s) requerido(s)</strong>
+                                                    </div>
+                                                </div>                                               
+                                            </li>
+                                            <li class="mb-3 doclist" id="doccomp" *ngFor="let doc of tipodocumento">   
+                                                <div class="row">
+                                                    <div class="col-4 col-sm-2 text-center">
+                                                        <em class="pi pi-check" [ngClass]="validarDocsObligatorios(doc) ? 'checkicon' : 'notcheck'"></em>
+                                                    </div>
+                                                    <div class="col-8 col-sm-10">
+                                                        <span class="doctext">{{ doc.descDocumento }} </span> <small class="smallobl">{{ doc.obligatorio === "1" ? '* Obligatorio' : '' }}</small>
+                                                    </div>
+                                                </div>    
+                                            </li>
+                                        </div>
+                                    </ul>
+                                    <label  for="tipo_folio"
+                                            class="col-sm-2 control-label">
+                                                Tipo de documento (*)
+                                    </label>
+                                    <div class="row col-md-12 form1 ">
+                                        <div class="col-md-6">
+                                            <app-ng-dropdown    appendTo="body"
+                                                                name="tipodocumento"
+                                                                class="estatus-dropdown"
+                                                                id="tipodocumento"
+                                                                [data]="tipodocumento"
+                                                                [name]="'tipodocumento'"
+                                                                [parentForm]="tipodoc"
+                                                                [placeholder]="'Seleccionar'"
+                                                                (itemSelect)="getDataA( $event, 'tipodocumento' )">
+                                            </app-ng-dropdown>
+                                        </div>
+                                        <div class="col-md-6" *ngIf="uploadsuccess !== true; else succes">
+                                            <button class="p-button-rounded p-button-danger"
+                                                    (click)="validarCargaArchivo($event)">
+                                                        CARGAR
+                                                <input  #fileInput
+                                                        type="file"
+                                                        id="up_doct_bttn"
+                                                        maxlength="1024"
+                                                        accept="image/tif, image/tiff, application/pdf, .tiff, .tif, .pdf" hidden/>
+                                                <label for="up_doct_bttn"></label>
+                                            </button>
+                                        </div>
+                                        <ng-template #succes>
+                                            <button class="p-button-rounded p-button-danger"
+                                                    (click)="fileInput.click()">
+                                                        CARGAR
+                                                <input #fileInput type="file" id="up_doct_bttn" (change)="onFileSelected($event)" maxlength="1024" accept="image/tif, image/tiff, application/pdf, .tiff, .tif, .pdf" hidden/>
+                                                <label for="up_doct_bttn"></label>
+                                            </button>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <br />
+                                <p-message severity="info" text="Recuerda que el peso máximo de carga por documento es de 10 MB, en caso de que tu documento pese más, puedes seccionarlo en tantas partes se requieran."></p-message>
+                            </form>
+                            <div class="card">
+                                <form class="form-horizontal" id="formfolio">
+                                    <p-table #dt1
+                                            class="rowAlternate headsticky"
+                                            [value]="arrayFiles"
+                                            [rows]="5" 
+                                            [paginator]="true"
+                                            [rowsPerPageOptions]="[5,10,25,50]"
+                                            [globalFilterFields]="['descripcionTipoDocumento','nombreDocumento']" 
+                                            responsiveLayout="scroll"
+                                            [(selection)]="selectedarrayFiles" 
+                                            [rowHover]="true"
+                                            [showCurrentPageReport]="true"
+                                            paginatorDropdownAppendTo="body"
+                                            id="formfdarrayfiles">
+                                        <ng-template pTemplate="caption">
+                                            <div class="flex align-items-center justify-content-between text-right">
+                                                <h5 class="m-0"></h5>
+                                                <span class="p-input-icon-left">
+                                                    <em class="pi pi-search mr-3"></em>
+                                                    <input  pInputText
+                                                            type="text"
+                                                            id="search3"
+                                                            (input)="dt1.filterGlobal( $any($event.target).value, 'contains' )"
+                                                            placeholder="Buscar..." />
+                                                    <label for="search3"></label>
+                                                </span>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th scope="col" pSortableColumn="descripcionTipoDocumento">Tipo de documento <p-sortIcon field="descripcionTipoDocumento"></p-sortIcon></th>
+                                                <th scope="col" pSortableColumn="nombreDocumento">Nombre documento <p-sortIcon field="nombreDocumento"></p-sortIcon></th>
+                                                <th scope="col" >Resultado <p-sortIcon field="resultado"></p-sortIcon></th>
+                                                <th scope="col" >Motivo <p-sortIcon field="descRechazo"></p-sortIcon></th>
+                                                <th scope="col" >Submotivo <p-sortIcon field="descSubRechazo"></p-sortIcon></th>
+                                                <th scope="col" pSortableColumn="comentario">Comentario <p-sortIcon field="comentario"></p-sortIcon></th>
+                                                <th scope="col" >Visualizar <p-sortIcon field="otras"></p-sortIcon></th>
+                                                <th scope="col" >Acciones <p-sortIcon field="acciones"></p-sortIcon></th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-arrayFiles let-rowIndex="rowIndex">
+                                            <tr>
+                                                <td>{{ arrayFiles.descripcionTipoDocumento }}</td>
+                                                <td class="wordwarp">{{ arrayFiles.nombreDocumento }}</td>
+                                                <td>{{ arrayFiles.resultado }}</td>
+                                                <td>{{ arrayFiles.descRechazo }}</td>
+                                                <td>{{ arrayFiles.descSubRechazo }}</td>
+                                                <td>{{ arrayFiles.comentario }}</td>
+                                                <td>
+                                                    <a class="btn btn-default mr-3" tabindex="0" id="btnPDFcp" title="PDF" (click)="previewArchivo( arrayFiles.idFilenet, arrayFiles.nombreDocumento, arrayFiles.descripcionTipoDocumento )">
+                                                        <span><em class="pi pi-file-pdf red-color"></em></span>
+                                                    </a>
+                                                    <a class="btn btn-default" tabindex="0" id="btnPDFcd" title="PDF" (click)="descargarArchivo( arrayFiles.idFilenet, arrayFiles.nombreDocumento, arrayFiles.descripcionTipoDocumento )">
+                                                        <span><em id="btnPDFcd" class="pi pi-arrow-down red-color"></em></span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-file custom-button-gral" id="btnelim" pButton pRipple (click)="eliminarDocumento( arrayFiles, rowIndex )">Eliminar</button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="confirmchek" class="row col-lg-10 xtra-top-pad-15">
+                <label> Confirmo haber leído y estar de acuerdo con la declaratoria y responsabilidad (*): </label>
+                <div class="checkbox-inline ml-3 form1">
+                    <label for="politicas" *ngFor="let pol of selectedPolitics">
+                        <p-checkbox name="politicas"
+                                    id="politicas"
+                                    [(ngModel)]="selectedPolitics"
+                                    value="{{pol}}"
+                                    [disabled]="politicas"
+                                    (click)="displayModalAd">
+                        </p-checkbox>
+            &nbsp; </label>
+                </div>
+                <a  class="custom-button-link-red ml-3"
+                    role="button"
+                    (click)="displayModalP = true">
+                        Ver políticas
+                </a>
+            </div>
+            <div class="col-lg-3 xtra-top-pad-15"></div>
+            <div class="col-lg-9 xtra-top-pad-15"></div>
+            <div class="row mb-5">
+                <div id="bottombtns" class="col-lg-12 col-xs-12 text-right footer-btn">
+                    <button class="p-button-rounded p-button-danger mr-3"
+                            type="submit"
+                            id="EnviaBtn"
+                            (click)="validarComplemento()"
+                            [disabled]="dataFiltersb.tiporeing === undefined">
+                                ENVIAR
+                    </button>
+                    <button class="p-button-rounded p-button-danger"
+                            [routerLink]="['/solicitudes']">
+                                Regresar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog id="dialogpdf"
+          [(visible)]="displayModalF" 
+          [modal]="true" 
+          [closable]="false"
+          [resizable]="false" [draggable]="false">
+    
+    <pdf-viewer
+            [src]="pdfSrc"
+            [page]="page"
+            [stick-to-page]="false"
+            [show-all]="false"
+            [rotation]="0"
+            [render-text]="false"
+            [zoom]="0"
+            [original-size]="false"
+            [fit-to-page]="true"
+            [zoom-scale]="'page-width'"
+            [show-borders]="false"
+            [autoresize]="true"
+            
+            (after-load-complete)="afterLoadComplete($event)"
+            class="pdf-viewer"
+            id="foliocomppdf"
+    ></pdf-viewer>
+
+    <ng-template pTemplate="footer" id="tempfolcomppdf">
+
+        <nav *ngIf="isLoaded">
+            <div class="row text-center">
+                <div class="col-md-12 text-center">
+                    <button class="btn custom-button-gral"
+                            type="button"
+                            (click)="prevPage()"
+                            [disabled]="page === 1" >
+                        Anterior
+                    </button>
+                    <button class="btn custom-button-gral"
+                            type="button"
+                            (click)="nextPage()"
+                            [disabled]="page === totalPages" >
+                        Siguiente
+                    </button>
+                    <button class="btn custom-button-gral"
+                            type="button"
+                            (click)="cerrarDialogF()" >
+                        Aceptar
+                    </button>
+                    <p>Página {{ page }} / {{ totalPages }}</p>
+                </div>
+            </div>
+          </nav>
+    </ng-template>
+</p-dialog>
+
+<p-dialog   class="dialog-mediuma"
+            header="Header" [(visible)]="displayModalM" [modal]="true" 
+            [draggable]="false"
+            [resizable]="false"
+            [closable]="false">
+    <ng-template pTemplate="header">
+        <div class="col-md-12 text-center">
+            <h3>{{ headerModalM }}</h3>
+        </div>
+    </ng-template>
+    <strong>{{ messageModalM }}</strong>
+        <ng-template pTemplate="footer">
+            <p-button   (click)="closeModal()"
+                        label="Cerrar"
+                        class="btn modal-button-gral">
+            </p-button>
+        </ng-template>
+</p-dialog>
+
+<p-dialog class="h50" header="Header" [(visible)]="displayModalFormErr" [modal]="true"
+    [draggable]="false" [resizable]="false" [closable]="false">
+    <ng-template pTemplate="header">
+        <h3>Error</h3>
+    </ng-template>
+    <strong>{{ messageModalM }}</strong>
+        <ng-template pTemplate="footer">
+            <p-button   (click)="closeModalForm()"
+                        label="Cerrar"
+                        class="btn modal-button-gral text-center">
+            </p-button>
+        </ng-template>
+</p-dialog>
+
+<p-dialog class="h50" header="Header" [(visible)]="displayModalFormErrRedirect" [modal]="true"
+    [draggable]="false" [resizable]="false" [closable]="false">
+    <ng-template pTemplate="header">
+        <h3>Error</h3>
+    </ng-template>
+    <strong>{{ messageModalM }}</strong>
+        <ng-template pTemplate="footer">
+            <p-button   (click)="closeModalFormRedirect()"
+                        label="Cerrar"
+                        class="btn modal-button-gral text-center">
+            </p-button>
+        </ng-template>
+</p-dialog>
+
+<p-dialog   header="Header"
+            class="h50"
+            [(visible)]="displayModalAd"
+            [modal]="true"
+            [draggable]="false"
+            [resizable]="false"
+            [closable]="false">
+    <ng-template pTemplate="header">
+        <h3>Error</h3>
+    </ng-template>
+    <p class="m-0 text-center">
+        Debe leer y aceptar la declaratoria.
+    </p>
+        <ng-template pTemplate="footer">
+            <p-button   (click)="closeAvisoModal()"
+                        label="Cerrar"
+                        class="btn modal-button-gral">
+            </p-button>
+        </ng-template>
+</p-dialog>
+
+<p-dialog   class="h50"
+            id="modalcomp"
+            name="modalcomp"
+            header="Header"
+            [(visible)]="displayModalBuc"
+            [modal]="true"
+            [draggable]="false"
+            [resizable]="false"
+            [closable]="false">
+    <ng-template pTemplate="header">
+        <h3>Error</h3>
+    </ng-template>
+    <p class="m-0 text-center">
+        <strong>No se encuentra el BUC solicitado</strong>
+    </p>
+    <p id="tmpcomp" class="m-0 text-center">Intente de nuevo con otro BUC</p>
+        <ng-template pTemplate="footer">
+            <p-button   label="Cerrar"
+                        class="btn modal-button-gral text-center"
+                        (click)="closeBucModal()">
+            </p-button>
+        </ng-template>
+</p-dialog> 
+
+<p-dialog   class="h50"
+            id="declaraaltafolcomp"
+            header="Header"
+            [(visible)]="displayModalP"
+            [modal]="true"
+            styleClass="dialog-small"
+            [draggable]="false"
+            [resizable]="false"
+            [closable]="false">
+    <ng-template id="tmp-1" pTemplate="header">
+        <div class="col-md-12 text-center">
+            <h3>Declaratoria de Responsabilidad</h3>
+        </div>
+    </ng-template>
+    <p class="m-0" id="bodytempcomp">
+        <strong>DECLARACIONES:</strong><br /><br />
+        I. Manifiesto haber tenido a la vista la documentación original que se adjunta a la presente solicitud, asegurándome que la misma no ha sido dictaminada anteriormente. Asimismo, he revisado la ruta de Santander Now: SITIOS/JURÍDICO/UNIDAD DE DICTAMINACIÓN/DICTAMENES y no existe dictamen previo del Cliente de referencia.
+        <br /><br />
+        II. Manifiesto haber cotejado contra su original cada una de las hojas de los documentos que en copia simple adjunto la presente solicitud de dictamen, obligándome a conservar un tanto de los documentos enviados a dictaminar para la integración del expediente correspondiente, en caso de ser procedente.
+    </p>
+        <ng-template pTemplate="footer">
+            <p-button   class="btn modal-button-gral text-center"
+                        id="closepolitic"
+                        name="closepolitic"
+                        (click)="closePoliticasModal()"
+                        label="Aceptar" >
+            </p-button>
+        </ng-template>
+</p-dialog>
+
+<!-- ============================================================== -->
+<!-- Modal Mensajes -->
+<!-- ============================================================== -->
+<p-dialog   header="Header"
+            id="modalMessageComp"
+            class="h50"
+            name="modalMessageComp"
+            [visible]="_dictaminacion.displayModalM"
+            [draggable]="false"
+            [modal]="true"
+            [closable]="false"
+            [resizable]="false">
+          <ng-template pTemplate="header">
+            <h3>Error</h3>
+        </ng-template>
+        <div class="row">
+            <p class="m-0 text-center"> {{ _dictaminacion.messageModalM }} <br> Intente nuevamente
+            </p>
+        </div>
+        <ng-template pTemplate="footer" id="tmpfootdevsal-2">
+            <p-button   class="btn modal-button-gral text-center"
+                        (click)="onFinishInstrucc();"
+                        label="Cerrar" >
+            </p-button>
+        </ng-template>
+</p-dialog>

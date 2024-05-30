@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24.09 24.09">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #ec0000;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 0.7px;
+      }
+    </style>
+  </defs>
+  <title> Master_Iconos_recompensas</title>
+  <g id="Layer_6" data-name="Layer 6">
+    <g>
+      <g>
+        <line class="cls-1" x1="10.33" y1="7.71" x2="18.22" y2="7.71"/>
+        <line class="cls-1" x1="10.33" y1="12.03" x2="18.22" y2="12.03"/>
+        <line class="cls-1" x1="10.33" y1="16.35" x2="18.22" y2="16.35"/>
+      </g>
+      <circle class="cls-1" cx="7.37" cy="7.69" r="1.5"/>
+      <circle class="cls-1" cx="7.37" cy="11.96" r="1.5"/>
+      <circle class="cls-1" cx="7.37" cy="16.4" r="1.5"/>
+    </g>
+  </g>
+</svg>

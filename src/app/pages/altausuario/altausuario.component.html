@@ -1,0 +1,229 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-group " id="accordion" role="tablist" aria-multiselectable="true">
+                <form class="form-horizontal" id="formu" #formseccion1="ngForm">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingAltaUsuarios">
+                            <h6 class="panel-title">
+                                <strong>Alta de usuario</strong>
+                                <a role="button" class="custom-button-link" data-toggle="collapse" href="#collapseAltaUsuarios" aria-expanded="true" aria-controls="collapseAltaUsuarios">
+                                    - Haz clic para ocultar o mostrar 
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="collapseAltaUsuarios" class="collapse show" role="tabpanel" aria-labelledby="headingAltaUsuarios">
+                             <div class="panel-body"><br>
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="tipogetusr" class="col-sm-12 col-md-6 control-label">
+                                                    Tipo de usuario 
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <p-dropdown name="tipogetusr"
+                                                                id="tipogetusr"
+                                                                optionLabel="nombre"
+                                                                placeholder="Seleccionar"
+                                                                [options]="tipogetusr"
+                                                                [(ngModel)]="tipousuario"
+                                                                [formControl]="t_usuario"
+                                                                (onChange)="getDataFirst( $event, 'tipusuario' )"
+                                                                [required]="true">
+                                                    </p-dropdown>
+                                                    <small class="p-error" *ngIf="tipousuario === undefined">Seleccione un tipo de usuario</small>
+                                                </div>
+                                                <label for="codigosam" class="col-sm-12 col-md-6 control-label">
+                                                    Codigo SAM (*) 
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input  type="text"
+                                                            class="form-control misSol"
+                                                            id="codigosam"
+                                                            name="codigosam"
+                                                            [maxlength]="8"
+                                                            [formControl]="c_sam"
+                                                            [(ngModel)]="codigosam"
+                                                            (ngModelChange)="getDataSecond( codigosam, 'codsam' )"
+                                                            required >
+                                                    <small class="p-error" *ngIf="codigosam === undefined || codigosam === ''">El Campo Codigo SAM es requerido.</small>
+                                                </div>
+                                                <label for="nombre" class="col-sm-12 col-md-12 control-label">
+                                                    Nombre, denominación o razón social (*) 
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input  type="text"
+                                                            class="form-control misSol"
+                                                            id="nombre"
+                                                            name="nombre"
+                                                            [maxlength]="100"
+                                                            [formControl]="t_nombre"
+                                                            [(ngModel)]="nombre"
+                                                            (ngModelChange)="getDataSecond( nombre, 'name' )">
+                                                    <small class="p-error" *ngIf="nombre === undefined || nombre === ''">El Campo nombre es requerido.</small>
+                                                </div>
+                                                <label for="iddesp" class="col-sm-12 col-md-6 control-label">
+                                                    ID Despacho (*) 
+                                                </label>
+                                                 <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input  type="text"
+                                                            class="form-control misSol"
+                                                            id="iddesp"
+                                                            name="iddesp"
+                                                            oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            [maxlength]="5"
+                                                            [formControl]="i_despacho"
+                                                            [(ngModel)]="idAbogado"
+                                                            (ngModelChange)="getDataSecond( idAbogado, 'idAbog' )">
+                                                    <small class="p-error" *ngIf="idAbogado === undefined || idAbogado === ''">El Campo ID despacho es requerido.</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <div [hidden]="tipodeusr !== 'E'">
+                                                    <label for="limitefol" class="col-sm-12 col-md-6 control-label">
+                                                        Límite de folios (*):
+                                                    </label>
+                                                    <div class="col-sm-12 col-md-12 form mb-5">
+                                                        <input  type="text"
+                                                                class="form-control misSol"
+                                                                id="limitefol"
+                                                                name="limitefol"
+                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                                pTooltip="Valor de solicitudes que se pueden asignar al despacho, vacio no existe limite de asignación de solicitudes"
+                                                                tooltipPosition="top"
+                                                                [maxlength]="3"
+                                                                [(ngModel)]="limfolios"
+                                                                (ngModelChange)="getDataFirst( limfolios, 'folios' )">
+                                                        <small class="p-error" *ngIf="limfolios === undefined">El Campo limite de folios es requerido.</small>
+                                                    </div>
+                                                </div>
+                                                <label for="email" class="col-sm-12 col-md-6 control-label">
+                                                    Correo (*) 
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-4">
+                                                    <input  class="form-control misSol"
+                                                            id="email"
+                                                            name="email"
+                                                            type="email"
+                                                            [formControl]="e_mail"
+                                                            [(ngModel)]="correo"
+                                                            [maxlength]="50"
+                                                            (ngModelChange)="getDataSecond( correo, 'email' )">
+                                                    <small class="p-error" *ngIf="correo === undefined || correo === ''">El Campo correo es requerido.</small>
+                                                </div>
+                                                <label for="telefono" class="col-sm-12 col-md-6 control-label">
+                                                    Teléfono(*) 
+                                                </label>
+                                                <div class="col-sm-12 col-md-12 form mb-5">
+                                                    <input  class="form-control misSol inputbuc"
+                                                            id="telefono"
+                                                            name="telefono"
+                                                            type="phone"
+                                                            oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            [maxlength]="10"
+                                                            [formControl]="t_telefono"
+                                                            [(ngModel)]="telefono"
+                                                            (ngModelChange)="getDataSecond( telefono, 'ntelefono' )" >
+                                                    <small class="p-error" *ngIf="telefono === undefined || telefono === ''">El Campo teléfono es requerido.</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="card" [hidden]="tipodeusr !== 'E'">
+                        <div class="card-header" role="tab" id="headingDictamen">
+                            <h6 class="panel-title">
+                                <strong>Tipo dictamen</strong>
+                                <a  role="button"
+                                    href="#collapseDictamen"
+                                    class="custom-button-link"
+                                    id="dictaltausu"
+                                    data-toggle="collapse"
+                                    aria-expanded="true"
+                                    aria-controls="collapseDictamen">
+                                    - Haz clic para ocultar o mostrar 
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="collapseDictamen" class="collapse show" role="tabpanel" aria-labelledby="headingDictamen">
+                            <div class="panel-body">
+                                <div class="row mt-3">
+                                    <div *ngFor="let dict of dictamenData" class="field-checkbox">
+                                        <div class="md-col-5 ml-4 mr-3 text-center">
+                                            <p-checkbox name="dictamenes"
+                                                        value="{{dict.nombre}}"
+                                                        [(ngModel)]="selectedDictamList"
+                                                        [label]="dict.nombre">
+                                            </p-checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+<!--                     <div class="card" [hidden]="tipodeusr !== 'E' && tipodeusr !== 'S'">
+                        <div class="card-header" role="tab" id="headingRegion">
+                            <h6 class="panel-title">
+                                <strong>Región</strong>
+                                <a  href="#collapseRegion"
+                                    role="button"
+                                    class="custom-button-link"
+                                    id="altausrreg"
+                                    data-toggle="collapse"
+                                    aria-controls="collapseRegion"
+                                    aria-expanded="true">
+                                    - Haz clic para ocultar o mostrar 
+                                </a>
+                            </h6>
+                        </div>
+                        <br />
+                        <div id="collapseRegion"class="collapse show" role="tabpanel" aria-labelledby="headingRegion">
+                            <div class="panel-body">
+                                <div class="row mt-39 mb-3">
+                                    <div *ngFor="let region of regionData">
+                                        <div class="md-col-5 ml-4 mr-3 text-center">
+                                            <p-checkbox name="regiones"
+                                                        value="{{region.nombre}}"
+                                                        [(ngModel)]="selectedRegionList"
+                                                        [label]="region.nombre" >
+                                            </p-checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="row xtra-top-pad-15 mb-5">
+                        <div class="col-md-12 col-sm-12 text-right footer-btn">
+                            <button (click)="guardarUsuario()"
+                                    type="submit"
+                                    id="EnviaBtn"
+                                    class="p-button-rounded p-button-danger mr-3"
+                                    [disabled]="(t_usuario.invalid)||(c_sam.invalid)||(t_nombre.invalid)||(i_despacho.invalid)||(e_mail.invalid)||(t_telefono.invalid)">Guardar</button>
+                            <a (click)="limpiarFormulario()"
+                                id="limpiarAv"
+                                class="p-button-rounded p-button-secondary">Limpiar formulario</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog class="dialog50" header="Header" [(visible)]="displayModalM" [modal]="true"
+    [draggable]="false" [resizable]="false">
+    <ng-template pTemplate="header">
+        {{ headerModalM }}
+    </ng-template>
+    <p class="m-0">{{ messageModalM }}</p>
+        <ng-template pTemplate="footer">
+            <p-button (click)="closeModal()" label="Cerrar" class="btn modal-button-gral"></p-button>
+        </ng-template>
+</p-dialog>
